@@ -72,17 +72,7 @@ onUnmounted(() => {
 
         }
 
-        &:hover {
-            background-color: $black;
-            color: $grey;
-            transition: all 0.3s ease-in-out;
 
-            &>svg>path {
-                // transform: rotate(180deg);
-                transition: all 0.3s ease-in-out;
-                stroke: $white;
-            }
-        }
     }
 
     .language-list {

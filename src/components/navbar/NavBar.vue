@@ -39,7 +39,8 @@ import SearchBar from './NavbarComps/SearchBar.vue';
     .right-container {
         height: 100%;
         @include flex();
-        justify-content: space-between;
+        justify-content: space-around;
+        gap:1.56rem;
 
     }
 
@@ -47,10 +48,7 @@ import SearchBar from './NavbarComps/SearchBar.vue';
         height: 100%;
         @include flex();
         justify-content: space-around;
-        width:70%;
-
-
-
+        width:67%;
     }
 }
 </style>
