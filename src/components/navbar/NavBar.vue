@@ -34,6 +34,9 @@ import SearchBar from './NavbarComps/SearchBar.vue';
     box-shadow: 0px 8px 50px 0px rgba(42, 192, 212, 0.15);
     padding: 1.25rem 0rem;
     display: flex;
+    user-select: none;
+    position: fixed;
+    z-index: 12;
     // justify-content: space-between;
 
     .right-container {
