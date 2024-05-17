@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import NavBar from '@/components/navbar/NavBar.vue';
+import { RouterLink } from 'vue-router';
+
+
+
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+        <NavBar />
+        <RouterLink/>
 </template>
