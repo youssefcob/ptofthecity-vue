@@ -34,6 +34,17 @@ h4{
   color:#2C3233;
 }
 
+p{
+  @extend h4 ;
+  line-height: 2.25rem;
+}
+
+li{
+  @extend h4 ;
+  line-height: 2.25rem;
+
+}
+
 a{
   text-decoration: none;
 }
@@ -67,5 +78,74 @@ a{
   background-color: $blue;
   border:none;
   outline:none;
+
+}
+
+.btn{
+  background-color: $blue;
+  color: $black;
+  border:none;
+  padding: 1.25rem 0rem;
+  border-radius: 0.625rem;
+  text-align: center;
+  cursor: pointer;
+  @extend .btnfont;
+}
+
+
+.input-field{
+  border-radius: 1.125rem;
+border: 1px solid $blue;
+
+background: $white;
+outline:none;
+height:3.75rem;
+padding:1.25rem;
+
+&::-webkit-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family: $montserrat;
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 500;
+line-height: 200%; 
+  color:$black;
+}
+
+&::-moz-placeholder { /* Firefox 19+ */
+    font-family: $montserrat;
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 500;
+line-height: 200%;
+  color:$black;
+  opacity: 1; // Firefox adds an extra layer of opacity to the placeholder, so we need to override that
+}
+
+&:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-family: $montserrat;
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 500;
+line-height: 200%;
+  color:$black;
+}
+
+&::-ms-input-placeholder { /* Microsoft Edge */
+    font-family: $montserrat;
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 500;
+line-height: 200%;
+  color:$black;
+}
+
+&::placeholder { /* Standard syntax */
+    font-family: $montserrat;
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 500;
+line-height: 200%;
+  color:$black;
+}
 
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+// import { defineProps } from 'vue';
 import ServiceDescription from './ServiceDescription.vue';
 import type { Service } from './Services';
 

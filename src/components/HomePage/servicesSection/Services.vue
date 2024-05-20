@@ -60,12 +60,12 @@ const scroll = (direction: number) => {
 <style scoped lang="scss">
 .container {
     width: 100%;
-    height: 80%;
+    height: 87%;
     @include flexDirection(column);
 
     h1 {
         align-self: baseline;
-        margin-left: 10%;
+        margin-left: 6.25rem;
         color: $navy;
     }
 
