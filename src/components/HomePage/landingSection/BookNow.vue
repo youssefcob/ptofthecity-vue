@@ -30,15 +30,6 @@
     .btn-container{
         width:75%;
     }
-    .btn {
-        background-color: $blue;
-        color: $black;
-        padding: 1.25rem 0rem;
-        border-radius: 0.625rem;
-        text-align: center;
-        cursor: pointer;
-        @extend .btnfont;
-    }
 
     .number {
         text-align: center;
