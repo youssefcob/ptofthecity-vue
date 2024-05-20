@@ -18,5 +18,6 @@ import InsuranceWeAccept from './InsuranceWeAccept.vue';
     width:100%;
     display: flex;
     flex-direction: column;
+    padding:0 6.25rem;
 }
 </style>

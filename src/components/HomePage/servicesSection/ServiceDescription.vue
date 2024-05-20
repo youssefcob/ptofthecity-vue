@@ -15,7 +15,7 @@ const props = defineProps({
         <ul v-if="props.service?.list"> 
             <li v-for="list_item in props.service.list"> {{ list_item }}</li>
         </ul>
-        <div class="learn-more btnfont">Learn More</div>
+        <div class="learn-more btn-transparent btnfont">Learn More</div>
     </div>
 </template>
 
@@ -39,20 +39,7 @@ const props = defineProps({
         padding-left: 1.4em;
 
     }
-    .learn-more{
-        color:$white;
-        padding:1.25rem 4.06rem;
-        cursor: pointer;
-        max-width:70%;
-        text-align: center;
-        border-radius: 1.125rem;
-        border: 1px solid $blue;
-        transition: all .3s ease-in-out;
-        &:hover{
-            background-color: rgba(43, 192, 212,0.2);
-            transition: all .3s ease-in-out;
-        }
-    }
+   
 
 
 

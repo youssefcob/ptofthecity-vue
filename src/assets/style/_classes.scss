@@ -1,90 +1,88 @@
 @import "variables";
 
-h1
-{
-    font-family: $helvetica;
-    font-weight: 600;
-    font-size:$h1;
-    letter-spacing: 0px;
-    color:#2C3233;
+h1 {
+  font-family: $helvetica;
+  font-weight: 600;
+  font-size: $h1;
+  letter-spacing: 0px;
+  color: #2C3233;
 }
 
-h2
-{
-  font-family: $helvetica-light; 
+h2 {
+  font-family: $helvetica-light;
   font-weight: lighter;
   font-size: $h2;
   letter-spacing: 0px;
-  color:#2C3233;
+  color: #2C3233;
 }
 
-h3{
+h3 {
   font-family: $helvetica-light;
   font-weight: lighter;
   font-size: $h3;
   letter-spacing: 0px;
-  color:#2C3233;
+  color: #2C3233;
 }
 
-h4{
+h4 {
   font-family: $helvetica;
   font-weight: lighter;
   font-size: $h4;
   letter-spacing: 0px;
-  color:#2C3233;
+  color: #2C3233;
 }
 
-p{
-  @extend h4 ;
+p {
+  @extend h4;
   line-height: 2.25rem;
 }
 
-li{
-  @extend h4 ;
+li {
+  @extend h4;
   line-height: 2.25rem;
 
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-.body{
- font-family: $montserrat;
+.body {
+  font-family: $montserrat;
   font-weight: 400;
   font-size: $body;
-  letter-spacing: 0px; 
-  font-stretch: extra-condensed	;
+  letter-spacing: 0px;
+  font-stretch: extra-condensed;
 }
 
-.btnfont{
+.btnfont {
   font-family: $montserrat;
   font-weight: bolder;
   font-size: $button;
   letter-spacing: 0px;
 }
 
-.caption{
+.caption {
   font-family: $montserrat;
   font-weight: lighter;
   font-size: $caption;
   letter-spacing: 0px;
 }
 
-.btn1{
-  width:400px;
-  height:60px;
+.btn1 {
+  width: 400px;
+  height: 60px;
   border-radius: 18px;
   background-color: $blue;
-  border:none;
-  outline:none;
+  border: none;
+  outline: none;
 
 }
 
-.btn{
+.btn {
   background-color: $blue;
   color: $black;
-  border:none;
+  border: none;
   padding: 1.25rem 0rem;
   border-radius: 0.625rem;
   text-align: center;
@@ -92,60 +90,121 @@ a{
   @extend .btnfont;
 }
 
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
 
-.input-field{
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.input-field {
+  border: 1px solid $blue;
   border-radius: 1.125rem;
-border: 1px solid $blue;
+  background: $white;
+  outline: none;
 
-background: $white;
-outline:none;
-height:3.75rem;
-padding:1.25rem;
 
-&::-webkit-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  font-family: $montserrat;
-font-size: 1.125rem;
-font-style: normal;
-font-weight: 500;
-line-height: 200%; 
-  color:$black;
-}
 
-&::-moz-placeholder { /* Firefox 19+ */
+  &::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     font-family: $montserrat;
-font-size: 1.125rem;
-font-style: normal;
-font-weight: 500;
-line-height: 200%;
-  color:$black;
-  opacity: 1; // Firefox adds an extra layer of opacity to the placeholder, so we need to override that
-}
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 200%;
+    color: $black;
+  }
 
-&:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  &::-moz-placeholder {
+    /* Firefox 19+ */
     font-family: $montserrat;
-font-size: 1.125rem;
-font-style: normal;
-font-weight: 500;
-line-height: 200%;
-  color:$black;
-}
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 200%;
+    color: $black;
+    opacity: 1; // Firefox adds an extra layer of opacity to the placeholder, so we need to override that
+  }
 
-&::-ms-input-placeholder { /* Microsoft Edge */
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
     font-family: $montserrat;
-font-size: 1.125rem;
-font-style: normal;
-font-weight: 500;
-line-height: 200%;
-  color:$black;
-}
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 200%;
+    color: $black;
+  }
 
-&::placeholder { /* Standard syntax */
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
     font-family: $montserrat;
-font-size: 1.125rem;
-font-style: normal;
-font-weight: 500;
-line-height: 200%;
-  color:$black;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 200%;
+    color: $black;
+  }
+
+  &::placeholder {
+    /* Standard syntax */
+    font-family: $montserrat;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 200%;
+    color: $black;
+  }
+
+  // input-field__forFile
+  &[type="text"] {
+    height: 3.75rem;
+    padding: 1.25rem;
+  }
+
+  &[type="file"] {
+
+    height: 3.75rem;
+    padding: 0;
+
+    &::file-selector-button {
+      height: 100%;
+      outline:none;
+      border:none;
+      background-color: $blue;
+      @extend .btnfont;
+    }
+
+    
+  }
+
 }
 
+.btn-transparent{
+  color:$white;
+  padding:1.25rem 4.06rem;
+  cursor: pointer;
+  max-width:70%;
+  text-align: center;
+  border-radius: 1.125rem;
+  border: 1px solid $blue;
+  transition: all .3s ease-in-out;
+  &:hover{
+      background-color: rgba(43, 192, 212,0.2);
+      transition: all .3s ease-in-out;
+  }
 }

@@ -13,6 +13,7 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    user-select:none;
 }
 @media only screen and (max-width: 1423px){
     html {

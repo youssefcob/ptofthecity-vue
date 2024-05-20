@@ -38,7 +38,6 @@ let showMore = () => {
 .insuranceContainer {
     width: 100%;
     display: flex;
-    padding: 0 6.25rem;
     flex-direction: column;
 
     >h1 {
