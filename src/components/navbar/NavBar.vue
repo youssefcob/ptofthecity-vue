@@ -1,16 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import Lang from './NavbarComps/LanguageDropDown.vue';
 import NavList from './NavbarComps/NavListHorizontal.vue';
 import NavLogo from './NavbarComps/NavLogo.vue';
 import ProfileSignup from './NavbarComps/ProfileSignup.vue';
 import SearchBar from './NavbarComps/SearchBar.vue';
+import ResponsiveDropdown from './ResponsiveDropDown/ResponsiveDropdown.vue';
+import DropDownButton from './ResponsiveDropDown/DropDownButton.vue';
 
-
+let menuState = ref(false); // menuState is now a reactive reference
+const handleDropdownUpdate = () => {
+    // console.log('Dropdown value updated:', newValue);
+    menuState.value = !menuState.value; // Update the reactive reference value
+    console.log(menuState.value);
+}
 
 </script>
 
 <template>
-    <nav class="navbar">
+    <nav class="navbar horizontal">
         <div class="left-container">
             <NavLogo />
             <NavList />
@@ -18,40 +27,74 @@ import SearchBar from './NavbarComps/SearchBar.vue';
 
         <div class="right-container">
             <SearchBar />
-            <ProfileSignup />
+            <!-- <ProfileSignup /> -->
             <Lang />
         </div>
+    </nav>
+    
+    <nav class="navbar mobile">
+            <NavLogo />
+            <DropDownButton @dropdown="handleDropdownUpdate" />
+    <ResponsiveDropdown @dropdown="handleDropdownUpdate" v-if="menuState"/>
+
     </nav>
 
 </template>
 
 <style scoped lang="scss">
-.navbar {
+
+.navbar{
     background-color: $grey;
     width: 100%;
     height: 8vh;
     min-height: 50px;
     box-shadow: 0px 8px 50px 0px rgba(42, 192, 212, 0.15);
     padding: 1.25rem 0rem;
-    display: flex;
     user-select: none;
     position: fixed;
     z-index: 12;
-    // justify-content: space-between;
 
-    .right-container {
-        height: 100%;
-        @include flex();
-        justify-content: space-around;
-        gap:1.56rem;
-
-    }
-
-    .left-container {
-        height: 100%;
-        @include flex();
-        justify-content: space-around;
-        width:67%;
-    }
 }
+
+.navbar.horizontal {
+    display: flex;
+    justify-content: space-around;
+   
+}
+
+
+.right-container {
+    height: 100%;
+    @include flex();
+    // justify-content: space-around;
+    gap:1.56rem;
+
+}
+
+.left-container {
+    height: 100%;
+    @include flex();
+    justify-content: space-between;
+    width:63%;
+}
+
+.mobile{
+    display:none;
+    justify-content: space-between;
+    padding:1.25rem 2rem;
+    align-items: center;
+
+}
+@media (max-width: 950px) {
+    .navbar.horizontal { /* Assuming your navbar class is .navbar */
+        display: none;
+    }
+    .navbar.mobile{
+        display:flex;
+        align-items: center;
+        @media screen and (max-width: 426px){
+        padding: 0rem 5rem;
+    }
+    }
+} 
 </style>

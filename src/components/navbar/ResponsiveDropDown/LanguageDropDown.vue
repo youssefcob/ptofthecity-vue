@@ -1,0 +1,114 @@
+<script setup lang="ts">
+import NavLogoInverted from './NavLogoInverted.vue';
+
+import { ref, onMounted, onUnmounted } from 'vue';
+import type { Ref } from 'vue';
+
+
+const show: Ref<boolean> = ref(false);
+const lang: Ref<string> = ref('EN');
+
+const changeLang = (language: string): void => {
+    lang.value = language;
+    show.value = false;
+}
+
+let handleClickOutside: (e: Event) => void;
+
+onMounted(() => {
+    handleClickOutside = (e: Event) => {
+        const dropdownElement = document.querySelector('.language-dropdown-responsive');
+        if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
+            show.value = false;
+
+        }
+    };
+    document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
+</script>
+
+<template>
+    <div class="lang-container">
+        <NavLogoInverted />
+
+        <div class="language">
+            <div class="language-dropdown-responsive">
+                <div class="language-btn" @click="show = !show">
+                    <span>{{ lang }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 12 7" fill="none">
+                        <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                </div>
+                <div class="language-list-responsive" v-if="show">
+                    <div class="language-item" @click="changeLang('EN')">EN</div>
+                    <div class="language-item" @click="changeLang('AR')">AR</div>
+                    <div class="language-item" @click="changeLang('ES')">ES</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<style scoped lang="scss">
+.lang-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: space-between;
+    background-color: $blue;
+    margin-bottom: 6.7rem;
+    padding: 2.5rem 5rem;
+    border-radius: 1.5rem;
+
+    >.language {
+        >.language-dropdown-responsive {
+            .language-btn {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0rem 1rem;
+                height: 100%;
+                width: 45px;
+                font-size: 12px;
+                font-family: $montserrat;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                letter-spacing: 0.01094rem;
+
+
+            }
+
+            .language-list-responsive {
+                position: absolute;
+                top: 3rem;
+                right: 0;
+                background-color: $white;
+                border-radius: 0.5rem;
+                box-shadow: 0px 8px 50px 0px rgba(42, 192, 212, 0.15);
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.5rem;
+
+                .language-item {
+                    padding: 0.5rem;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: $grey;
+                    }
+                }
+            }
+        }
+    }
+}
+</style>

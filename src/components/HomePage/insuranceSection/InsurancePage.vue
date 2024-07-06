@@ -19,5 +19,9 @@ import InsuranceWeAccept from './InsuranceWeAccept.vue';
     display: flex;
     flex-direction: column;
     padding:0 6.25rem;
+    @media screen and (max-width: 500px){
+        padding:0;
+        
+    }
 }
 </style>

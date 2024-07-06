@@ -24,4 +24,11 @@ import BookNow from './BookNow.vue';
         left: 12%;
         z-index: 1;
     }
+
+    @media only screen and (max-width: 600px) {
+        .booknow-container {
+            top: 30%;
+            left: 0%;
+    }
+}
 </style>

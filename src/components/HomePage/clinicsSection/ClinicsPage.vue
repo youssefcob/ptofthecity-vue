@@ -12,6 +12,7 @@ import {clinicLocations} from './Clinics';
             <ClinicAccordion :location="location" />
             </template>
         </div>
+        <div class="btn-transparent">find your nearest location</div>
     </div>
 </template>
 
@@ -26,6 +27,15 @@ import {clinicLocations} from './Clinics';
 
     .accordionsContainer {
         margin-top: 2.44rem;
+
+    }
+
+    .btn-transparent {
+        color:$black;
+        width:fit-content;
+        @extend .btnfont;
+        padding: 1rem 4.0625rem;
+        margin-left:auto;
 
     }
 }

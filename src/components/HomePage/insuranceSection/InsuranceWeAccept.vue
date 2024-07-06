@@ -9,16 +9,16 @@ let showmore = ref(false);
 let showMore = () => {
     let insurances = document.querySelector('.insurances');
     let arrow = document.querySelector('.arrow');
-        insurances?.classList.toggle('show-more');
-        insurances?.classList.toggle('some-hidden');
-        showmore.value = !showmore.value;
-        arrow?.classList.toggle('flip-arrow');
+    insurances?.classList.toggle('show-more');
+    insurances?.classList.toggle('some-hidden');
+    showmore.value = !showmore.value;
+    arrow?.classList.toggle('flip-arrow');
 }
 </script>
 
 <template>
     <div class="insuranceContainer">
-        <h1>Insurance we accept</h1>
+        <h1>Insurance</h1>
         <div class="insurances some-hidden">
             <div class="single-insurance" v-for="key in keys" :key="key">
                 <img :src="key" alt="">
@@ -28,8 +28,8 @@ let showMore = () => {
             <template v-if="!showmore">Show more</template>
             <template v-else>Show less</template>
             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
-            <path d="M1 1L6 6L11 1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
+                <path d="M1 1L6 6L11 1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
         </span>
 
     </div>
@@ -42,6 +42,10 @@ let showMore = () => {
 
     >h1 {
         color: $navy;
+        @media screen and (max-width: 500px){
+            margin-left: 5%;
+            
+        }
     }
 
     >.show-btn {
@@ -53,6 +57,7 @@ let showMore = () => {
 
         >svg {
             margin-left: 0.625rem;
+
             >path {
                 stroke: $navy;
             }
@@ -95,6 +100,40 @@ let showMore = () => {
         transform: rotate(180deg);
     }
 
+    @media screen and (max-width: 500px) {
+
+        .insurances {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scrolling on touch devices */
+            scrollbar-width: thin;
+
+            /* For Firefox */
+            &::-webkit-scrollbar {
+                height: 4px;
+                /* For WebKit browsers */
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #ccc;
+                /* Scrollbar thumb color */
+            }
+
+            .single-insurance {
+            flex: 0 0 auto;
+            width:85px;
+            height: 85px;
+        }
+
+
+        }
+        .show-btn{
+            display: none;
+        }
+
+        
+    }
 
 }
 </style>

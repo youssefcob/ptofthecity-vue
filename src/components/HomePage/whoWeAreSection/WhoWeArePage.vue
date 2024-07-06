@@ -10,16 +10,28 @@
             <div class="stats">
 
                 <div class="box">
-                    <h1>22</h1>
-                    <h4>Clinics</h4>
+                    <div>
+                        <h1>22</h1>
+                    </div>
+                    <div>
+                        <h4>Clinics</h4>
+                    </div>
                 </div>
                 <div class="box">
-                    <h1>22</h1>
-                    <h4>Clinics</h4>
+                    <div>
+                        <h1>22</h1>
+                    </div>
+                    <div>
+                        <h4>Clinics</h4>
+                    </div>
                 </div>
                 <div class="box">
-                    <h1>22</h1>
-                    <h4>Clinics</h4>
+                    <div>
+                        <h1>66600</h1>
+                    </div>
+                    <div>
+                        <h4>Clinics</h4>
+                    </div>
                 </div>
             </div>
 
@@ -82,6 +94,9 @@
     h1 {
         color: $navy;
     }
+    h4 {
+                color: $navy;
+            }
 
     .stats {
         display: grid;
@@ -89,6 +104,12 @@
 
         gap: 3rem;
         padding: 3rem 0;
+
+        @media screen and (max-width: 770px) {
+            display: flex;
+            flex-direction: column;
+            gap: 7px
+        }
 
         >.box {
             display: flex;
@@ -104,10 +125,38 @@
             border-radius: 1.125rem;
 
 
-            >h4 {
-                color: $navy;
-            }
+            
 
+            @media screen and (max-width: 770px) {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                justify-content: space-between;
+
+                >div {
+                    width: 50%;
+                    display: flex;
+
+                    &:first-child {
+                        justify-content: flex-end;
+
+                        >h1 {
+                            font-size: 30px;
+
+                        }
+
+                      
+                    }
+                    &:last-child {
+                            justify-content: flex-start;
+
+                            >h4 {
+                                font-size: 20px;
+                            }
+                        }
+                }
+
+            }
         }
 
     }
@@ -158,7 +207,7 @@
             color: $black;
             @extend .btnfont;
             margin-bottom: 1.7rem;
-            margin-top:0;
+            margin-top: 0;
             max-width: 15%;
             // margin-top:3rem;
         }

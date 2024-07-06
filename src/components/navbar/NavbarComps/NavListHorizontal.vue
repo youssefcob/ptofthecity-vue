@@ -1,16 +1,26 @@
 <script setup lang="ts">
+import { ref, type Ref } from 'vue';
+const targetDivRef: Ref<HTMLElement | null> = ref(null);
 
+const handleScrollToTarget = (id:any) => {
+  targetDivRef.value = document.getElementById(id);
+  if (targetDivRef.value) {
+    targetDivRef.value.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    console.warn(`Div with ID "${id}" not found.`);
+  }
+};
 </script>
 
 <template>
         <ul>
-            <li><router-link active-class="navbar-link" to="/Services">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('servicesSection')">
                     Services
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/insurance">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('insuranceSection')">
                     Insurance
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/WhoWeAre">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('whoWeAreSection')">
                     Who We Are
                 </router-link></li>
             <li><router-link active-class="navbar-link" to="/Blog">
@@ -46,9 +56,6 @@ ul {
 
   }
 
-  .navbar-link {
-    color:red !important;
-  }
 
 
 </style>

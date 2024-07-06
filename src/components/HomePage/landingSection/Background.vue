@@ -45,7 +45,7 @@ let getBackgroundImageUrl = function (src: any) {
     <div class="image-container">
         <div class="image" :style="{ backgroundImage: `url(${getBackgroundImageUrl(image)})` }"></div>
         <div class="overlay overlay-light"></div>
-        <slot></slot>
+        <slot class="content"></slot>
 
     </div>
 </template>
@@ -96,4 +96,6 @@ let getBackgroundImageUrl = function (src: any) {
     transition: all 0.2s ease-in-out;
 
 }
+
+
 </style>

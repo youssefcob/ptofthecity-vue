@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { Ref } from 'vue';
 import insurances from "./Insurances";
+import EligibilityFormResponsive from './EligibiltyFormResponsive.vue';
 
 
 const show: Ref<boolean> = ref(false);
@@ -15,6 +16,11 @@ const changeCompany = (insurance: string) => {
 
 }
 
+const showDropDown = () => {
+    show.value = true;
+    console.log(show.value);
+}
+
 const filterCompanies = () => {
     filteredList.value = insurancesList.filter(insurance => insurance.startsWith(company.value));
 }
@@ -24,7 +30,11 @@ onMounted(() => {
     handleClickOutside = (e: Event) => {
         const dropdownElement = document.querySelector('.dropdown-btn');
         if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-            show.value = false;
+            // if (e.target !== dropdownElement) {
+                show.value = false;
+                console.log(show.value);
+            // }
+
         }
     };
     document.addEventListener('click', handleClickOutside);
@@ -40,6 +50,8 @@ onUnmounted(() => {
 <template>
     <div class="eligibility-container">
         <h1>Check eligibility</h1>
+        <EligibilityFormResponsive class="responsive-form-container" />
+
         <div class="form-image-container">
             <div class="image-container">
                 <div class="image">
@@ -64,7 +76,7 @@ onUnmounted(() => {
                                 </div>
 
                             </div> -->
-                            <div class="dropdown-btn" @click="show = true">
+                            <div class="dropdown-btn" @click.stop="showDropDown">
 
                                 <div class="required">
                                     <input class="input-field " @input="filterCompanies()" v-model="company"
@@ -129,17 +141,24 @@ onUnmounted(() => {
                 </div>
 
             </div>
+
+
         </div>
 
     </div>
 </template>
 
 <style scoped lang="scss">
+.responsive-form-container {
+    display: none;
+}
+
 .eligibility-container {
     margin-top: 9rem;
     // padding: $pagePadding;
 
     width: 100%;
+
 
     >h1 {
         color: $navy;
@@ -150,6 +169,10 @@ onUnmounted(() => {
         margin-top: 3.13rem;
         display: flex;
         align-items: center;
+        @media screen and (max-width: 426px){
+            display:none;
+            
+        }
 
         >.image-container {
             width: 25%;
@@ -305,6 +328,41 @@ onUnmounted(() => {
             font-size: 1.125rem;
             font-style: normal;
             font-weight: 500;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .eligibility-container {
+        @media screen and (max-width: 426px) {
+            .responsive-form-container {
+                display: block;
+            }
+        }
+
+        >h1 {
+            margin-left: 5%;
+        }
+
+        .form-image-container {
+            .image-container {
+                display: none;
+            }
+
+            .form-container {
+                @media screen and (max-width: 426px) {
+                    display: none;
+                }
+
+                width:100%;
+                height:100%;
+
+                .form {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
         }
     }
 }
