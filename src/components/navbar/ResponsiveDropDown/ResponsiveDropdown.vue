@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { defineEmits } from 'vue';
 import SearchBar from '../NavbarComps/SearchBar.vue';
 import NavListVertical from '../NavbarComps/NavListVertical.vue';
 import LanguageDropDown from './LanguageDropDown.vue';

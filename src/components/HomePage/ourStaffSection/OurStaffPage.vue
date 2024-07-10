@@ -1,14 +1,14 @@
-
-
 <script setup lang="ts">
 
 
 import { ref } from 'vue';
 import StaffMember from './StaffMember.vue';
-import {staffMembers} from './StaffMembers';
+import { staffMembers } from './StaffMembers';
 
 
 const staff = ref(null);
+
+
 
 const scroll = (direction: number) => {
     if (staff.value) {
@@ -17,7 +17,7 @@ const scroll = (direction: number) => {
             console.log(el.scrollLeft, el.clientWidth, el.scrollWidth)
             const width = el.clientWidth;
 
-            const threshold = 100; 
+            const threshold = 100;
             const isNearEnd = el.scrollLeft + threshold >= el.scrollWidth - el.clientWidth;
 
             if (direction === 1 && (isNearEnd || el.scrollLeft + el.clientWidth >= el.scrollWidth)) {
@@ -48,7 +48,7 @@ const scroll = (direction: number) => {
                         stroke-linejoin="round" />
                 </svg></div>
 
-            <div class="staff" ref="staff" >
+            <div class="staff" ref="staff">
                 <StaffMember v-for="staffMember in staffMembers" :staffMember="staffMember" />
 
             </div>
@@ -60,47 +60,101 @@ const scroll = (direction: number) => {
                 </svg></div>
 
         </div>
-        <div class="btn-transparent btnfont">Learn More</div>
+        <div class="btn-transparent main btnfont">Learn More</div>
     </div>
 </template>
 
 <style scoped lang="scss">
 .container {
-    margin-top:12rem;
+    margin-top: 12rem;
+
     width: 100%;
-    height: 87%;
+    // height:100%;
+
     @include flexDirection(column);
-    .btn-transparent{
-        align-self: flex-end;
-        margin:$pagePadding;
-        color:$black;
+
+    @media screen and (max-width: 800px) {
+        justify-content: flex-start;
+        margin-top: 5rem;
+
+        >.title-wrapper {
+            >p {
+                display: none;
+            }
+        }
     }
 
-.title-wrapper {
-    padding:$pagePadding;
-    align-self: flex-start;
-    h1{
-        color:$navy
+    @media screen and (max-width: 800px) {
+        // margin-top: 0;
+        // height: 70%;
+
     }
-}
+
+    .btn-transparent {
+        align-self: flex-end;
+        margin: $pagePadding;
+   
+        color: $black;
+    }
+
+    .title-wrapper {
+        padding: $pagePadding;
+        @media screen and (max-width: 768px) {
+            padding: $pagePaddingRes;
+
+        }
+        align-self: flex-start;
+
+        h1 {
+            color: $navy
+        }
+    }
 
     .staff-container {
         width: 100%;
         height: 100%;
+        height:300px;
         display: flex;
         justify-content: space-between;
+
+        @media screen and (max-width: 800px) {
+            height: 300px;
+            padding: 20px 0;
+        }
+
+        @media screen and (max-width: 425px) {
+            height: 200px;
+            padding: 20px 0;
+        }
+        @media screen and (min-width: 2080px) {
+            height: 600px;
+            padding: 20px 0;
+        }
+
         align-items: center;
 
         .staff {
+
             width: 90%;
             height: 90%;
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            border-radius:1.25rem;
+            border-radius: 1.25rem;
+            @include scrollBar;
+
+
+            @media screen and (max-width: 800px) {
+                width: 100%;
+                height: 100%;
+                
+            }
 
             &::-webkit-scrollbar {
+                @media screen and (min-width: 800px) {
                 display: none;
+                }
+                
             }
 
             .single-service {
@@ -110,6 +164,10 @@ const scroll = (direction: number) => {
         }
 
         .btn {
+            @media screen and (max-width: 800px) {
+                display: none;
+            }
+
             width: 4%;
             height: 90%;
             background-color: $navy;
@@ -152,6 +210,13 @@ const scroll = (direction: number) => {
             }
         }
     }
-
+    .btn-transparent{
+    @media screen and (max-width: 426px) {
+            align-self: center;
+            width:85%;
+            display:none;
+        }
+        
+    }
 }
 </style>

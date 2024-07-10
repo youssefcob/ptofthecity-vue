@@ -49,27 +49,31 @@
                                 And to more success, we go.
                             </p>
                         </div>
-                        <h3>Our Technique</h3>
-                        <div class="infowrapper">
-                            <p>
-                                We offer you a treatment plan specialized for each case to achieve the most effective
-                                results.
-                                <br>
-                                <br>
-                                You will be given detailed information about the nature of the case and injury,
-                                the
-                                treatment plan, tools, and devices you will use, as well as the expected outcome from
-                                the
-                                treatment.
-                                <br><br>
-                                Our main concern is your comfort and wellness. You will be treated with the
-                                most
-                                recent evidence guidelines and the most advanced tools, techniques, and devices that
-                                will
-                                help you reach the treatment goal in the most convenient way and in the shortest
-                                duration of
-                                time.
-                            </p>
+                        <div>
+                            <h3>Our Technique</h3>
+                            <div class="infowrapper">
+                                <p>
+                                    We offer you a treatment plan specialized for each case to achieve the most
+                                    effective
+                                    results.
+                                    <br>
+                                    <br>
+                                    You will be given detailed information about the nature of the case and injury,
+                                    the
+                                    treatment plan, tools, and devices you will use, as well as the expected outcome
+                                    from
+                                    the
+                                    treatment.
+                                    <br><br>
+                                    Our main concern is your comfort and wellness. You will be treated with the
+                                    most
+                                    recent evidence guidelines and the most advanced tools, techniques, and devices that
+                                    will
+                                    help you reach the treatment goal in the most convenient way and in the shortest
+                                    duration of
+                                    time.
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <div class="image-wrapper">
@@ -77,7 +81,7 @@
 
                     </div>
                 </div>
-                <div class="btn-transparent">Learn More</div>
+                <div class="btn-transparent">Learn more</div>
             </div>
         </div>
     </div>
@@ -87,6 +91,10 @@
 <style scoped lang="scss">
 .container {
     padding: $pagePadding;
+    @media screen and (max-width: 768px) {
+            padding: $pagePaddingRes;
+
+        }
     padding-top: 6rem;
     display: flex;
     flex-direction: column;
@@ -94,9 +102,10 @@
     h1 {
         color: $navy;
     }
+
     h4 {
-                color: $navy;
-            }
+        color: $navy;
+    }
 
     .stats {
         display: grid;
@@ -125,7 +134,7 @@
             border-radius: 1.125rem;
 
 
-            
+
 
             @media screen and (max-width: 770px) {
                 display: flex;
@@ -141,19 +150,36 @@
                         justify-content: flex-end;
 
                         >h1 {
-                            font-size: 30px;
+                            font-size: 60px;
+
+                            @media screen and (max-width: 425px) {
+                                font-size: 40px;
+                            }
+
+                            @media screen and (max-width: 320px) {
+                                font-size: 35px;
+                            }
 
                         }
 
-                      
-                    }
-                    &:last-child {
-                            justify-content: flex-start;
 
-                            >h4 {
-                                font-size: 20px;
+                    }
+
+                    &:last-child {
+                        justify-content: flex-start;
+
+                        >h4 {
+                            font-size: 45px;
+
+                            @media screen and (max-width: 425px) {
+                                font-size: 35px;
+                            }
+
+                            @media screen and (max-width: 320px) {
+                                font-size: 30px;
                             }
                         }
+                    }
                 }
 
             }
@@ -162,58 +188,155 @@
     }
 
     .infocontainer {
-
+        display:flex;
+        flex-direction: column;
+        width:100%;
         h3 {
+            margin-bottom: 1.25rem;
             color: $navy;
-            margin: 1.25rem 0;
 
+            @media screen and (max-width: 770px) {
+                font-size: 35px;
+            }
+
+            @media screen and (max-width: 425px) {
+                font-size: 17px;
+            }
+
+        
+        }
+        p {
+
+            font-family: $montserrat;
+
+            @media screen and (max-width: 1024px) {
+                font-size: 11px;
+            }
+
+
+            @media screen and (max-width: 770px) {
+                font-size: 14px;
+            }
+
+            @media screen and (max-width: 425px) {
+                // font-size: 11px;
+            }
+
+            
+            @media screen and (max-width: 375px) {
+                // font-size: 11px;
+            }
+
+        
+        }
+        .btn-transparent {
+            color: black;
+            font-weight: 700;
+            font-family: $montserrat;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2.5rem;
+            display: inline-block;
+            align-self: flex-end;
+            @media screen and (max-width: 430px) {
+                font-size: 12px;
+                font-weight: 900;
+                align-self: center;
+                width:100%;
+                max-width: 100%;
+                padding:14px 0;
+                margin-top:80px;
+
+                
+                
+            }
+
+           
         }
 
-
-
+        // height:30vh;
+        // overflow: hidden;
         .wrapper {
             display: flex;
-            align-items: flex-start;
-            justify-items: flex-start;
             gap: 2.5rem;
-            margin-bottom: 0;
-            margin-bottom: 0;
-            padding-top: 0;
 
-            .infowrapper {
-                padding: 2.5rem;
-                background-color: $white;
-                border-radius: 1.25rem;
+            // height:25rem;
+            @media screen and (min-width: 1024px) {
+                gap: 1rem;
+            }
+
+            .info {
+                flex: 5;
+                display: flex;
+                flex-direction: column;
+                gap: 2.5rem;
+
+                @media screen and (min-width: 1024px) {
+                    flex: 2.4;
+                    gap: 1rem;
+                }
+
+
+          
+                @media screen and (min-width: 1440px) {
+                    flex: 2.8;
+                }
+
+                @media screen and (min-width: 1730px) {
+                    flex: 5.3;
+                }
+
+                @media screen and (min-width: 2000px) {
+                    flex: 2;
+                }
+
+                @media screen and (min-width: 2300px) {
+                    flex: 3.1;
+                }
+
+
+
+
+
+
+                .infowrapper {
+                    background-color: white;
+                    padding: 2.25rem;
+                    border-radius: 1.25rem;
+                    >p {
+                        font-family: $montserrat;
+                        line-height: 200%;
+                    }
+                }
+
             }
 
             .image-wrapper {
-                width: 25.875rem;
-                height: 41.25rem;
+                @media screen and (max-width: 768px) {
+                    display: none;
+                }
+
                 display: flex;
                 align-items: flex-start;
                 justify-items: flex-start;
                 flex-shrink: 0;
+                // width: 25.875rem;
+                // height: 24rem;
+                flex:1;
+                border-radius: 30px;
+
 
                 >img {
                     width: 100%;
-                    height: 89%;
-                    object-fit: cover;
-                    border-radius: 1.125rem;
+                    height: 100%;
+                    object-fit: contain;
+                    border-radius: 30px;
+                    overflow: hidden;
                 }
             }
         }
 
-        .btn-transparent {
-            color: $black;
-            @extend .btnfont;
-            margin-bottom: 1.7rem;
-            margin-top: 0;
-            max-width: 15%;
-            // margin-top:3rem;
-        }
-
 
     }
-
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref , type Ref} from 'vue';
 
 import Lang from './NavbarComps/LanguageDropDown.vue';
 import NavList from './NavbarComps/NavListHorizontal.vue';
@@ -15,11 +15,31 @@ const handleDropdownUpdate = () => {
     menuState.value = !menuState.value; // Update the reactive reference value
     console.log(menuState.value);
 }
+const nav = ref<HTMLElement | null>(null);
+onMounted(() => {
+    let prevScrollpos = window.scrollY;
+    const handleScroll = () => {
+        const currentScrollPos = window.scrollY;
+        if(nav.value === null) return;
+        if (prevScrollpos > currentScrollPos) {
+            nav.value.style.top = "0";
+        } else {
+            nav.value.style.top = "-8vh";
+        }
+        prevScrollpos = currentScrollPos;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    onUnmounted(() => {
+        window.removeEventListener('scroll', handleScroll);
+    });
+});
 
 </script>
 
 <template>
-    <nav class="navbar horizontal">
+    <nav class="navbar horizontal" ref="nav">
         <div class="left-container">
             <NavLogo />
             <NavList />
@@ -53,6 +73,7 @@ const handleDropdownUpdate = () => {
     user-select: none;
     position: fixed;
     z-index: 12;
+    transition: all 0.5s ease-in-out;
 
 }
 

@@ -23,9 +23,12 @@ const props = defineProps({
 <style scoped lang="scss">
 .staffMember {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     overflow: hidden;
     background-size: cover;
+    // background-size: 120% 100%;
+    background-position: center; /* Centers the background image */
+
     flex: 0 0 33%;
     margin-right:1%;
     scroll-snap-align: start;

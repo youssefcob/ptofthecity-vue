@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {ref, onMounted,} from 'vue';
-import type {Ref} from 'vue';
+import { ref, onMounted, } from 'vue';
+import type { Ref } from 'vue';
 
 import type { ClinicLocations } from './Clinics';
 const accordionItemsContainer = ref<any>(null);
@@ -12,19 +12,23 @@ const props = defineProps({
     }
 })
 
-    const expandItems = ()=>{
+const expandItems = () => {
 
-            accordionItemsContainer.value.classList.toggle('expand');
-            accordion.value.classList.toggle('invert');
+    accordionItemsContainer.value.classList.toggle('expand');
+    accordion.value.classList.toggle('invert');
 
-    }
+}
 
 </script>
 
 <template>
     <div class="accordion" ref="accordion" @click="expandItems">
-        <div class="city"><h2>{{props.location?.name}}</h2></div>
-        <div class="number-of-clinics"><h2>{{ props.location?.numberOfClinics }} Clinics</h2></div>
+        <div class="city">
+            <h2>{{ props.location?.name }}</h2>
+        </div>
+        <div class="number-of-clinics">
+            <h2>{{ props.location?.numberOfClinics }} Clinics</h2>
+        </div>
     </div>
     <div class="accordionItemsContainer" ref="accordionItemsContainer">
 
@@ -34,61 +38,109 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-h2{
-    color:$navy;
+h2 {
+    color: $navy;
 }
+
 .accordion {
     display: flex;
     align-items: center;
-    justify-content:space-between ;
+    justify-content: space-between;
     width: 100%;
-    padding:0 1.88rem;
+    padding: 0 1.88rem;
     height: 7.5rem;
     flex-shrink: 0;
     border-radius: 0.5625rem;
+
+    @media screen and (max-width: 500px) {
+        border-radius: 10px;
+    }
+
     background: $white;
     transition: all .3s ease-in-out;
     box-shadow: 0px 4px 4px 0px rgba(35, 102, 129, 0.30);
     cursor: pointer;
 }
 
+@media screen and (min-width: 500px) {
+    .accordionItemsContainer {
+        display: grid;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: all .3s ease-in-out;
+
+
+
+
+
+        margin: 0.75rem 0;
+        grid-template-columns: repeat(auto-fit, minmax(20.5rem, 1fr));
+        gap: 1.25rem;
+
+        .item {
+            // width: 20.5rem;
+            height: 18rem;
+            flex-shrink: 0;
+            border-radius: 1.125rem;
+
+            background-color: $navy;
+        }
+    }
+}
+
+
+@media screen and (max-width: 500px) {
 .accordionItemsContainer {
-    display: grid;
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // height: 150px;
     max-height: 0;
-    overflow: hidden;
-    transition: all .3s ease-in-out;
 
 
-
-    margin: 0.75rem 0;
-    grid-template-columns: repeat(auto-fit, minmax(20.5rem, 1fr));
-    gap: 1.25rem;
+    width: 100%;
+    gap: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* For momentum scrolling on mobile devices */
+    padding:5px 10px;
 
     .item {
-        // width: 20.5rem;
-        height: 18rem;
-        flex-shrink: 0;
-        border-radius: 1.125rem;
-
+        width: 150px;
+        flex: 0 0 auto;
+        height: 150px;
         background-color: $navy;
+        border-radius: 1.125rem;
+        display:none;
+
     }
 }
+}
 
-.accordionItemsContainer.expand{
+.accordionItemsContainer.expand {
     max-height: 200rem;
     transition: all 0.3s ease-in-out;
-}
+    @media screen and (max-width: 500px){
+    padding:10px 10px;
 
-.accordion.invert{
-    background-color:$navy;
-    transition: all .3s ease-in-out;
-    box-shadow: none;
-    h2{
-        color:$white;
-    transition: all .3s ease-in-out;
-
+        >.item{
+            display:block;
+        }
+        
     }
 }
 
+.accordion.invert {
+    background-color: $navy;
+    transition: all .3s ease-in-out;
+    box-shadow: none;
+
+    h2 {
+        color: $white;
+        transition: all .3s ease-in-out;
+
+    }
+}
 </style>

@@ -64,18 +64,7 @@ onUnmounted(() => {
                     </span>
                     <form action="">
                         <div class="input-fields-container">
-                            <!-- <div class="input-field dropdown-btn">
-                                <span>{{company}}</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 7"
-                                    fill="none">
-                                    <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                <div class="dropdown-container">
-
-                                </div>
-
-                            </div> -->
+                          
                             <div class="dropdown-btn" @click.stop="showDropDown">
 
                                 <div class="required">

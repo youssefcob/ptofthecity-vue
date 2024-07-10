@@ -70,7 +70,7 @@ onUnmounted(() => {
             </div>
             <div class="required">
                 <input class="input-field " type="text" placeholder="Member ID">
-                <label class="asterisk" style="left:30%" v-show="!company">*</label>
+                <label class="asterisk" style="left:24%" v-show="!company">*</label>
 
             </div>
             <input class="input-field " type="text" placeholder="Medicare ID">
@@ -182,6 +182,19 @@ onUnmounted(() => {
             justify-content: center;
             top: 26%;
             left: 19%;
+
+            @media screen and (max-width: 500px){
+            left: 14%;
+                
+            }
+            @media screen and (max-width: 380px){
+            left: 16%;
+                
+            }
+            @media screen and (max-width: 325px){
+            left: 19%;
+                
+            }
             padding:7px;
             font-family: $montserrat;
             font-size: 13px;
@@ -197,7 +210,7 @@ onUnmounted(() => {
 
         .asterisk {
             position: absolute;
-            left: 48%;
+            left: 38%;
             top: 50%;
             transform: translateY(-50%);
             font-size: 13px;

@@ -35,6 +35,10 @@ h4 {
 p {
   @extend h4;
   line-height: 2.25rem;
+  @media  screen and (max-width: 500px){
+    line-height: 4rem;
+
+  }
 }
 
 li {
@@ -208,3 +212,28 @@ a {
       transition: all .3s ease-in-out;
   }
 }
+
+  .btn-transparent.main {
+    color: black;
+    font-weight: 700;
+    font-family: $montserrat;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 2.5rem;
+    display: inline-block;
+    align-self: flex-end;
+    @media screen and (max-width: 430px) {
+        font-size: 12px;
+        font-weight: 900;
+        align-self: center;
+        width:100%;
+        max-width: 100%;
+        padding:19px 0;
+        // margin-top:80px;
+  
+        
+        
+    }
+  
+   
+  }

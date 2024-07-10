@@ -18,7 +18,11 @@ import InsuranceWeAccept from './InsuranceWeAccept.vue';
     width:100%;
     display: flex;
     flex-direction: column;
-    padding:0 6.25rem;
+    padding: $pagePadding;
+    @media screen and (max-width: 768px) {
+            padding: $pagePaddingRes;
+
+        }
     @media screen and (max-width: 500px){
         padding:0;
         

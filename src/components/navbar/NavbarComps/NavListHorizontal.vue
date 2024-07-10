@@ -5,7 +5,7 @@ const targetDivRef: Ref<HTMLElement | null> = ref(null);
 const handleScrollToTarget = (id:any) => {
   targetDivRef.value = document.getElementById(id);
   if (targetDivRef.value) {
-    targetDivRef.value.scrollIntoView({ behavior: 'smooth' });
+    targetDivRef.value.scrollIntoView({ behavior: 'smooth', block: 'start'});
   } else {
     console.warn(`Div with ID "${id}" not found.`);
   }
@@ -13,7 +13,7 @@ const handleScrollToTarget = (id:any) => {
 </script>
 
 <template>
-        <ul>
+      <ul>
             <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('servicesSection')">
                     Services
                 </router-link></li>
@@ -26,16 +26,16 @@ const handleScrollToTarget = (id:any) => {
             <li><router-link active-class="navbar-link" to="/Blog">
                     Blog
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/Careers">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('careersSection')">
                     Careers
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/TrustedBy">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('TrustedBySection')">
                     Trusted by
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/Faqs">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('FAQsSection')">
                     FAQs
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/Contact us">
+            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('ContactUsSection')">
                     Contact us
                 </router-link></li>
 

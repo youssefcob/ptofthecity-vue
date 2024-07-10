@@ -12,14 +12,23 @@ import {clinicLocations} from './Clinics';
             <ClinicAccordion :location="location" />
             </template>
         </div>
-        <div class="btn-transparent">find your nearest location</div>
+        <div class="btn-transparent main">find your nearest location</div>
     </div>
 </template>
 
 <style scoped lang="scss">
 .container {
     padding: $pagePadding;
+    @media screen and (max-width: 768px) {
+            padding: $pagePaddingRes;
+
+        }
     // height: 90vh;
+    >p{
+        @media screen and (max-width: 500px){
+            display:none;
+        }
+    }
 
     h1 {
         color: $navy;
@@ -31,11 +40,7 @@ import {clinicLocations} from './Clinics';
     }
 
     .btn-transparent {
-        color:$black;
-        width:fit-content;
-        @extend .btnfont;
-        padding: 1rem 4.0625rem;
-        margin-left:auto;
+        margin-top: 10px;
 
     }
 }
