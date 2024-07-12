@@ -32,6 +32,7 @@ const reRoute = () => {
 
 <style scoped lang="scss">
 .staffMember {
+    cursor: pointer;
     width: 100%;
     height: 100%;
     display: flex;

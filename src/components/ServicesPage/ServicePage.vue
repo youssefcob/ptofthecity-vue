@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { services, type Service } from '@/components/HomePage/servicesSection/Services';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from './SingleService.vue';
