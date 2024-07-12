@@ -12,7 +12,7 @@ const emit = defineEmits([`input`]);
 const emitInput = (e: Event) => {
     // emit(`input`, (e.target as HTMLInputElement).value);
     emit(`input`, (input.value));
-    
+
 }
 const CalcHeight = () => {
     if (props.height) {
@@ -30,47 +30,57 @@ const CalcTop = () => {
 </script>
 
 <template>
-<div class="required">
-<input class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()}`"  floatlabeltype type="text" v-model="input" @input="emitInput">
-<textarea class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()}`"  floatlabeltype type="text" v-model="input" @input="emitInput"/>
-<label  class="asterisk" v-if="!input" :style="CalcTop()">{{ $props.placeHolder }}<span v-if="props.required"> *</span></label>
-</div>
+    <div class="required">
+        <input class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()}`" floatlabeltype
+            type="text" v-model="input" @input="emitInput">
+        <textarea class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()}`"
+            floatlabeltype type="text" v-model="input" @input="emitInput" />
+        <label class="asterisk" v-if="!input" :style="CalcTop()">{{ $props.placeHolder }}<span v-if="props.required">
+                *</span></label>
+    </div>
 </template>
 
 <style scoped lang="scss">
-
-
-
 .required {
-        position: relative;
-        >.input-field {
-            @media screen and (max-width: 800px) {
-                height: 45px;
-                padding: 18px;
-            }
+    position: relative;
 
-        }
-        .arrowdown,
-        .asterisk {
-            position: absolute;
+    >.input-field {
+        @media screen and (max-width: 800px) {
+            height: 45px;
+            padding: 18px;
         }
 
-        .asterisk {
-            left:2.2%;
-            top:35%;
-            color:black;
-            font-family: $montserrat;
-            > span {
-                color: red;
-            }
-            @media screen and (max-width: 800px) {
-               font-size: 13px;
-            }
+    }
+
+    .arrowdown,
+    .asterisk {
+        position: absolute;
+    }
+
+    .asterisk {
+        left: 1.25rem;
+        @media screen and (max-width: 800px) {
+            left: 18px;
+        }
+        top: 35%;
+        color: rgba(0, 0, 0, 0.793);
+        font-family: $montserrat;
+        font-size: 1.125rem;
+        pointer-events: none;
+
+
+        >span {
+            color: red;
         }
 
-        .arrowdown {
-            left: 90%;
-            top: 34%;
+        @media screen and (max-width: 800px) {
+            font-size: 13px;
         }
     }
+
+    .arrowdown {
+        left: 90%;
+        top: 34%;
+    }
+}
 </style>

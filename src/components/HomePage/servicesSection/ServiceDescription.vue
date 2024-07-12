@@ -1,9 +1,8 @@
 <script setup lang="ts">
-// import { defineProps } from 'vue';
 import type { Service } from './Services';
 const props = defineProps({
     service: {
-        type: Object as () => Service
+        type: Object as () => Service,
     }
 });
 </script>
@@ -11,11 +10,13 @@ const props = defineProps({
 <template>
     <div class="ser">
         <h1 class="title">{{ props.service?.title }}</h1>
-        <p class="description">{{ props.service?.description }}</p>
+        <p class="description">{{ props.service?.listHeader }}</p>
         <ul class="list" v-if="props.service?.list">
             <li v-for="list_item in props.service.list"> {{ list_item }}</li>
         </ul>
-        <div class="learn-more btn-transparent btnfont">Learn More</div>
+            <router-link active-class="navbar-link" class="learn-more btn-transparent btnfont" :to="{name:`service`, params: { id : $props.service?.id }}">
+                Learn More
+            </router-link>
     </div>
 </template>
 
@@ -28,9 +29,17 @@ const props = defineProps({
     padding: 0 3.13rem;
     padding-top: 3rem;
     padding-bottom: 2.13rem;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+
+    .learn-more {
+        align-self: flex-end;
+        margin-top: auto;
+        > a {
+            color: white;
+        }
+    }
 
     >h1,
     p {
@@ -46,11 +55,11 @@ const props = defineProps({
     }
 
     @media (max-width: 750px) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 0rem;
-            padding-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 0rem;
+        padding-bottom: 2rem;
 
         .description,
         .list,

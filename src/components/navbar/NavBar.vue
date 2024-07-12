@@ -41,7 +41,7 @@ onMounted(() => {
 <template>
     <nav class="navbar horizontal" ref="nav">
         <div class="left-container">
-            <NavLogo />
+            <router-link to="/"><NavLogo /></router-link> 
             <NavList />
         </div>
 

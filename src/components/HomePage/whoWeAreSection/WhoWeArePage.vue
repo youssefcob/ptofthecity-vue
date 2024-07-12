@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="image-wrapper">
-                        <img src="@/assets/images/whoweare.jpg" alt="">
+                        <!-- <img src="@/assets/images/whoweare.jpg" alt=""> -->
 
                     </div>
                 </div>
@@ -266,33 +266,33 @@
             }
 
             .info {
-                flex: 5;
+                // flex: 5;
                 display: flex;
                 flex-direction: column;
                 gap: 2.5rem;
 
-                @media screen and (min-width: 1024px) {
-                    flex: 2.4;
-                    gap: 1rem;
-                }
+                // @media screen and (min-width: 1024px) {
+                //     flex: 2.4;
+                //     gap: 1rem;
+                // }
 
 
           
-                @media screen and (min-width: 1440px) {
-                    flex: 2.8;
-                }
+                // @media screen and (min-width: 1440px) {
+                //     flex: 2.8;
+                // }
 
-                @media screen and (min-width: 1730px) {
-                    flex: 5.3;
-                }
+                // @media screen and (min-width: 1730px) {
+                //     flex: 5.3;
+                // }
 
-                @media screen and (min-width: 2000px) {
-                    flex: 2;
-                }
+                // @media screen and (min-width: 2000px) {
+                //     flex: 2;
+                // }
 
-                @media screen and (min-width: 2300px) {
+                // @media screen and (min-width: 2300px) {
                     flex: 3.1;
-                }
+                // }
 
 
 
@@ -315,24 +315,12 @@
                 @media screen and (max-width: 768px) {
                     display: none;
                 }
+                background-image: url("/images/whoweare.jpg");
+                width:30%;
+                background-size: cover;
+                background-position: center;
+                border-radius: 1.25rem;
 
-                display: flex;
-                align-items: flex-start;
-                justify-items: flex-start;
-                flex-shrink: 0;
-                // width: 25.875rem;
-                // height: 24rem;
-                flex:1;
-                border-radius: 30px;
-
-
-                >img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
-                    border-radius: 30px;
-                    overflow: hidden;
-                }
             }
         }
 

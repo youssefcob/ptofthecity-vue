@@ -15,13 +15,9 @@ import { ref } from 'vue';
 
 <style scoped lang="scss">
     .trustedBy-container {
-        // margin-bottom:500px;
       >h1{
         color:$navy;
-        // padding:$pagePadding;
-        // @media screen and (max-width: 500px){
-        //     padding:$pagePaddingRes;
-        // }
+
 
         @include pagePadding;
       }

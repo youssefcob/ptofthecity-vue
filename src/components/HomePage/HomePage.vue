@@ -66,10 +66,14 @@ import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
 .landing-page-container {
     width:100%;
     height:100vh;
+    @media screen and (max-width: 500px){
+        // height:92vh;
+        
+    }
 }
 .servicesSection {
     width:100%;
-    height:92vh;
+    height:100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,18 +104,11 @@ import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
 // }
 .ourStaffSection{
     width:100%;
-    // height:60vh;
-    @media screen and (max-width: 800px){
-    height:fit-content;        
-    }
-
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
+    margin-top:12.5rem;
 }
 
 .clinicsSection{
-    margin-top:12.5rem;
+    margin-top:7.5rem;
     // @media screen and (max-width: 500px){
     //     margin-top:10vh;
         

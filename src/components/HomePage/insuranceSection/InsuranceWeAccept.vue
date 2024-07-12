@@ -18,7 +18,7 @@ let showMore = () => {
 
 <template>
     <div class="insuranceContainer">
-        <h1>Insurance</h1>
+        <h1>Insurance we accept</h1>
         <div class="insurances some-hidden">
             <div class="single-insurance" v-for="key in keys" :key="key">
                 <img :src="key" alt="">
