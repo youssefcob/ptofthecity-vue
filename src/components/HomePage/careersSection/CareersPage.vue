@@ -5,7 +5,7 @@
 
 <template>
     <div class="careers-container">
-        <h1>Careers</h1>
+        <h1 class="sectionHeader">Careers</h1>
         <div class="careers-wrapper">
             <div class="careers-background">
                 <div class="careers-content">
@@ -17,71 +17,49 @@
                 </div>
             </div>
         </div>
-        <div class="btn mobile">Apply Now</div>
+        <div class="btn mobile responsive main">Apply Now</div>
 
     </div>
 </template>
 
 <style scoped lang="scss">
 .careers-container {
-    margin-top: 11.38rem;
-    margin-bottom: 11.38rem;
 
-    padding: $pagePadding;
+@include pagePadding;
 
     >.btn.mobile {
         display: none;
-
         @media screen and (max-width: 500px) {
             display: block;
-            font-size: 12px;
-            font-weight: 900;
-            align-self: center;
-            width: 100%;
-            max-width: 100%;
-            padding: 19px 0;
-            margin-top: 20px;
         }
     }
 
-    >h1 {
-        color: $navy;
-    }
+   
 
-    @media screen and (max-width: 726px) {
-        padding: $pagePaddingRes;
-
-    }
+ 
 
     >.careers-wrapper {
-        margin-top: 3.12rem;
         width: 100%;
-        height: 40.275rem;
+        height: clamp(22rem, 40vw, 37rem);
 
         >.careers-background {
-            position: relative;
+            // position: relative;
             width: 100%;
             height: 100%;
             background-image: url('/images/careers.png');
-            background-size: cover;
-            background-position: center;
-        border-radius: 20px;
-        overflow: hidden;
+            @include image;
+            overflow: hidden;
+            @include flex(inherit,flex-end);
 
 
             >.careers-content {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 32%;
-                height: 100%;
-                background: rgba(44, 50, 51, 0.20);
-                backdrop-filter: blur(50px);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 5rem;
+               @include backDrop;
+               @include flexDirection(column,center);
+               padding:1.25rem;
+               width:clamp(17rem,30%,35rem);
+               gap:1.25rem;
+               text-align: center;
+
 
                 >.text {
                     display: flex;

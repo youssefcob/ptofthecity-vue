@@ -2,7 +2,7 @@
 
 import SearchBar from '../NavbarComps/SearchBar.vue';
 import NavListVertical from '../NavbarComps/NavListVertical.vue';
-import LanguageDropDown from './LanguageDropDown.vue';
+import LanguageDropDown from './LanguageDropDownResponsive.vue';
 
 const emit = defineEmits(['dropdown']);
 

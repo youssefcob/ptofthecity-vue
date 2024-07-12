@@ -19,13 +19,18 @@ const reRoute = () => {
 </script>
 
 <template>
-    <div class="staffMember" @click="reRoute" :style="{ backgroundImage: `url(${props.staffMember?.image})` }">
-        <div class="staffMemberDescription">
-            <h2>{{ props.staffMember?.name }}</h2>
-            <div class="desc">
-                <p>{{ props.staffMember?.name }}</p>
+
+    <div class="staffMember" @click="reRoute">
+        <div class="image" :style="{ backgroundImage: `url(${props.staffMember?.image})` }">
+            <div class="staffMemberDescription">
+                <h2>{{ props.staffMember?.name }}</h2>
+                <div class="desc">
+                    <p>{{ props.staffMember?.name }}</p>
+                </div>
             </div>
         </div>
+
+        <h4 class="responsive-name">{{ props.staffMember?.name }}</h4>
 
     </div>
 </template>
@@ -33,42 +38,60 @@ const reRoute = () => {
 <style scoped lang="scss">
 .staffMember {
     cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     flex: 0 0 calc(33% - 0.33rem);
-    background-size: cover;
-    background-position: center;
-    border-radius: 1.125rem;
     scroll-snap-align: start;
-    justify-content: flex-end;
     overflow: hidden;
+    .responsive-name{
+        display:none;
+        @media screen and (max-width: 425px){
+            display:block;
+            text-align: center;
+            margin-top: 1rem;
+            font-family: $montserrat;
+            font-weight:400;
+            font-size: 1.5rem;
+        }
+    }
+
+    .image {
+        height: 100%;
+        @include image;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        @media screen and (max-width: 425px){
+            height:82%;
+        }
+    }
+
     &:hover {
-           .staffMemberDescription .desc{
-                height:auto;
-                max-height: 10rem;
+        .staffMemberDescription .desc {
+            height: auto;
+            max-height: 10rem;
             transition: all 0.8s ease-in-out;
 
-            }
         }
+    }
 
     .staffMemberDescription {
         padding: 5%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        p,h2{
-            color:white;
+        text-align: center;
+        @media screen and (max-width: 425px) {
+            display: none;
         }
-       
-        .desc{
-            max-height:0;
-            overflow:hidden;
+
+        p,
+        h2 {
+            color: white;
+        }
+
+        .desc {
+            max-height: 0;
+            overflow: hidden;
             transition: all 0.8s ease-in-out;
 
         }
+
         @include backDrop;
     }
 }

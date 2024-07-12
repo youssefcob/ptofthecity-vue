@@ -9,6 +9,13 @@
   flex-direction: $direction;
 }
 
+@mixin responsiveFontSize($baseFontSize: 1rem) {
+  $fontSize: calc(#{$baseFontSize} / (1vw + 0.01)); // Add 0.01 to avoid division by zero
+
+  /* Set font size */
+  font-size: $fontSize;
+}
+
 @mixin scrollBar() {
   &::-webkit-scrollbar {
     width: 8px;
@@ -51,6 +58,23 @@
   }
 }
 
+@mixin pageNoPadding() {
+  padding: 0;
+
+  @media screen and (max-width: 500px) {
+    .sectionHeader {
+      margin-left: 6.25rem;
+
+      @media screen and (max-width: 500px) {
+        margin-left: 2.5rem;
+
+      }
+    }
+  }
+
+}
+
+
 
 @mixin backDrop() {
   background-color: rgba(44, 50, 51, 0.20);
@@ -72,14 +96,31 @@
 @mixin carouselItem2($noOfItems: 1) {
   $percentage: calc(100% / $noOfItems);
   $margin: calc(1rem / $noOfItems);
-  @if($noOfItems == 1) {
+
+  @if($noOfItems ==1) {
     $percentage: 100%;
     $margin: 0rem;
-  } 
+  }
 
-flex: 0 0 calc($percentage - $margin);
+  flex: 0 0 calc($percentage - $margin);
 
-scroll-snap-align: start;
-border-radius: 1.125rem;
+  scroll-snap-align: start;
+  border-radius: 1.125rem;
 
+}
+
+@mixin sectionMargin() {
+  margin: 12.5rem 0;
+}
+
+@mixin image($shadow:false) {
+  background-position: center;
+  background-size: cover;
+  $border-radius: 1.125rem;
+
+  border-radius: $border-radius;
+
+  @if($shadow : shadow){
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
 }

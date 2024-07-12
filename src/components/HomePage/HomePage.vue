@@ -17,12 +17,13 @@ import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
     <section class="landing-page-container">
         <LandingPage />
     </section>
-   <section class="servicesSection" id="servicesSection">
+    <section class="servicesSection" id="servicesSection">
         <ServicesPage />
     </section>
    <section class="insuranceSection" id="insuranceSection">
         <InsurancePage />
     </section>
+
      <section class="whoWeAreSection" id="whoWeAreSection">
         <WhoWeArePage />
     </section> 
@@ -47,6 +48,7 @@ import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
     <section class="TestimonialsSection" id="TestimonialsSection">
         <TestimonialsPage/>
     </section>
+
     <section class="FAQsSection" id="FAQsSection">
         <FAQsPage/>
     </section>
@@ -61,36 +63,20 @@ import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
 
 .home{
     height:fit-content;
+    >section{
+        &:first-child{
+            margin-top:0;
+        }
+        @include sectionMargin;
+    }
 
 }
 .landing-page-container {
     width:100%;
     height:100vh;
-    @media screen and (max-width: 500px){
-        // height:92vh;
-        
-    }
+   
 }
-.servicesSection {
-    width:100%;
-    height:100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.5s ease-in-out;
 
-    @media screen and (max-width: 550px){
-        height:80vh;
-    }
-
-    @media screen and (max-width: 500px){
-        height:70vh;
-    }
-    @media screen and (max-width: 450px){
-        height:60vh;
-    }
-
-}
 
 .insuranceSection{
     width:100%;

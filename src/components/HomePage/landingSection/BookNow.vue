@@ -2,8 +2,8 @@
 
     <div class="main-image-content">
         <div class="info">
-            <h1>PT Of The City</h1>
-            <h2>Where Healing Happens</h2>
+            <h1 class="landing-header">PT Of The City</h1>
+            <h2 class="secondary-landing-header">Where Healing Happens</h2>
             <div class="btn-container">
                 <div class="btn bigScreen">Book Now</div>
                 <div class="number">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn responsive">Book Now</div>
+        <div class="btn responsive main">Book Now</div>
 
 
     </div>
@@ -27,29 +27,14 @@
 <style scoped lang="scss">
 .main-image-content {
 
-    color: $white;
-
+    .info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap:1rem;
+    }
     .responsive {
         display: none;
-    }
-
-    h1 {
-        color: white;
-
-        @media screen and (max-width: 426px) {
-            font-size: 50px;
-
-        }
-    }
-
-    h2 {
-        color: white;
-        margin: 1.25rem 0;
-
-        @media screen and (max-width: 426px) {
-            font-size: 42px;
-
-        }
     }
 
     .btn-container {
@@ -92,20 +77,14 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        // align-items: center;
-        height: 67%;
+        height: 60%;
         padding: 0 2rem;
-
-        .info {
-            // padding:0 2rem;
-        }
 
         .number {
             display: flex;
             align-items: center;
         }
 
-        // align-items: center;
         .btn {
             &.bigScreen {
                 display: none;
@@ -113,18 +92,7 @@
 
             &.responsive {
                 display: block;
-                width: 88%;
-                max-width: 300px;
-                height: 40px;
-                align-self: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size:11px;
-                letter-spacing: 0.2px;
-                font-weight: 900;
-                // font-family: $montserrat;
-
+               
             }
         }
 

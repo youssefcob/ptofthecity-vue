@@ -5,7 +5,7 @@ import ContactUsImage from './ContactUsImage.vue';
 
 <template>
     <div class="container">
-        <div class="header">
+        <div class="sectionHeader">
             <h1>Contact us</h1>
             <p>We would love to hear from you!</p>
         </div>
@@ -17,7 +17,7 @@ import ContactUsImage from './ContactUsImage.vue';
                 <ContactUsImage />
             </div>
         </div>
-        <div class="btn-transparent main">submit</div>
+        <div class="btn responsive main">submit</div>
 
     </div>
 </template>
@@ -26,19 +26,12 @@ import ContactUsImage from './ContactUsImage.vue';
 .container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 500px;
     @include pagePadding;
 
-    .header {
-        >h1 {
-            color: $navy;
-        }
-    }
-
+ 
     .form-image-container {
         display: flex;
         justify-content: space-between;
-        margin-top: 2.56rem;
         height: fit-content;
         gap: 1.25rem;
 
@@ -69,15 +62,7 @@ import ContactUsImage from './ContactUsImage.vue';
     }
 
     .main {
-        align-self: flex-start;
-        color: $black;
-        background-color: $blue;
-        width: 24%;
-        padding: 20px;
-
-        @media screen and (max-width: 800px) {
-            width: 100%;
-        }
+        
     }
 
 }

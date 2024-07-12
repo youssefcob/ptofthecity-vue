@@ -50,26 +50,25 @@ h2 {
     padding: 0 1.88rem;
     height: 6.5rem;
     flex-shrink: 0;
-    border-radius: 0.5625rem;
+    border-radius: $border-radius;
 
-    @media screen and (max-width: 1100px) {
-        height: 7.5rem;
-    }
+
 
     @media screen and (max-width: 500px) {
-        height: 7.5rem;
+        height: 9rem;
     }
 
     >span {
-        font-family: $helvetica;
-        font-size: 1.75rem;
+        @extend .text;
+        // font-family: $helvetica;
+        // font-size: 1.75rem;
 
-        @media screen and (max-width: 800px) {
-            font-size: 2rem;
-        }
+        // @media screen and (max-width: 800px) {
+        //     font-size: 2rem;
+        // }
 
         @media screen and (max-width: 500px) {
-            font-size: 2.3rem;
+            font-size: 2.2rem;
         }
 
     }
@@ -106,16 +105,8 @@ h2 {
         border-radius: 1.125rem;
 
         padding: 2rem 1.88rem;
-        font-family: $montserrat;
-        font-size: 1.75rem;
-        line-height: 200%; /* 2.25rem */
-        @media screen and (max-width: 800px) {
-            font-size: 2rem;
-        }
-
-        @media screen and (max-width: 500px) {
-            font-size: 2.3rem;
-        }
+       @extend .text-s;
+     
     }
 }
 

@@ -21,7 +21,7 @@ import BookNow from './BookNow.vue';
     .booknow-container {
         position: absolute;
         top: 50%;
-        left: 12%;
+        left: 6%;
         z-index: 1;
     }
 

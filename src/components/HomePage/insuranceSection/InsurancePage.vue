@@ -6,26 +6,11 @@ import InsuranceWeAccept from './InsuranceWeAccept.vue';
 </script>
 
 <template>
-    <div class="insuranceLayout">
         <InsuranceWeAccept />
         <CheckEligibility />
-    </div>
 
 </template>
 
 <style scoped lang="scss">
-.insuranceLayout{
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    padding: $pagePadding;
-    @media screen and (max-width: 768px) {
-            padding: $pagePaddingRes;
-
-        }
-    @media screen and (max-width: 500px){
-        padding:0;
-        
-    }
-}
+div{}
 </style>

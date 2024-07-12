@@ -64,21 +64,12 @@ ul {
   flex-direction: column;
   align-items: start;
   padding: 0;
-  gap:24px;
+  gap:3rem;
 
-  /* Remove default padding */
   a {
-    text-decoration: none;
-    color: $black;
-    color: #2C3233;
-
-    font-size: 11px;
-    text-align: center;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    text-shadow: rgba(0,0,0,.01) 0 0 1px;
+   @extend h4;
+   font-size:2rem;
+   font-weight: bolder;
 
   }
 }

@@ -92,8 +92,9 @@ onUnmounted(() => {
 .drpdown-btn {
     >.required {
         >.input-field {
+
             @media screen and (max-width: 800px) {
-                height: 45px;
+                height: 6rem;
                 padding: 18px;
             }
 

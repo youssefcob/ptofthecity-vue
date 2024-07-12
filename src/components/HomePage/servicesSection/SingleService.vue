@@ -32,33 +32,17 @@ const reRoute = () => {
 
 <style scoped lang="scss">
 .single-service {
-    width: 100%;
-    height: 100%;
     overflow: hidden;
-    // background-image: url(@/assets/images/servicesCarousel/06df9092a1bfd6cb8df5d3c910637faa.jpg);
     @include flex(center, flex-end);
     background-size: cover;
+    background-position: center;
 
-    .img-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
 
     .service-description {
-        width: 32rem;
+        width: clamp(17rem,35%,50rem);
         height: 100%;
 
-        @media (max-width: 750px) {
-            width: 50%;
-        }
+  
 
     }
 

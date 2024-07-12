@@ -53,9 +53,9 @@ onMounted(() => {
     </nav>
     
     <nav class="navbar mobile">
-            <NavLogo />
-            <DropDownButton @dropdown="handleDropdownUpdate" />
-    <ResponsiveDropdown @dropdown="handleDropdownUpdate" v-if="menuState"/>
+        <router-link to="/"><NavLogo /></router-link> 
+        <DropDownButton @dropdown="handleDropdownUpdate" />
+    <ResponsiveDropdown responsive @dropdown="handleDropdownUpdate" v-if="menuState"/>
 
     </nav>
 
@@ -107,7 +107,7 @@ onMounted(() => {
 
 }
 @media (max-width: 950px) {
-    .navbar.horizontal { /* Assuming your navbar class is .navbar */
+    .navbar.horizontal { 
         display: none;
     }
     .navbar.mobile{

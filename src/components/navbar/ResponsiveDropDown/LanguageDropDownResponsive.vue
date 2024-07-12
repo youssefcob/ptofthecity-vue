@@ -33,16 +33,18 @@ onUnmounted(() => {
 
 <template>
     <div class="lang-container">
-        <NavLogoInverted />
+        <NavLogoInverted class="logo"/>
 
         <div class="language">
             <div class="language-dropdown-responsive">
                 <div class="language-btn" @click="show = !show">
-                    <span>{{ lang }}</span>
+                    <span>
+                    {{ lang }}
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 12 7" fill="none">
                         <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1.5" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
+                </span>
 
                 </div>
                 <div class="language-list-responsive" v-if="show">
@@ -58,6 +60,10 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .lang-container {
+    >.logo{
+    margin-left:2.5rem;
+
+    }
     width: 100%;
     display: flex;
     align-items: center;
@@ -65,16 +71,17 @@ onUnmounted(() => {
     align-items: space-between;
     background-color: $blue;
     margin-bottom: 6.7rem;
-    padding: 2.5rem 5rem;
     border-radius: 1.5rem;
 
     >.language {
         >.language-dropdown-responsive {
+            position: relative;
             .language-btn {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 0rem 1rem;
+                padding: 2.5rem 5rem;
+
                 height: 100%;
                 width: 45px;
                 font-size: 12px;
@@ -83,13 +90,20 @@ onUnmounted(() => {
                 font-weight: 700;
                 line-height: normal;
                 letter-spacing: 0.01094rem;
+                margin-right:1rem;
+                >span{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap:1rem;
+                }
 
 
             }
 
             .language-list-responsive {
                 position: absolute;
-                top: 3rem;
+                bottom:3rem;
                 right: 0;
                 background-color: $white;
                 border-radius: 0.5rem;

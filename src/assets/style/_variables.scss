@@ -28,9 +28,14 @@ $body: 1rem;
 $button: 1rem;
 $caption: 0.875rem;
 
-
+$resMargin:2.5rem;
 $pagePadding:0 6.25rem;
-$pagePaddingRes: 0 2.5rem;
+$pagePaddingRes: 0 $resMargin;
 
 
 
+$section-margin:12.5rem;
+
+$border-radius:1.125rem;
+
+$input-field:height;

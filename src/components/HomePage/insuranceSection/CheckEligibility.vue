@@ -1,76 +1,41 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import type { Ref } from 'vue';
 import insurances from "./Insurances";
 import EligibilityFormResponsive from './EligibiltyFormResponsive.vue';
 
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import FileInputField from '@/components/sharedComponents/FileInputField.vue';
-
-
-const show: Ref<boolean> = ref(false);
-const company: Ref<string> = ref('');
-const insurancesList = insurances;
-let filteredList = ref(insurancesList);
-
-
-
-
-
-
-
 </script>
 
 
 <template>
     <div class="eligibility-container">
-        <h1>Check eligibility</h1>
+        <h1 class="sectionHeader">Check eligibility</h1>
         <EligibilityFormResponsive class="responsive-form-container" />
 
         <div class="form-image-container">
-            <div class="image-container">
-                <div class="image">
-                    <img src="@/assets/images/eligibilityFormImage.jpg" alt="insurance form">
-                </div>
+            <div class="image" :style="{ backgroundImage: `url('images/eligibilityFormImage.jpg')` }">
             </div>
             <div class="form-container">
                 <div class="form">
                     <span>Check your benefits and eligibility and our team will get back to you within 30 mintues
                     </span>
-                    <form action="">
-                        <div class="input-fields-container">
-                     
+                    <div class="input-fields-container">
 
-                            <DropDownInputField 
-                            :list="insurances" 
-                            id="insurances" 
-                            placeHolder="Insurance Plan"
-                            required  
-                            />
 
-                            <FileInputField
-                            placeHolder="Inusrance Card Front"/>
-                  
-                            <InputField
-                            placeHolder="Member ID"
-                            id="memberId"
-                            required
-                            />
-                            <FileInputField
-                            placeHolder="Inusrance Card Back"/>
-                          
-                            <InputField
-                            placeHolder="Medicare ID"
-                            />     
-                            <InputField
-                            placeHolder="Medicaid ID"
-                            />
-                        </div>
+                        <DropDownInputField :list="insurances" id="insurances" placeHolder="Insurance Plan" required />
 
-                        <button class="btn">Submit</button>
+                        <FileInputField placeHolder="Inusrance Card Front" />
 
-                    </form>
+                        <InputField placeHolder="Member ID" id="memberId" required />
+                        <FileInputField placeHolder="Inusrance Card Back" />
+
+                        <InputField placeHolder="Medicare ID" />
+                        <InputField placeHolder="Medicaid ID" />
+                    </div>
+
+                    <button class="btn">Submit</button>
+
                 </div>
 
             </div>
@@ -87,61 +52,45 @@ let filteredList = ref(insurancesList);
 }
 
 .eligibility-container {
-    margin-top: 9rem;
-    // padding: $pagePadding;
-
-    width: 100%;
-
-
-    >h1 {
-        color: $navy;
-    }
+    margin-top: $section-margin;
+    @include pagePadding;
 
     >.form-image-container {
-        height: 36.4375rem;
-        margin-top: 3.13rem;
+        height: 35.4375rem;
         display: flex;
-        align-items: center;
-        @media screen and (max-width: 426px){
-            display:none;
-            
+        justify-content: space-between;
+
+        @media screen and (max-width: 426px) {
+            display: none;
+
         }
 
-        >.image-container {
-            width: 25%;
+        >.image {
+            @media screen and (max-width: 800px) {
+            display: none;
+
+        }
+            width: 30%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            >.image {
-                width: 100%;
-                height: 100%;
-
-                >img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    border-radius: 1.125rem;
-                }
-            }
+            @include image(shadow);
         }
 
         >.form-container {
-            height: 100%;
-            width: 75%;
+            width: 67%;
             @include flex(center, center);
+            @include pagePadding;
+@media screen and (max-width: 800px) {
+    padding:0;
+}
 
             >.form {
-                width: 70%;
-                height: 70%;
+                width: 100%;
 
-                >form {
-                    margin-top: 1.33rem;
-                }
+
+            
 
                 >span {
-                    @extend h4;
+                    @extend .text;
                     display: block;
                     width: 33.375rem;
 
@@ -149,120 +98,26 @@ let filteredList = ref(insurancesList);
 
             }
         }
-    }
 
-    .input-fields-container {
-        padding: 1.87rem 0;
-        display: grid;
-        grid-template-columns: 1fr 0.8fr;
-        gap: 0.63rem;
-
-        .dropdown-btn {
-            position: relative;
-
-            .dropdown-wrapper {
-                position: absolute;
-                top: calc(100% + 0.63rem);
-                border-radius: 1.125rem;
-                border: 1px solid $blue;
-                width: 100%;
-                height: 10rem;
-                background-color: $white;
-                z-index: 1;
-                @include flex();
-                justify-content: flex-start;
-
-                .dropdown-list {
-                    overflow-y: scroll;
-
-                    height: 95%;
-                    width: 98%;
+        .input-fields-container {
+            padding: 1.87rem 0;
+            display: grid;
+            grid-template-columns: 1fr 0.8fr;
+            gap: 0.63rem;
 
 
-
-                    &::-webkit-scrollbar {
-                        width: 10px;
-
-                        background-color: white;
-                        // border-radius:rem;
-                    }
-
-                    /* Track */
-                    &::-webkit-scrollbar-track {
-                        border-radius: 1.125rem;
-                    }
-
-                    /* Handle */
-                    &::-webkit-scrollbar-thumb {
-                        background: $navy;
-                        border-radius: 1.125rem;
-                    }
-
-
-                    // /* Handle on hover */
-                    // &::-webkit-scrollbar-thumb:hover {
-                    //     background: #555;
-                    // }
-
-
-                    .dropdown-item {
-                        cursor: pointer;
-                        padding: 1rem 1rem;
-                        border-radius: 1.25rem;
-                        border: none;
-                        @extend h4;
-
-                        &:hover {
-                            background-color: lighten($blue, 30%);
-                            // color: $white;
-                        }
-
-                    }
-                }
-            }
 
         }
-
     }
+
+
 
     .btn {
         width: 42%;
     }
 
-    .required {
-        position: relative;
 
-        .arrowdown,
-        .asterisk {
-            position: absolute;
-        }
 
-        .asterisk {
-            left: 11.5rem;
-            top: 25%;
-            color: red;
-        }
-
-        .arrowdown {
-            left: 90%;
-            top: 34%;
-        }
-    }
-
-    .file-input {
-        position: relative;
-
-        >label {
-            position: absolute;
-            left: 7rem;
-            bottom: 30%;
-            background-color: $white;
-            font-family: $montserrat;
-            font-size: 1.125rem;
-            font-style: normal;
-            font-weight: 500;
-        }
-    }
 }
 
 @media screen and (max-width: 800px) {
@@ -272,10 +127,6 @@ let filteredList = ref(insurancesList);
             .responsive-form-container {
                 display: block;
             }
-        }
-
-        >h1 {
-            margin-left: 5%;
         }
 
         .form-image-container {

@@ -18,42 +18,34 @@ let showMore = () => {
 
 <template>
     <div class="insuranceContainer">
-        <h1>Insurance we accept</h1>
+        <h1 class="sectionHeader">Insurance we accept</h1>
         <div class="insurances some-hidden">
             <div class="single-insurance" v-for="key in keys" :key="key">
                 <img :src="key" alt="">
             </div>
         </div>
-        <span class="show-btn" @click="showMore()">
+        <div class="show-btn" @click="showMore()">
             <template v-if="!showmore">Show more</template>
             <template v-else>Show less</template>
             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
                 <path d="M1 1L6 6L11 1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-        </span>
+        </div>
 
     </div>
 </template>
 <style scoped lang="scss">
 .insuranceContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-    >h1 {
-        color: $navy;
-        @media screen and (max-width: 500px){
-            margin-left: 5%;
-            
-        }
+    @include pagePadding();
+    @media screen and (max-width: 500px) {
+        @include pageNoPadding;
     }
-
     >.show-btn {
         margin-top: 1.25rem;
         color: $navy;
         cursor: pointer;
-        align-self: flex-end;
         @extend .btnfont;
+        text-align: end;
 
         >svg {
             margin-left: 0.625rem;
@@ -65,16 +57,13 @@ let showMore = () => {
     }
 
     >.insurances {
-        // background-color: red;
         display: grid;
-
-        margin-top: 2.13rem;
         grid-template-columns: repeat(auto-fit, minmax(12.375rem, 1fr));
         gap: 1.25rem;
 
 
         >.single-insurance {
-            // width: 12.375rem;
+            width: 12.375rem;
             height: 12.375rem;
             // margin-right:1.25rem;
 

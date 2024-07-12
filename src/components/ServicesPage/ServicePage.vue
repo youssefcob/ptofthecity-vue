@@ -32,7 +32,7 @@ const navigateTo = (id: string) => {
             <div class="info">
                 <h1>{{ service?.title }}</h1>
                 <p v-html="formatText(service?.description)"></p>
-                <div class="btn btn-transparent main">Book Now</div>
+                <div class="btn responsive main">Book Now</div>
             </div>
             <!-- <div class="image" ></div> -->
 
@@ -40,7 +40,7 @@ const navigateTo = (id: string) => {
             <h1 class="responsive-header">{{ service?.title }}</h1>
 
         </div>
-        <router-link to="/" class="btn-transparent back">Back To Homepage</router-link>
+        <router-link to="/" class="btn transparent responsive main back">Back To Homepage</router-link>
     </div>
         <h1 class="carousel-header">Services</h1>
         <Carousel class="carousel">
@@ -50,6 +50,13 @@ const navigateTo = (id: string) => {
 
 <style scoped lang="scss">
 .container {
+    .back{
+        @media screen and (min-width: 500px){
+            display:none;
+        }
+        display:block;
+        width:100%;
+    }
     width: 100%;
     // background-color: blueviolet;
     @include pagePadding;
@@ -86,7 +93,6 @@ const navigateTo = (id: string) => {
 
         .info {
             width: 70%;
-            padding:1.7rem 0;
 
             @media screen and (max-width: 800px) {
                 width: 100%;

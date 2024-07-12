@@ -10,57 +10,58 @@ const props = defineProps({
 <template>
     <div class="ser">
         <h1 class="title">{{ props.service?.title }}</h1>
-        <p class="description">{{ props.service?.listHeader }}</p>
-        <ul class="list" v-if="props.service?.list">
+        <!-- <p class="description">{{ props.service?.listHeader }}</p> -->
+        <div class="list" v-if="props.service?.list">
             <li v-for="list_item in props.service.list"> {{ list_item }}</li>
-        </ul>
-            <router-link active-class="navbar-link" class="learn-more btn-transparent btnfont" :to="{name:`service`, params: { id : $props.service?.id }}">
-                Learn More
-            </router-link>
+        </div>
+        <router-link active-class="navbar-link" class="learn-more btn transparent btnfont"
+            :to="{ name: `service`, params: { id: $props.service?.id } }">
+            Learn More
+        </router-link>
     </div>
 </template>
 
 <style scoped lang="scss">
 .ser {
-    width: 100%;
     height: 100%;
-    fill: rgba(44, 50, 51, 0.20);
-    backdrop-filter: blur(50px);
+    @include backDrop();
     padding: 0 3.13rem;
     padding-top: 3rem;
     padding-bottom: 2.13rem;
     display: flex;
     flex-direction: column;
-    gap: 2%;
+
+    >.title {
+        color: $white;
+
+        @media screen and (max-width: 800px) {
+            font-size: 2rem;
+            // align-self: center;
+            margin: auto;
+
+        }
+    }
+
+    >.list li {
+        @extend .text;
+        color: $white;
+        list-style-position:inside;
+
+
+    }
 
     .learn-more {
         align-self: flex-end;
         margin-top: auto;
-        > a {
-            color: white;
-        }
+        width:50%;
+        color:$white;
+        
     }
 
-    >h1,
-    p {
-        color: $white;
-    }
+    // >h1,
+ 
 
-    >ul>li {
-        color: $white;
-        list-style-position: inside;
-        text-indent: -1.4em;
-        padding-left: 1.4em;
-
-    }
-
-    @media (max-width: 750px) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 0rem;
-        padding-bottom: 2rem;
-
+    @media (max-width: 800px) {
         .description,
         .list,
         .learn-more {

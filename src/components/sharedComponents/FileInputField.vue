@@ -69,12 +69,13 @@ const HandleFileUpload = (e: Event) => {
 
 .file-input {
     &.big-screen {
-        @media screen and (max-width: 425px) {
+        @media screen and (max-width: 800px) {
             display: none;
         }
+        height: 3.75rem;
 
         border: 1px solid $blue;
-        border-radius: 1.125rem;
+        border-radius: $border-radius;
         background: $white;
         outline: none;
         display: flex;
@@ -86,13 +87,16 @@ const HandleFileUpload = (e: Event) => {
 
         .file-btn {
             height: 100%;
-            width: 27%;
+            width: 30%;
             background-color: $blue;
             display: flex;
             align-items: center;
             justify-content: center;
             @extend .btnfont;
             pointer-events: none;
+            text-align: center;
+            color:$black;
+            border-radius: $border-radius;
 
 
         }
@@ -103,13 +107,14 @@ const HandleFileUpload = (e: Event) => {
             font-style: normal;
             font-weight: 500;
             pointer-events: none;
+            margin-left:1rem;
         }
 
 
     }
 
     &.responsive {
-        @media screen and (min-width: 426px) {
+        @media screen and (min-width: 801px) {
             display: none;
         }
 
@@ -121,12 +126,12 @@ const HandleFileUpload = (e: Event) => {
         overflow: hidden;
         align-items: center;
         cursor: pointer;
-        height:45px;
+        height:6rem;
         position: relative;
 
         >.file-btn {
             height: 100%;
-            width: 13%;
+            width: 19%;
             background-color: $blue;
             display: flex;
             align-items: center;
@@ -140,9 +145,7 @@ const HandleFileUpload = (e: Event) => {
 
             margin-left:10px;
             font-family: $montserrat;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 500;
+            @extend .text-s;
             pointer-events: none;
         }
     }

@@ -48,10 +48,7 @@ interface Service {
             listHeader:"Orthopedic rehabilitation includes an array of treatments for bone, joint, and muscle problems, such as:",
             list:[
                 "Different joint injuries and pain",
-                "Pre-operative orthopedic rehabilitation",
-                "Post-operative rehabilitation",
-                "Musculoskeletal pain and injuries",
-                "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
+               
             ],
             LearnMore:"Learn More"
         },

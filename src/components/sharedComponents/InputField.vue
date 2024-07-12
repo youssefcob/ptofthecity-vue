@@ -45,8 +45,10 @@ const CalcTop = () => {
     position: relative;
 
     >.input-field {
+    height: 3.75rem;
+
         @media screen and (max-width: 800px) {
-            height: 45px;
+            height: 6rem;
             padding: 18px;
         }
 

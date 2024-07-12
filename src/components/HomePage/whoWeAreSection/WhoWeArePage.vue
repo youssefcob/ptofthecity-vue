@@ -14,7 +14,7 @@
                         <h1>22</h1>
                     </div>
                     <div>
-                        <h4>Clinics</h4>
+                        <h3 class="header-q">Clinics</h3>
                     </div>
                 </div>
                 <div class="box">
@@ -22,7 +22,7 @@
                         <h1>22</h1>
                     </div>
                     <div>
-                        <h4>Clinics</h4>
+                        <h3 class="header-q">Clinics</h3>
                     </div>
                 </div>
                 <div class="box">
@@ -30,17 +30,17 @@
                         <h1>66600</h1>
                     </div>
                     <div>
-                        <h4>Clinics</h4>
+                        <h3 class="header-q">Clinics</h3>
                     </div>
                 </div>
             </div>
 
             <div class="infocontainer">
-                <h3>Our story</h3>
+                <h3 class="header-t">Our story</h3>
                 <div class="wrapper">
                     <div class="info">
                         <div class="infowrapper">
-                            <p>Our story of success started with Dr. Mahmoud`s simple dream of being the best physical
+                            <p class="text-s">Our story of success started with Dr. Mahmoud`s simple dream of being the best physical
                                 therapy clinic in town. It grew over the years into a dream that came true with the
                                 establishment of the PT of the city in 2020. We reached 14 locations in a few years, all
                                 over New York, with the dedication of our partners and team and the trust of our
@@ -50,9 +50,9 @@
                             </p>
                         </div>
                         <div>
-                            <h3>Our Technique</h3>
+                            <h3 class="header-t">Our Technique</h3>
                             <div class="infowrapper">
-                                <p>
+                                <p class="text-s">
                                     We offer you a treatment plan specialized for each case to achieve the most
                                     effective
                                     results.
@@ -77,11 +77,10 @@
                         </div>
                     </div>
                     <div class="image-wrapper">
-                        <!-- <img src="@/assets/images/whoweare.jpg" alt=""> -->
 
                     </div>
                 </div>
-                <div class="btn-transparent">Learn more</div>
+                <div class="btn transparent responsive main">Learn more</div>
             </div>
         </div>
     </div>
@@ -90,22 +89,8 @@
 
 <style scoped lang="scss">
 .container {
-    padding: $pagePadding;
-    @media screen and (max-width: 768px) {
-            padding: $pagePaddingRes;
+    @include pagePadding();
 
-        }
-    padding-top: 6rem;
-    display: flex;
-    flex-direction: column;
-
-    h1 {
-        color: $navy;
-    }
-
-    h4 {
-        color: $navy;
-    }
 
     .stats {
         display: grid;
@@ -122,7 +107,6 @@
 
         >.box {
             display: flex;
-            // max-width: 33.78569rem;
             height: 13.75rem;
             padding: 2.625rem 3.5625rem;
             flex-direction: column;
@@ -148,37 +132,11 @@
 
                     &:first-child {
                         justify-content: flex-end;
-
-                        >h1 {
-                            font-size: 60px;
-
-                            @media screen and (max-width: 425px) {
-                                font-size: 40px;
-                            }
-
-                            @media screen and (max-width: 320px) {
-                                font-size: 35px;
-                            }
-
-                        }
-
-
                     }
 
                     &:last-child {
                         justify-content: flex-start;
 
-                        >h4 {
-                            font-size: 45px;
-
-                            @media screen and (max-width: 425px) {
-                                font-size: 35px;
-                            }
-
-                            @media screen and (max-width: 320px) {
-                                font-size: 30px;
-                            }
-                        }
                     }
                 }
 
@@ -188,125 +146,33 @@
     }
 
     .infocontainer {
-        display:flex;
+        display: flex;
         flex-direction: column;
-        width:100%;
-        h3 {
-            margin-bottom: 1.25rem;
-            color: $navy;
-
-            @media screen and (max-width: 770px) {
-                font-size: 35px;
-            }
-
-            @media screen and (max-width: 425px) {
-                font-size: 17px;
-            }
-
-        
+        width: 100%;
+        .header-t{
+            margin-bottom:1.25rem;
         }
-        p {
-
-            font-family: $montserrat;
-
-            @media screen and (max-width: 1024px) {
-                font-size: 11px;
-            }
+      
 
 
-            @media screen and (max-width: 770px) {
-                font-size: 14px;
-            }
 
-            @media screen and (max-width: 425px) {
-                // font-size: 11px;
-            }
 
-            
-            @media screen and (max-width: 375px) {
-                // font-size: 11px;
-            }
-
-        
-        }
-        .btn-transparent {
-            color: black;
-            font-weight: 700;
-            font-family: $montserrat;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 2.5rem;
-            display: inline-block;
-            align-self: flex-end;
-            @media screen and (max-width: 430px) {
-                font-size: 12px;
-                font-weight: 900;
-                align-self: center;
-                width:100%;
-                max-width: 100%;
-                padding:14px 0;
-                margin-top:80px;
-
-                
-                
-            }
-
-           
-        }
-
-        // height:30vh;
-        // overflow: hidden;
         .wrapper {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
 
-            // height:25rem;
-            @media screen and (min-width: 1024px) {
-                gap: 1rem;
-            }
 
             .info {
-                // flex: 5;
                 display: flex;
                 flex-direction: column;
                 gap: 2.5rem;
-
-                // @media screen and (min-width: 1024px) {
-                //     flex: 2.4;
-                //     gap: 1rem;
-                // }
-
-
-          
-                // @media screen and (min-width: 1440px) {
-                //     flex: 2.8;
-                // }
-
-                // @media screen and (min-width: 1730px) {
-                //     flex: 5.3;
-                // }
-
-                // @media screen and (min-width: 2000px) {
-                //     flex: 2;
-                // }
-
-                // @media screen and (min-width: 2300px) {
-                    flex: 3.1;
-                // }
-
-
-
-
-
+                // width: 69%;
 
                 .infowrapper {
-                    background-color: white;
+                    background-color: $white;
                     padding: 2.25rem;
-                    border-radius: 1.25rem;
-                    >p {
-                        font-family: $montserrat;
-                        line-height: 200%;
-                    }
+                    border-radius: $border-radius;
+
                 }
 
             }
@@ -315,11 +181,10 @@
                 @media screen and (max-width: 768px) {
                     display: none;
                 }
+
                 background-image: url("/images/whoweare.jpg");
-                width:30%;
-                background-size: cover;
-                background-position: center;
-                border-radius: 1.25rem;
+                width:100%;
+                @include image(shadow);
 
             }
         }

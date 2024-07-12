@@ -114,12 +114,9 @@ const scroll = (direction: number) => {
         margin-top: 1rem;
 
         .indicator{
-            width: 1rem;
-            height: 1rem;
-            max-width: 7px;
-            max-height: 7px;
-            min-width: 5px;
-            min-height:5px ;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: 0.5rem;
             border-radius: 50%;
             background-color: $darkgrey;
             transition: background-color 0.3s ease-in-out;
@@ -133,7 +130,7 @@ const scroll = (direction: number) => {
         height: 100%;
         display: flex;
         justify-content: space-between;
-        gap:20px;
+        gap:1rem;
 
 
         >.carousel-items {
@@ -155,7 +152,7 @@ const scroll = (direction: number) => {
         }
 
         >.btn {
-            width: 4%;
+            width: 4.2rem;
             background-color: $navy;
             color: $white;
             display: flex;

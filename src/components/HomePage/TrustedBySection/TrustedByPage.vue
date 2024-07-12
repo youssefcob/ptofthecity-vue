@@ -6,7 +6,7 @@ import { ref } from 'vue';
 
 <template>
     <div class="trustedBy-container">
-        <h1>Trusted by</h1>
+        <h1 class="sectionHeader-m" >Trusted by</h1>
         <div class="trustBy-carousel">
             <div class="item" v-for="index in trustedBy" :key="index"></div>
         </div>
@@ -15,12 +15,7 @@ import { ref } from 'vue';
 
 <style scoped lang="scss">
     .trustedBy-container {
-      >h1{
-        color:$navy;
 
-
-        @include pagePadding;
-      }
       >.trustBy-carousel{
         display: flex;
         // justify-content: center;
@@ -30,20 +25,17 @@ import { ref } from 'vue';
         overflow-x: scroll;
         @include scrollBar;
         @media screen and (max-width: 500px){
-            margin-left:2.5rem;
+            margin-left:$resMargin;
         }
         >.item{
       
-            width: 100px;
-            height: 100px;
-            background: $white;
-            // border-radius: 50%;
+            width: 9rem;
+            height: 9rem;
+            background-color: $darkgrey;
+            border-radius: $border-radius;
             flex: 0 0 auto;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            @media screen and (max-width: 500px){
-                width: 50px;
-                height: 50px;
-            }
+            
         }
       }
     }
