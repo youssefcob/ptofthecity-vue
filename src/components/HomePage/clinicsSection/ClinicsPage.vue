@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import ClinicAccordion from './ClinicAccordion.vue';
 import { clinicLocations } from './Clinics';
+
+const isFirstItem=(index:number)=>{
+    return (index===0);
+}
 </script>
 
 <template>
     <div class="container">
-        <h1 class="sectionHeader">Clinics</h1>
-        <p>22 clinics all over New York</p>
+        <div class="sectionHeader">
+            <h1>Clinics</h1>
+            <p>22 clinics all over New York</p>
+        </div>
+
         <div class="accordionsContainer">
-            <template v-for="location in clinicLocations" :key="location">
-                <ClinicAccordion :location="location" />
+            <template v-for="(location,index) in clinicLocations" :key="location">
+                <ClinicAccordion :location="location" :active="isFirstItem(index)"/>
             </template>
         </div>
         <div class="btn transparent responsive main">find your nearest location</div>

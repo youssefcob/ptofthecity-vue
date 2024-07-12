@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, } from 'vue';
+import { ref, onMounted, computed, } from 'vue';
 import type { Ref } from 'vue';
 
 import { type FAQs } from './FAQs';
@@ -9,6 +9,9 @@ const accordion = ref<any>(null);
 const props = defineProps({
     faq: {
         type: Object as () => FAQs
+    },
+    active: {
+        type: Boolean
     }
 })
 const formatAnswer = (answer: string | undefined): string => {
@@ -21,16 +24,24 @@ const expandItems = () => {
     accordion.value.classList.toggle('invert');
 
 }
+const isActive = ()=>{
+    return props.active ? 'expand' : '';
+
+}
+
+const isInverted = ()=>{
+    return props.active ? 'invert' : '';
+}
 
 </script>
 
 
 <template>
-    <div class="accordion" ref="accordion" @click="expandItems">
+    <div :class="`accordion ${isInverted()}`" ref="accordion" @click="expandItems">
         <span>{{ props.faq?.question }}</span>
 
     </div>
-    <div class="accordionItemsContainer" ref="accordionItemsContainer">
+    <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">
 
         <div class="item" v-html="formatAnswer(props.faq?.answer)"></div>
 
@@ -60,12 +71,8 @@ h2 {
 
     >span {
         @extend .text;
-        // font-family: $helvetica;
-        // font-size: 1.75rem;
-
-        // @media screen and (max-width: 800px) {
-        //     font-size: 2rem;
-        // }
+        font-weight:light;
+        font-size: 1.5rem;
 
         @media screen and (max-width: 500px) {
             font-size: 2.2rem;
@@ -93,18 +100,11 @@ h2 {
     transition: all .3s ease-in-out;
 
 
-
-
-
-    margin: 0.75rem 0;
-    grid-template-columns: repeat(auto-fit, minmax(20.5rem, 1fr));
-    gap: 1.25rem;
-
     .item {
         flex-shrink: 0;
         border-radius: 1.125rem;
 
-        padding: 2rem 1.88rem;
+        padding: 2rem 3rem;
        @extend .text-s;
      
     }

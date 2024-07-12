@@ -10,4 +10,5 @@ body {
 }
 html {
     font-size:clamp(10px, 1vw, 17px);
+    user-select: none;
 }

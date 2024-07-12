@@ -130,6 +130,8 @@ const navigateTo = (id: string) => {
 
         >.image {
             width: 100%;
+            height: clamp(300px, 40vw, 40rem);
+   
             @media screen and (max-width: 800px) {
                 width: 100%;
                 height: 300px;

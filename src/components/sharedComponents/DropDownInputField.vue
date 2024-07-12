@@ -77,7 +77,7 @@ onUnmounted(() => {
             </label>
 
         </div>
-        <div class="dropdown-wrapper {{ props.id }}" v-if="show">
+        <div class="dropdown-wrapper {{ props.id }}" v-if="show && filteredList?.length">
             <div class="dropdown-list {{ props.identifier }}">
                 <div class="dropdown-item " v-for="insurance in filteredList" :key="insurance"
                     @click="changeInput(insurance)">{{ insurance }}</div>
@@ -92,7 +92,6 @@ onUnmounted(() => {
 .drpdown-btn {
     >.required {
         >.input-field {
-
             @media screen and (max-width: 800px) {
                 height: 6rem;
                 padding: 18px;

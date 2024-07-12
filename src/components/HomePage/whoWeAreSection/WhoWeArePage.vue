@@ -3,7 +3,7 @@
 <template>
     <div class="container">
 
-        <h1>Who we are</h1>
+        <h1 class="sectionHeader">Who we are</h1>
 
 
         <div class="whoWeAreContainer">
@@ -97,7 +97,8 @@
         grid-template-columns: repeat(auto-fill, minmax(calc(33% - 3rem), 1fr));
 
         gap: 3rem;
-        padding: 3rem 0;
+        // padding: 3rem 0;
+        padding-bottom: 3rem;
 
         @media screen and (max-width: 770px) {
             display: flex;

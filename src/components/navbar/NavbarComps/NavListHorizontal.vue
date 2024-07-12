@@ -50,7 +50,7 @@ ul {
   gap:1.25rem;
   align-items: center;
   a{
-  @extend h4;
+  @extend .nav-font;
 
   }
 

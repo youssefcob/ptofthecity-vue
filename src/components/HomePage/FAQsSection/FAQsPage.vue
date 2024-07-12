@@ -2,7 +2,9 @@
 import QuestionAccordion from '@/components/sharedComponents/FAQs/QuestionAccordion.vue';
 import { faqs } from '../../sharedComponents/FAQs/FAQs';
 
-
+const isFirstItem=(index:number)=>{
+    return (index===0);
+}
 
 
 </script>
@@ -11,7 +13,7 @@ import { faqs } from '../../sharedComponents/FAQs/FAQs';
     <div class="container">
         <h1 class="sectionHeader">FAQs</h1>
         <div class="questionsContainer">
-            <QuestionAccordion v-for="faq in faqs" :faq="faq" />
+            <QuestionAccordion v-for="(faq,index) in faqs" :faq="faq" :key="index" :active="isFirstItem(index)" />
         </div>
         <div class="btn transparent responsive main">learn more</div>
     </div>
@@ -23,6 +25,12 @@ import { faqs } from '../../sharedComponents/FAQs/FAQs';
     display: flex;
     flex-direction: column;
     @include pagePadding;
+
+    .questionsContainer{
+        display: flex;
+        flex-direction: column;
+        gap:0.7rem;
+    }
 
 
     .main{

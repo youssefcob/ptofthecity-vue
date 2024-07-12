@@ -10,7 +10,7 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
 
 <template>
     <div class="container">
-        <h1>Testimonials</h1>
+        <h1 class="sectionHeader">Testimonials</h1>
 
         <Carousel class="carousel">
             <SingleTestimonial v-for="testimonial in testimonials" :testimonial="testimonial" />

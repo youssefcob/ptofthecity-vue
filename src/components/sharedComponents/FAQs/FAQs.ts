@@ -5,11 +5,8 @@ interface FAQs {
 
 const faqs = [
 {
-    question: "What is PTOFTHECITY?",
-    answer: `PTOFTHECITY 
-    is a platform that
-     connects people with
-      local events and activities happening in their city.`
+    question: "What is PtOfTheCity?",
+    answer: `PtOfTheCity? is a platform that connects people with local events and activities happening in their city.`
 },
 {
     question: "How can I create an account?",

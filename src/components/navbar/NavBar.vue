@@ -96,7 +96,7 @@ onMounted(() => {
     height: 100%;
     @include flex();
     justify-content: space-between;
-    width:63%;
+    width:70%;
 }
 
 .mobile{

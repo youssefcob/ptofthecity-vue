@@ -56,6 +56,7 @@ const reRoute = () => {
     .image {
         height: 100%;
         @include image;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
