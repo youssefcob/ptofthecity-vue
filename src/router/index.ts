@@ -26,6 +26,16 @@ const router = createRouter({
           name: 'staff',
           component: StaffPage,
           props: true
+        },
+        {
+          path: '/whoWeAre',
+          name: 'whoWeAre',
+          component: () => import('@/components/WhoWeArePage/WhoWeAre.vue')
+        },
+        {
+          path: '/careers',
+          name: 'careers',
+          component: () => import('@/components/CareerPage/Career.vue')
         }
       ]
     },

@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn mobile responsive main">Apply Now</div>
+        <router-link to="careers" class="btn mobile responsive main">Apply Now</router-link>
 
     </div>
 </template>

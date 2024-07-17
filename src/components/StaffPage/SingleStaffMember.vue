@@ -43,10 +43,12 @@ const reRoute = () => {
             width:100%;
             text-align: center;
             color:$white;
-            padding:1.5rem;
+            padding:0.75rem;
+            font-size:1.2rem;
+
             @media screen and (max-width: 500px){
-                font-size:3rem;
-            padding:3rem;
+                font-size:1.5rem;
+            padding:1rem;
 
             }
         }

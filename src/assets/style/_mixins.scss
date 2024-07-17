@@ -46,7 +46,20 @@
   // scrollbar-color:  transparent #D9D9D9;
 
 }
-
+@mixin padding($direction){
+  @if($direction == left){
+    padding-left: 6.25rem;
+    @media screen and (max-width: 500px) {
+      padding-left: 2.5rem;
+    }
+  }
+  @if($direction == right){
+    padding-right: 6.25rem;
+    @media screen and (max-width: 500px) {
+      padding-right: 2.5rem;
+    }
+  }
+}
 @mixin pagePadding() {
 
   $pagePadding: 0 6.25rem;

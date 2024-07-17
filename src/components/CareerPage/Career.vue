@@ -1,0 +1,3 @@
+<template>
+    smth smth
+</template>

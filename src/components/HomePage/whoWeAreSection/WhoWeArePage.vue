@@ -80,7 +80,7 @@
 
                     </div>
                 </div>
-                <div class="btn transparent responsive main">Learn more</div>
+                <router-link to="/whoWeAre" class="btn transparent responsive main">Learn more</router-link>
             </div>
         </div>
     </div>

@@ -45,7 +45,7 @@ const navigateTo = (id: string) => {
     </div>
         <h1 class="carousel-header">Services</h1>
         <Carousel class="carousel">
-            <SingleStaffMember class="singleService" v-for="member in filteredStaff" :staffMember="member" @navigate="navigateTo" />
+            <SingleStaffMember class="s-staff" v-for="member in filteredStaff" :staffMember="member" @navigate="navigateTo" />
         </Carousel>
 </template>
 
@@ -168,7 +168,7 @@ const navigateTo = (id: string) => {
         @media screen and (max-width: 500px){
                 @include pagePadding;
         }
-        .singleService{
+        .s-staff{
         @include carouselItem2(5);
         @media screen and (max-width: 1024px){
             @include carouselItem2(4);

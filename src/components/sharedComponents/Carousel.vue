@@ -8,7 +8,9 @@ let currentIndex = ref(0);
 let carouselItemsNo = ref(0);
 
 
-
+const props= defineProps({
+   NoIndicator: Boolean
+});
 
 onMounted(() => {
     if (wheel.value) {
@@ -34,6 +36,7 @@ const updateCurrentIndexBasedOnScroll = () => {
 };
 
 const scroll = (direction: number) => {
+    console.log('smth')
     if (wheel.value) {
         const el = wheel.value as HTMLElement;
         if (el) {
@@ -65,6 +68,9 @@ const scroll = (direction: number) => {
     // console.log(currentIndex.value);
 };
 
+
+
+
 </script>
 
 <template>
@@ -78,7 +84,7 @@ const scroll = (direction: number) => {
                 </svg></div>
 
             <div class="carousel-items" ref="wheel">
-                <slot></slot>
+                <slot  ></slot>
              
 
             </div>
@@ -90,7 +96,7 @@ const scroll = (direction: number) => {
                 </svg></div>
 
         </div>
-        <div class="indicator-container">
+        <div class="indicator-container" v-if="!NoIndicator">
             <div class="indicator" v-for="i in carouselItemsNo" :key="i" :class="{active: i-1 === currentIndex}">
             </div>
 
