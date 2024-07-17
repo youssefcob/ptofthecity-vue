@@ -13,7 +13,7 @@
                         <h2>Join Us <span>Now</span></h2>
                         <p>We Are Always Hiring</p>
                     </div>
-                    <div class="btn">Apply Now</div>
+                    <router-link to="careers" class="btn">Apply Now</router-link>
                 </div>
             </div>
         </div>
