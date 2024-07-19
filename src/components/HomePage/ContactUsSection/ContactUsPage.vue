@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import ContactForm from './ContactForm.vue';
 import ContactUsImage from './ContactUsImage.vue';
+
+const props = defineProps({
+    header: String,
+});
 </script>
 
 <template>
     <div class="container">
         <div class="sectionHeader">
-            <h1>Contact us</h1>
+            <h1>{{header || 'Contact us'}}</h1>
             <p>We would love to hear from you!</p>
         </div>
         <div class="form-image-container">

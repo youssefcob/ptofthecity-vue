@@ -5,7 +5,10 @@
             <h1 class="landing-header">PT Of The City</h1>
             <h2 class="secondary-landing-header">Where Healing Happens</h2>
             <div class="btn-container">
-                <div class="btn bigScreen">Book Now</div>
+                <router-link to="booking" >
+                    <div to="booking" class="btn bigScreen">Book Now</div >
+                </router-link >
+
                 <div class="number">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                             <g clip-path="url(#clip0_813_892)">
@@ -18,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn responsive main">Book Now</div>
+        <router-link to="booking" class="btn responsive main">Book Now</router-link>
 
 
     </div>

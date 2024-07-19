@@ -13,9 +13,9 @@ const isFirstItem=(index:number)=>{
     <div class="container">
         <h1 class="sectionHeader">FAQs</h1>
         <div class="questionsContainer">
-            <QuestionAccordion v-for="(faq,index) in faqs" :faq="faq" :key="index" :active="isFirstItem(index)" />
+            <QuestionAccordion v-for="(faq,index) in faqs.home" :faq="faq" :key="index" :active="isFirstItem(index)" />
         </div>
-        <div class="btn transparent responsive main">learn more</div>
+        <router-link to="/FAQs" class="btn transparent responsive main">learn more</router-link>
     </div>
 </template>
 

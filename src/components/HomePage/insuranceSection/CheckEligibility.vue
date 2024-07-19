@@ -24,15 +24,15 @@ import FileInputField from '@/components/sharedComponents/FileInputField.vue';
                     <div class="input-fields-container">
                         <div class="left">
                             <div class="split">
-                                <InputField placeHolder="First Name" id="firstName" required />
-                                <InputField placeHolder="Last Name" id="lastName" required />
+                                <InputField class="field" placeHolder="First Name" id="firstName" required />
+                                <InputField class="field" placeHolder="Last Name" id="lastName" required />
                             </div>
                             <DropDownInputField :list="insurances" id="insurances" placeHolder="Insurance" required />
                             <InputField placeHolder="Member ID" id="memberId" required />
                             <InputField placeHolder="Member ID" id="MemberId" />
                             <div class="split">
-                                <InputField placeHolder="Medicare ID" />
-                                <InputField placeHolder="Medicaid ID" />
+                                <InputField class="field" placeHolder="Medicare ID" />
+                                <InputField class="field" placeHolder="Medicaid ID" />
                             </div>
                         </div>
 
@@ -144,6 +144,9 @@ $formGap: 1.2rem;
                 .split{
                     display:flex;
                     gap:$formGap;
+                    >.field{
+                        width:100%;
+                    }
                 }
                 @media screen and (max-width: 800px) {
              .left,.right{
