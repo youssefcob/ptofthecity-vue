@@ -17,43 +17,43 @@ import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
     <section class="landing-page-container">
         <LandingPage />
     </section>
-    <section class="servicesSection" id="servicesSection">
+    <section class="servicesSection" id="Services">
         <ServicesPage />
     </section>
-   <section class="insuranceSection" id="insuranceSection">
+   <section class="insuranceSection" id="Insurace">
         <InsurancePage />
     </section>
 
-     <section class="whoWeAreSection" id="whoWeAreSection">
+     <section class="whoWeAreSection" id="WhoWeAre">
         <WhoWeArePage />
     </section> 
 
-    <section class="clinicsSection" id="clinicsSection">
+    <section class="clinicsSection" id="Clinics">
         <ClinicsPage/>
     </section>
 
-    <section class="ourStaffSection" id="ourStaffSection">
+    <section class="ourStaffSection" id="OurStaff">
         <OurStaffPage/>
     </section>
 
-    <section class="careersSection" id="careersSection">
+    <section class="careersSection" id="Careers">
         <CareersPage/>
     </section>
 
     
-    <section class="TrustedBySection" id="TrustedBySection">
+    <section class="TrustedBySection" id="TrustedBy">
         <TrustedByPage/>
     </section>
 
-    <section class="TestimonialsSection" id="TestimonialsSection">
+    <section class="TestimonialsSection" id="Testimonials">
         <TestimonialsPage/>
     </section>
 
-    <section class="FAQsSection" id="FAQsSection">
+    <section class="FAQsSection" id="FAQs">
         <FAQsPage/>
     </section>
 
-    <section class="ContactUsSection" id="ContactUsSection">
+    <section class="ContactUsSection" id="ContactUs">
         <ContactUsPage/>
     </section>
 </div>

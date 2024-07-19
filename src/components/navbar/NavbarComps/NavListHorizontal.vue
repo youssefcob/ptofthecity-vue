@@ -14,28 +14,28 @@ const handleScrollToTarget = (id:any) => {
 
 <template>
       <ul>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('servicesSection')">
+            <li><router-link active-class="navbar-link" to="/#Services">
                     Services
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('insuranceSection')">
+            <li><router-link active-class="navbar-link" to="/#Insurace">
                     Insurance
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('whoWeAreSection')">
+            <li><router-link active-class="navbar-link" to="/#WhoWeAre">
                     Who We Are
                 </router-link></li>
             <li><router-link active-class="navbar-link" to="/Blog">
                     Blog
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('careersSection')">
+            <li><router-link active-class="navbar-link" to="/#Careers">
                     Careers
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('TrustedBySection')">
+            <li><router-link active-class="navbar-link" to="/#TrustedBy">
                     Trusted by
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('FAQsSection')">
+            <li><router-link active-class="navbar-link" to="/#FAQs">
                     FAQs
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('ContactUsSection')">
+            <li><router-link active-class="navbar-link" to="/#ContactUs">
                     Contact us
                 </router-link></li>
 

@@ -17,7 +17,7 @@ import ContactUsImage from './ContactUsImage.vue';
                 <ContactUsImage />
             </div>
         </div>
-        <div class="btn responsive main">submit</div>
+        <div class="btn responsive main">Submit</div>
 
     </div>
 </template>

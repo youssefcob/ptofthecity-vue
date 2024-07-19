@@ -3,10 +3,13 @@ import SingleService from './SingleService.vue';
 import { services } from './Services';
 import Carousel from '@/components/sharedComponents/Carousel.vue';
 
+const props = defineProps({
+    NoTitle: Boolean,
+});
 </script>
 <template>
     <div class="container">
-        <h1 class="sectionHeader-m">Services</h1>
+        <h1 class="sectionHeader-m" v-if="!NoTitle">Services</h1>
 
         <Carousel NoIndicator class="carousel" v-slot="scope">
             <SingleService  class="singleService" v-for="service in services" :service="service" />
@@ -22,6 +25,12 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
         @media screen and (max-width: 500px) {
             @include padding(left);
       
+        }
+        .singleService {
+            @media screen and (min-width: 500px) {
+            @include carouselItem2(1);
+                
+            }
         }
 
     }

@@ -8,6 +8,9 @@
 body {
     background-color:#eeeced ;
 }
+body:has(dialog[open]) {
+    overflow: hidden;
+}
 html {
     font-size:clamp(10px, 1vw, 17px);
     user-select: none;

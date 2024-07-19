@@ -43,7 +43,7 @@ const reRoute = () => {
     overflow: hidden;
     .responsive-name{
         display:none;
-        @media screen and (max-width: 425px){
+        @media screen and (max-width:500px){
             display:block;
             text-align: center;
             margin-top: 1rem;
@@ -60,7 +60,7 @@ const reRoute = () => {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        @media screen and (max-width: 425px){
+        @media screen and (max-width:500px){
             height:82%;
         }
     }
@@ -77,7 +77,7 @@ const reRoute = () => {
     .staffMemberDescription {
         padding: 5%;
         text-align: center;
-        @media screen and (max-width: 425px) {
+        @media screen and (max-width:500px) {
             display: none;
         }
 

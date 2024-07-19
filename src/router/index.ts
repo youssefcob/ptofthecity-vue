@@ -1,6 +1,6 @@
 import HomeView from '@/views/HomeView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import  HomePage  from '@/components/HomePage/HomePage.vue'
+import HomePage from '@/components/HomePage/HomePage.vue'
 import ServicePage from '@/components/ServicesPage/ServicePage.vue'
 import StaffPage from '@/components/StaffPage/StaffPage.vue'
 const router = createRouter({
@@ -13,16 +13,16 @@ const router = createRouter({
       children: [
         {
           path: '/',
-          component:HomePage
+          component: HomePage,
         },
         {
-          path: '/service/:id', 
+          path: '/service/:id',
           name: 'service',
           component: ServicePage,
           props: true
         },
         {
-          path: '/staff/:id', 
+          path: '/staff/:id',
           name: 'staff',
           component: StaffPage,
           props: true
@@ -39,9 +39,22 @@ const router = createRouter({
         }
       ]
     },
-    
 
-  ]
+
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+        top: 77
+      }
+    };
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { top: 0 };
+  }
 })
 
 export default router

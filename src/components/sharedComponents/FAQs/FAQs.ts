@@ -14,7 +14,7 @@ const faqs = [
 },
 {
     question: "How do I post an event?",
-    answer: "To post an event, go to your account dashboard and click on the 'Create Event' button. Fill out the event details and submit it for review."
+    answer: "To post an event, go to your account dashboard and click on the 'Create Event' button. Fill out the event details and Submit it for review."
 },
 {
     question: "Can I edit or delete my posted events?",

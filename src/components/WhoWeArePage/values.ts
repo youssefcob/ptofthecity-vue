@@ -27,7 +27,7 @@ const values = [
 },
 {
     name: "Uniqueness",
-    path: "/images/Values/uniquiness.png",
+    path: "/images/Values/uniqueness.png",
     description: "Our approach is unique and engaging. We strive to offer one-of-a-kind value."
 },
 {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref , type Ref} from 'vue';
+import { onMounted, onUnmounted, ref, type Ref } from 'vue';
 
 import Lang from './NavbarComps/LanguageDropDown.vue';
 import NavList from './NavbarComps/NavListHorizontal.vue';
@@ -16,17 +16,31 @@ const handleDropdownUpdate = () => {
     console.log(menuState.value);
 }
 const nav = ref<HTMLElement | null>(null);
+const mobileNav = ref<HTMLElement | null>(null);
 onMounted(() => {
+    var x = window.matchMedia("(max-width: 950px)")
+
     let prevScrollpos = window.scrollY;
     const handleScroll = () => {
         const currentScrollPos = window.scrollY;
-        if(nav.value === null) return;
-        if (prevScrollpos > currentScrollPos) {
-            nav.value.style.top = "0";
+        if (!x.matches) {
+            if (nav.value === null) return;
+            if (prevScrollpos > currentScrollPos) {
+                nav.value.style.top = "0";
+            } else {
+                nav.value.style.top = "-8vh";
+            }
+            prevScrollpos = currentScrollPos;
         } else {
-            nav.value.style.top = "-8vh";
+            if (mobileNav.value === null) return;
+            if (prevScrollpos > currentScrollPos) {
+                mobileNav.value.style.top = "0";
+            } else {
+                mobileNav.value.style.top = "-8vh";
+            }
+            prevScrollpos = currentScrollPos;
         }
-        prevScrollpos = currentScrollPos;
+
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -41,7 +55,9 @@ onMounted(() => {
 <template>
     <nav class="navbar horizontal" ref="nav">
         <div class="left-container">
-            <router-link to="/"><NavLogo /></router-link> 
+            <router-link to="/">
+                <NavLogo />
+            </router-link>
             <NavList />
         </div>
 
@@ -51,19 +67,20 @@ onMounted(() => {
             <Lang />
         </div>
     </nav>
-    
-    <nav class="navbar mobile">
-        <router-link to="/"><NavLogo /></router-link> 
+
+    <nav class="navbar mobile" ref="mobileNav">
+        <router-link to="/">
+            <NavLogo />
+        </router-link>
         <DropDownButton @dropdown="handleDropdownUpdate" />
-    <ResponsiveDropdown responsive @dropdown="handleDropdownUpdate" v-if="menuState"/>
+        <ResponsiveDropdown responsive @dropdown="handleDropdownUpdate" v-if="menuState" />
 
     </nav>
 
 </template>
 
 <style scoped lang="scss">
-
-.navbar{
+.navbar {
     background-color: $grey;
     width: 100%;
     height: 8vh;
@@ -80,7 +97,7 @@ onMounted(() => {
 .navbar.horizontal {
     display: flex;
     justify-content: space-around;
-   
+
 }
 
 
@@ -88,7 +105,7 @@ onMounted(() => {
     height: 100%;
     @include flex();
     // justify-content: space-around;
-    gap:1.56rem;
+    gap: 1.56rem;
 
 }
 
@@ -96,26 +113,29 @@ onMounted(() => {
     height: 100%;
     @include flex();
     justify-content: space-between;
-    width:70%;
+    width: 70%;
 }
 
-.mobile{
-    display:none;
+.mobile {
+    display: none;
     justify-content: space-between;
-    padding:1.25rem 2rem;
+    padding: 1.25rem 2rem;
     align-items: center;
 
 }
+
 @media (max-width: 950px) {
-    .navbar.horizontal { 
+    .navbar.horizontal {
         display: none;
     }
-    .navbar.mobile{
-        display:flex;
+
+    .navbar.mobile {
+        display: flex;
         align-items: center;
-        @media screen and (max-width: 426px){
-        padding: 0rem 5rem;
+
+        @media screen and (max-width: 426px) {
+            padding: 0rem 5rem;
+        }
     }
-    }
-} 
+}
 </style>

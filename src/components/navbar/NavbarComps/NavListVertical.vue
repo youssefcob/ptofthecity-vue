@@ -24,28 +24,28 @@ const handleScrollToTarget = (id:any) => {
 <template>
   <div class="dropdown">
     <ul>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('servicesSection')">
+      <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#Services">
                     Services
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('insuranceSection')">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#Insurace">
                     Insurance
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('whoWeAreSection')">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#WhoWeAre">
                     Who We Are
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/Blog">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/Blog">
                     Blog
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('careersSection')">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#Careers">
                     Careers
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('TrustedBySection')">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#TrustedBy">
                     Trusted by
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('FAQsSection')">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#FAQs">
                     FAQs
                 </router-link></li>
-            <li><router-link active-class="navbar-link" to="/"  @click="handleScrollToTarget('ContactUsSection')">
+            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#ContactUs">
                     Contact us
                 </router-link></li>
 

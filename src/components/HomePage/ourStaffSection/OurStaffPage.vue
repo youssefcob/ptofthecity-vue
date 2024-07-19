@@ -48,7 +48,7 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
     .staffMembers{
         height:30rem;
 
-        @media screen and (max-width: 425px) {
+        @media screen and (max-width:500px) {
             margin-left:$resMargin;
         }
 

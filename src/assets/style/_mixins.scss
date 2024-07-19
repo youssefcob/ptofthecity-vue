@@ -126,14 +126,14 @@
   margin: 12.5rem 0;
 }
 
-@mixin image($shadow:false) {
+@mixin image($shadow:shadow) {
   background-position: center;
   background-size: cover;
   $border-radius: 1.125rem;
 
   border-radius: $border-radius;
 
-  @if($shadow : shadow){
+  @if($shadow == shadow){
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   }
 }
