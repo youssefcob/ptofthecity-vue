@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 const props = defineProps({
     required: Boolean,
+    optional: Boolean,
     placeHolder: String,
     asteriskPosition: String,
     height: String,
@@ -35,8 +36,8 @@ const CalcTop = () => {
             type="text" v-model="input" @input="emitInput">
         <textarea class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()}`"
             floatlabeltype type="text" v-model="input" @input="emitInput" />
-        <label class="asterisk" v-if="!input" :style="CalcTop()">{{ $props.placeHolder }}<span v-if="props.required">
-                *</span></label>
+        <label class="asterisk" v-if="!input" :style="CalcTop()">{{ $props.placeHolder }}<span style="color:red" v-if="props.required">
+                *</span> <span class='ps' v-if="$props.optional">(Optional)</span></label>
     </div>
 </template>
 
@@ -71,9 +72,7 @@ const CalcTop = () => {
         pointer-events: none;
 
 
-        >span {
-            color: red;
-        }
+      
 
         @media screen and (max-width: 800px) {
             font-size: 13px;
