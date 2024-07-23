@@ -24,7 +24,7 @@ import { onMounted, ref } from 'vue';
             <SingleStaffMember class="s-staff" v-for="member in staffMembers" :staffMember="member" />
         </Carousel>
         <div class="btns-container">
-            <router-link active-class="navbar-link" class="btn btnfont" to="/" >
+            <router-link active-class="navbar-link" class="btn btnfont" to="/booking" >
                 Book Now
             </router-link>
             <router-link active-class="navbar-link" class="btn transparent btnfont" to="/">

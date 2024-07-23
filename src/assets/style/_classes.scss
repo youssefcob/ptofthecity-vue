@@ -33,7 +33,7 @@ h4 {
   color: #2C3233;
 }
 
-span{
+span {
   font-family: $helvetica;
   font-weight: lighter;
   letter-spacing: 0px;
@@ -83,11 +83,11 @@ a {
   letter-spacing: 0px;
 }
 
-.ps{
+.ps {
   font-family: $montserrat;
   font-size: 0.875rem;
-  color:lighten($black,20%);
-  margin:0.6rem;
+  color: lighten($black, 20%);
+  margin: 0.6rem;
 }
 
 
@@ -100,6 +100,7 @@ a {
   text-align: center;
   cursor: pointer;
   @extend .btnfont;
+  
 
   &.responsive {
     @media screen and (max-width: 500px) {
@@ -126,9 +127,11 @@ a {
     transition: all 0.3s ease-in-out;
 
     &:hover {
-      background-color: $blue;
+      background-color: rgba(42, 192, 212, 0.30);
+      ;
       color: $black;
       transition: all 0.3s ease-in-out;
+
     }
   }
 
@@ -142,6 +145,15 @@ a {
 
 }
 
+input[type="text"] {
+  font-family: $montserrat;
+  font-size: 1.125rem;
+
+  @media screen and (max-width: 800px) {
+    font-size: 13px;
+  }
+}
+
 .sectionHeader-m {
   @extend .sectionHeader;
   margin-left: 6.25rem;
@@ -152,18 +164,19 @@ a {
   }
 }
 
-.smallHeader{
+.smallHeader {
   font-family: $helvetica;
   font-weight: 400;
   font-size: 2.5rem;
 
 }
+
 .text {
   font-family: $helvetica;
   font-weight: lighter;
   font-size: $h4;
   letter-spacing: 0px;
-  color:$black;
+  color: $black;
 
 }
 
@@ -172,16 +185,16 @@ a {
   font-size: $h4;
   font-weight: 400;
   line-height: 200%;
-  color:$black;
+  color: $black;
 
 }
 
-.nav-font{
+.nav-font {
   font-family: $montserrat;
   font-size: $h4;
   font-weight: 400;
   line-height: 200%;
-  color:$black;
+  color: $black;
 }
 
 .landing-header {
@@ -225,7 +238,7 @@ a {
   background: $white;
   outline: none;
   height: 3.75rem;
-  padding:1.25rem;
+  padding: 1.25rem;
 
 
 }

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Modal from '../sharedComponents/modal.vue';
-import {careers , type Career}from './careers';
+import { careers, type Career } from './careers';
 import Careerinfo from './careerinfo.vue';
 const modal = ref<InstanceType<typeof Modal> | null>(null);
- 
-    const selectedCareer = ref<Career>(careers.pt);
+
+const selectedCareer = ref<Career>(careers.pt);
 const openModal = () => {
     if (modal.value) modal.value.openModal();
 }
@@ -13,7 +13,7 @@ const changeCareer = (career: Career) => {
     selectedCareer.value = career;
 }
 
-const handleModal=(career: Career)=>{
+const handleModal = (career: Career) => {
     changeCareer(career);
     openModal();
 
@@ -26,7 +26,7 @@ const closeModal = () => {
 
 <template>
     <modal ref="modal">
-        <Careerinfo @close="closeModal" :career="selectedCareer"/>
+        <Careerinfo @close="closeModal" :career="selectedCareer" />
     </modal>
 
     <div class="options-wrapper">
@@ -111,13 +111,17 @@ const closeModal = () => {
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
+                padding:1rem;
+
+                &:hover {
+                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                    transition: all 0.3s ease-in-out;
+
+                }
 
                 >h1 {
                     color: $white;
                     text-align: center;
-                    // font-size: 370%;
-                    // font-size: 3.7rem;
-                    // font-size: 3.3vw;
                     font-size: clamp(2.5rem, 3.3vw, 3.7rem);
                 }
             }

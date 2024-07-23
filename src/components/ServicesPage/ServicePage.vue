@@ -31,7 +31,8 @@ const navigateTo = (id: string) => {
 
             <div class="info">
                 <h1>{{ service?.title }}</h1>
-                <p v-html="formatText(service?.description)"></p>
+                <p class="text-s" v-html="formatText(service?.description)"></p>
+                
                 <div class="btn responsive main">Book Now</div>
             </div>
             <!-- <div class="image" ></div> -->
@@ -116,7 +117,8 @@ const navigateTo = (id: string) => {
 
             >.btn {
                 align-self: flex-start;
-                width: 30%;
+                width: 30rem;
+                // min-width:30rem;
 
                 @media screen and (max-width: 500px) {
                     width: 100%;
@@ -126,8 +128,9 @@ const navigateTo = (id: string) => {
         }
 
         >.image {
-            width: 30%;
-
+            width: 50%;
+            height: clamp(300px, 40vw, 40rem);
+            
             @media screen and (max-width: 800px) {
                 width: 100%;
                 height: 300px;

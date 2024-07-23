@@ -1,18 +1,24 @@
 <script setup lang="ts">
 
-import { ref, onMounted, onUnmounted, type Ref } from 'vue';
+import { ref, watch, onMounted, onUnmounted, type Ref } from 'vue';
 
 const props = defineProps({
     id: String,
     required: Boolean,
     list: Array as () => string[],
     placeHolder: String,
+    watch: Boolean,
+    RefreshList:Number
+
 });
+let filteredList = ref(props.list);
+
 
 const input: Ref<string> = ref('');
 const show: Ref<boolean> = ref(false);
 
 const showDropDown = () => {
+    filteredList.value = props.list;
     show.value = true;
     console.log(show.value);
 }
@@ -23,8 +29,6 @@ const changeInput = (insurance: string) => {
     console.log(show.value);
 
 }
-
-let filteredList = ref(props.list);
 
 const emit = defineEmits([`input`]);
 
@@ -54,6 +58,8 @@ onMounted(() => {
         }
     };
     document.addEventListener('click', handleClickOutside);
+
+    
 });
 
 onUnmounted(() => {
@@ -137,11 +143,13 @@ onUnmounted(() => {
 
             .dropdown-list {
                 width: 98%;
+
                 .dropdown-item {
                     cursor: pointer;
                     padding: 1rem 1rem;
                     border-radius: 1.25rem;
                     border: none;
+
                     &:hover {
                         background-color: lighten($blue, 30%);
                         // color: $white;
@@ -165,6 +173,7 @@ onUnmounted(() => {
             z-index: 1;
             @include flex();
             justify-content: flex-start;
+
             .dropdown-list {
                 height: 95%;
                 width: 98%;
@@ -174,6 +183,7 @@ onUnmounted(() => {
                     font-family: $montserrat;
                     font-size: 13px;
                     margin-left: 6px;
+
                     &:hover {
                         background-color: $blue;
                     }

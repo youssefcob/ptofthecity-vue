@@ -50,6 +50,7 @@ const toggleDropDown = () => {
 
     h3 {
         font-size: 15px;
+        font-weight: 600;
     }
 
     >.content {

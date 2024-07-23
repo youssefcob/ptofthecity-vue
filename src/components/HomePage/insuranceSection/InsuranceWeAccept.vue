@@ -10,7 +10,7 @@ let showMore = () => {
     let insurances = document.querySelector('.insurances');
     let arrow = document.querySelector('.arrow');
     insurances?.classList.toggle('show-more');
-    insurances?.classList.toggle('some-hidden');
+    // insurances?.classList.toggle('some-hidden');
     showmore.value = !showmore.value;
     arrow?.classList.toggle('flip-arrow');
 }
@@ -60,6 +60,9 @@ let showMore = () => {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(12.375rem, 1fr));
         gap: 1.25rem;
+        transition: all 0.5s ease-in-out;
+        max-height:26rem;
+        overflow: hidden;
 
 
         >.single-insurance {
@@ -76,12 +79,14 @@ let showMore = () => {
     }
 
     .some-hidden {
-        max-height: calc(12.375rem + 12.375rem + 1.25rem);
-        overflow: hidden;
+        
+        transition: all 0.5s ease-in-out;
     }
 
     .show-more {
-        max-height: fit-content;
+        max-height: 100rem;
+        transition: all 0.5s ease-in-out;
+
 
     }
 

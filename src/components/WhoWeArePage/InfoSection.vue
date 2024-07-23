@@ -89,7 +89,7 @@ import ValuesGrid from './ValuesGrid.vue';
                 </div>
             </div>
             <div class="image-wrapper" :style="{ backgroundImage: `url(/images/whoWeArePage.jpg)` }">
-                <div class="btn btnfont">Book Now</div>
+                <router-link to="/booking" class="btn btnfont">Book Now</router-link>
             </div>
         </div>
 

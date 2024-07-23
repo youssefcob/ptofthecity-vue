@@ -8,19 +8,19 @@ import SingleStaffMember from './SingleStaffMember.vue';
 const props = defineProps({
     id: String,
 });
-let staff:Ref< StaffMember | undefined >= ref(staffMembers.find(member => member.id == props.id));
+let staff: Ref<StaffMember | undefined> = ref(staffMembers.find(member => member.id == props.id));
 
 const formatText = (text: string | undefined): string => {
     if (!text) return '';
     return text.replace(/\n/g, '<br>');
 }
 // console.log(service?.path);
-const filteredStaff:Ref<StaffMember[]> =  ref(staffMembers.filter(member => member.id !== props.id));
+const filteredStaff: Ref<StaffMember[]> = ref(staffMembers.filter(member => member.id !== props.id));
 
 const navigateTo = (id: string) => {
     staff.value = staffMembers.find(member => member.id == id);
     filteredStaff.value = staffMembers.filter(member => member.id !== id);
-    
+
 }
 </script>
 
@@ -34,7 +34,7 @@ const navigateTo = (id: string) => {
 
             <div class="info">
                 <h1>{{ staff?.name }}</h1>
-                <p v-html="formatText(staff?.description)"></p>
+                <p class="text-s" v-html="formatText(staff?.description)"></p>
                 <div class="btn responsive main">Book Now</div>
             </div>
             <!-- <div class="image" ></div> -->
@@ -43,22 +43,25 @@ const navigateTo = (id: string) => {
         </div>
         <router-link to="/" class="btn transparent responsive main back">Back To Homepage</router-link>
     </div>
-        <h1 class="carousel-header">Services</h1>
-        <Carousel class="carousel">
-            <SingleStaffMember class="s-staff" v-for="member in filteredStaff" :staffMember="member" @navigate="navigateTo" />
-        </Carousel>
+    <h1 class="carousel-header">Services</h1>
+    <Carousel class="carousel">
+        <SingleStaffMember class="s-staff" v-for="member in filteredStaff" :staffMember="member"
+            @navigate="navigateTo" />
+    </Carousel>
 </template>
 
 <style scoped lang="scss">
 .container {
-    .back{
-        @media screen and (min-width: 500px){
-            display:none;
+    .back {
+        @media screen and (min-width: 500px) {
+            display: none;
         }
+
         display:block;
         width:100%;
-        margin-top: 0;
+        margin-top: 2rem;
     }
+
     width: 100%;
     // background-color: blueviolet;
     @include pagePadding;
@@ -131,7 +134,7 @@ const navigateTo = (id: string) => {
         >.image {
             width: 100%;
             height: clamp(300px, 40vw, 40rem);
-   
+
             @media screen and (max-width: 800px) {
                 width: 100%;
                 height: 300px;
@@ -145,46 +148,55 @@ const navigateTo = (id: string) => {
     }
 
 }
-.carousel-wrapper{
-    height:fit-content;
+
+.carousel-wrapper {
+    height: fit-content;
 }
-.carousel-header{
+
+.carousel-header {
     @include pagePadding;
-    color:$navy;
-    margin-top:2rem;
-    @media screen and (max-width: 500px){
-        margin-top:10rem;
+    color: $navy;
+    margin-top: 2rem;
 
-        }
+    @media screen and (max-width: 500px) {
+        margin-top: 10rem;
+
+    }
 }
-.carousel{
-    margin-top:2rem;
-    @media screen and (max-width: 500px){
-        margin-top:5rem;
 
-        }
-        height:300px;
-        width:100%;
-        @media screen and (max-width: 500px){
-                @include pagePadding;
-        }
-        .s-staff{
+.carousel {
+    margin-top: 2rem;
+
+    @media screen and (max-width: 500px) {
+        margin-top: 5rem;
+
+    }
+
+    height:300px;
+    width:100%;
+
+    @media screen and (max-width: 500px) {
+        @include pagePadding;
+    }
+
+    .s-staff {
         @include carouselItem2(5);
-        @media screen and (max-width: 1024px){
+
+        @media screen and (max-width: 1024px) {
             @include carouselItem2(4);
 
         }
 
-        @media screen and (max-width: 800px){
+        @media screen and (max-width: 800px) {
             @include carouselItem2(3);
 
         }
 
-        @media screen and (max-width: 500px){
+        @media screen and (max-width: 500px) {
             @include carouselItem2(1);
 
         }
-   
+
     }
-    }
+}
 </style>

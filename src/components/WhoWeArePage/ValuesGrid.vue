@@ -38,9 +38,9 @@ onMounted(() => {
                 <img class="navy" :src="'/images/navyMask.jpg'">
                 <img class="white" :src="'/images/whiteMask.jpg'">
             </div>
-            <h3> {{ value.name }} </h3>
+            <h3 class="header-t"> {{ value.name }} </h3>
             <div class="description">
-                <h3>{{ value.name }}</h3>
+                <h3 class="header-t">{{ value.name }}</h3>
                 <p class="text-t">{{ value.description }}</p>
             </div>
         </div>
@@ -56,6 +56,13 @@ onMounted(() => {
     @media screen and (max-width: 500px) {
 
         margin-left: $resMargin;
+    }
+
+    .text-s{
+        @media screen and (max-width: 1440px) {
+            font-size: 1rem;
+            
+        }
     }
 
     display: grid;
@@ -100,6 +107,8 @@ onMounted(() => {
                 top: 0;
                 left: 0;
             }
+
+     
 
 
         }

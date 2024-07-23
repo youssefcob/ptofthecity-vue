@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { vMaska } from "maska/vue"
+
 const props = defineProps({
     required: Boolean,
     optional: Boolean,
     placeHolder: String,
     asteriskPosition: String,
     height: String,
+    mask: String
 });
 let input = ref(``);
 const emit = defineEmits([`input`]);
@@ -32,7 +35,8 @@ const CalcTop = () => {
 
 <template>
     <div class="required">
-        <input class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()}`" floatlabeltype
+        <input class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()}`" 
+        v-maska="mask"
             type="text" v-model="input" @input="emitInput">
         <textarea class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()}`"
             floatlabeltype type="text" v-model="input" @input="emitInput" />
