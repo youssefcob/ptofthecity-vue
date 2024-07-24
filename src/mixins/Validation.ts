@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 interface dropdown {
     dropdown: string[];
 }
@@ -27,8 +29,7 @@ interface Form {
 }
 
 
-interface errors
-{
+interface errors {
     [key: string]: string;
 }
 
@@ -39,8 +40,8 @@ class validation {
                 const pushError = (): void => {
                     if (this.element.message && this.element.message.required) {
                         this.errors.push({
-                                [this.key]: this.element.message.required
-                            });
+                            [this.key]: this.element.message.required
+                        });
                     } else {
                         this.errors.push({
                             [this.key]: `${this.key} is required`
@@ -68,7 +69,83 @@ class validation {
 
 
             },
-            date: (arr?: string[]) => {}
+            date: (arr?: string[]) => {
+                const pushError = (s: string): void => {
+                    if (this.element.message && this.element.message.date) {
+                        this.errors.push({
+                            [this.key]: this.element.message.date
+                        });
+                    } else {
+                        this.errors.push({
+                            [this.key]: `date ${s}`
+                        });
+                    }
+                }
+
+                if (arr && arr.length > 0) {
+                    const firstElement = arr[0];
+                    // console.log(firstElement)
+                    let parsedDate = moment(this.data, 'MM-DD-YYYY', true);
+                    if (firstElement === 'past') {
+                        console.log('past')
+
+                        if (moment(parsedDate).isAfter()) {
+                            pushError('cannot be in the past');
+                        }
+                    } else if (firstElement === 'future') {
+                        if (moment(parsedDate).isBefore()) {
+                            pushError('cannot be in the future');
+                            // console.log('future')
+                        }
+                    } else {
+                        console.error('Invalid date rule');
+                    }
+
+                    if (!parsedDate.isValid()) {
+                        pushError('is invalid');
+                    }
+                }
+
+            },
+            min: (arr?: string[]) => {
+                const pushError = (): void => {
+                    if (this.element.message && this.element.message.min) {
+                        this.errors.push({
+                            [this.key]: this.element.message.min
+                        });
+                    } else {
+                        this.errors.push({
+                            [this.key]: `${this.key} is invalid`
+                        });
+                    }
+                }
+
+                if (arr && arr.length > 0) {
+                    const firstElement = arr[0];
+                    if (typeof this.data === 'string') {
+                        if (this.data.length < parseInt(firstElement)) {
+                            pushError();
+                        }
+                    }
+                }
+
+            },
+            dropdown: (arr?: string[]) => {
+                if (this.data && this.data.length > 0) {
+                    if (!arr?.includes(this.data)) {
+                        if (this.element.message && this.element.message.dropdown) {
+                            this.errors.push({
+                                [this.key]: this.element.message.dropdown
+                            });
+                        } else {
+                            this.errors.push({
+                                [this.key]: `${this.key} is invalid`
+                            });
+                        }
+                    }
+                }
+
+            }
         }
     }
     // protected validator: { [key: string]: () => void };
@@ -112,9 +189,10 @@ class validation {
     private checkRules(): any {
         let rules = this.element.rules as (string | dropdown)[];
         for (const rule of rules) {
-            if (this.handleRule(rule)) {
-                return true;
-            };
+            this.handleRule(rule);
+            // if (this.handleRule(rule)) {
+            // return true;
+            // };
         }
 
     }
@@ -124,6 +202,7 @@ class validation {
             if (rule.includes(':')) {
                 let ruleArr = rule.split(':');
                 let ruleName = ruleArr[0];
+                // console.log(ruleName)
                 let ruleValue = ruleArr.splice(1);
                 const validationFunction = this.validator[ruleName];
 
@@ -139,6 +218,13 @@ class validation {
             }
 
 
+        } else if (typeof rule === 'object') {
+            for (const key in rule) {
+                const validationFunction = this.validator[key];
+                if (validationFunction && typeof validationFunction === 'function') {
+                    validationFunction([rule[key as keyof typeof rule]]);
+                }
+            }
         }
         return !(this.errors.length === 0);
 
@@ -155,27 +241,7 @@ class validation {
         }, [] as string[]);
 
     }
-    // private checkIfRequired(element: any, key: string): void {
-    //     if (typeof element.required === 'boolean' && element.required === true) {
-    //         if (!this.data[key as keyof typeof this.data]) {
 
-    //             if (element.message && element.message.required) {
-    //                 this.errors.push(element.message.required);
-    //             } else {
-    //                 this.errors.push(`${key} is required`);
-
-    //             }
-    //         }
-    //     }
-    // }
-
-    // private checkIfDropdown(element: any, key: string): void {
-    //     if (element.dropdown && element.dropdown.length > 0) {
-    //         if (!element.dropdown.includes(this.data[key as keyof typeof this.data])) {
-
-    //         }
-    //     }
-    // }
 }
 
 export default validation;

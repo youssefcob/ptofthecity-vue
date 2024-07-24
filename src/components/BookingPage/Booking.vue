@@ -10,14 +10,14 @@ const form = reactive({
     location: '',
     firstName: '',
     lastName: '',
-    dob: { day: 0, month: 0, year: 0 },
+    dob: '',
     gender: '',
     phone: '',
     payment: '',
     insurance: '',
     memberId: '',
     pain: '',
-    date: { day: 0, month: 0, year: 0 },
+    date: '',
     time: ''
 
 })
@@ -53,7 +53,7 @@ const formValidation = {
         rules: ['required', 'letters'],
     },
     dob: {
-        rules: ['required', 'date:past'],
+        rules: ['date:past','required','min:10' ],
 
     },
     gender: {
@@ -61,7 +61,7 @@ const formValidation = {
 
     },
     phone: {
-        rules: ['required', 'format:##-##-####'],
+        rules: ['required', 'min:14'],
 
     },
     payment: {
@@ -108,28 +108,28 @@ const validate = () => {
     v.validate()
     let errors = v.errors;
     let keys = v.keys
+    console.log(errors)
 
     keys.forEach((key) => {
-        console.log(key);
+        // console.log(key);
         setTimeout(() => {
             formErrors[key as keyof typeof formErrors] = false
 
         }, 500)
-        console.log(formErrors);
+        // console.log(formErrors);
         formErrors[key as keyof typeof formErrors] = true
-        console.log(formErrors);
+        // console.log(formErrors);
 
     })
 
 }
 
-const updateHours = () => {
+const updateHours = (date: { day: number, month: number, year: number }) => {
     let time = new Date().getHours()
     let month = new Date().getMonth()
     let day = new Date().getDate()
     let year = new Date().getFullYear()
     let hours = [];
-    const date = form.date
     for (let i = 8; i < 16; i++) {
         if (i < time && month === date.month && day === date.day && year === date.year) continue
         hours.push(`${i}:00`)
@@ -138,8 +138,8 @@ const updateHours = () => {
 
 }
 const updateDate = (date: { day: number, month: number, year: number }) => {
-    form.date = date;
-    updateHours();
+    form.date = `${date.month}-${date.day}-${date.year}`;
+    updateHours(date);
 }
 
 const assignPayment = (e: string) => {
@@ -150,10 +150,10 @@ const isSelfPay = () => {
 
 }
 
-const assignFormDate = (date: string) => {
-    const [month, day, year] = date.split('-')
-    form.dob = { day: parseInt(day), month: parseInt(month), year: parseInt(year) }
-}
+// const assignFormDate = (date: string) => {
+//     const [month, day, year] = date.split('-')
+//     form.dob = { day: parseInt(day), month: parseInt(month), year: parseInt(year) }
+// }
 </script>
 <template>
     <div class="booking-container">
@@ -181,7 +181,7 @@ const assignFormDate = (date: string) => {
                 <div class="split">
                     <div class="field">
                         <InputField placeHolder="Date of Birth" mask="##-##-####" id="dob" required
-                            @input="assignFormDate($event)" :error="formErrors.dob"/>
+                            @input="form.dob = $event" :error="formErrors.dob"/>
                         <div class="ps">MM-DD-YYYY</div>
                     </div>
                     <DropDownInputField class='field' :list="['Male', 'Female', 'Other']" required id="gender"
