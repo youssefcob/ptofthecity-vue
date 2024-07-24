@@ -3,39 +3,50 @@
 import { ref, watch, onMounted, onUnmounted, type Ref } from 'vue';
 
 const props = defineProps({
-    id: String,
     required: Boolean,
     list: Array as () => string[],
     placeHolder: String,
     watch: Boolean,
-    RefreshList:Number
-
+    disabled: Boolean,
+    error:Boolean
 });
 let filteredList = ref(props.list);
+const makeid = (length:number)=> {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
 
-
+let inputField = ref(null);
+let id = makeid(5);
 const input: Ref<string> = ref('');
 const show: Ref<boolean> = ref(false);
 
 const showDropDown = () => {
     filteredList.value = props.list;
     show.value = true;
-    console.log(show.value);
 }
+const emit = defineEmits([`input`]);
 
 const changeInput = (insurance: string) => {
     input.value = insurance;
+    emit(`input`, input.value);
     show.value = false;
-    console.log(show.value);
 
 }
 
-const emit = defineEmits([`input`]);
 
 const filterList = () => {
     if (props.list) {
         filteredList.value = props.list.filter(listItem => listItem.toLowerCase().startsWith(input.value.toLowerCase()));
     }
+    console.log(input.value);
 
     emit(`input`, input.value);
 
@@ -47,7 +58,7 @@ let handleClickOutside: (e: Event) => void;
 
 onMounted(() => {
     handleClickOutside = (e: Event) => {
-        const dropdownElement = document.querySelector(`.drpdown-btn.${props.id}`);
+        const dropdownElement = document.querySelector(`.drpdown-btn.${id}`);
         if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
             // if (e.target !== dropdownElement) {
             show.value = false;
@@ -59,7 +70,7 @@ onMounted(() => {
     };
     document.addEventListener('click', handleClickOutside);
 
-    
+
 });
 
 onUnmounted(() => {
@@ -69,10 +80,11 @@ onUnmounted(() => {
 
 <template>
 
-    <div :class="`drpdown-btn ${props.id}`" @click="showDropDown">
+    <div :class="`drpdown-btn ${id}`" @click="showDropDown">
 
         <div class="required">
-            <input class="input-field " @input="filterList()" v-model="input" style="width:100%" type="text">
+            <input :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()"
+                v-model="input" :style="`width:100%;$;${($props.error)?'border-color:red':''}`" type="text">
             <label class="asterisk" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">
                     *</span></label>
             <label class="arrowdown" ref="arrowdown">
@@ -83,8 +95,8 @@ onUnmounted(() => {
             </label>
 
         </div>
-        <div class="dropdown-wrapper {{ props.id }}" v-if="show && filteredList?.length">
-            <div class="dropdown-list {{ props.identifier }}">
+        <div class="dropdown-wrapper {{ id }}" v-if="show && filteredList?.length && !$props.disabled">
+            <div class="dropdown-list {{ identifier }}">
                 <div class="dropdown-item " v-for="insurance in filteredList" :key="insurance"
                     @click="changeInput(insurance)">{{ insurance }}</div>
 
@@ -101,6 +113,10 @@ onUnmounted(() => {
             @media screen and (max-width: 800px) {
                 height: 6rem;
                 padding: 18px;
+            }
+
+            &[disabled] {
+                background-color: $grey;
             }
 
         }

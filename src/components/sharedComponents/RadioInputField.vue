@@ -45,7 +45,7 @@ onMounted(() => {
         <div class="options">
             <div class="option" v-for="option in props.options" :key="option">
                 <input type="radio" @change="" :name="props.title" :value="option" />
-                <div class="radio-input" :for="option" ></div>
+                <div class="radio-input" :for="option"></div>
                 <label class="text">{{ option }}</label>
             </div>
         </div>
@@ -56,6 +56,7 @@ onMounted(() => {
     display: flex;
     gap: 1.25rem;
     align-items: center;
+    width: 100%;
 
     .text {
         color: $black;
@@ -63,7 +64,9 @@ onMounted(() => {
 
     .options {
         display: flex;
-        gap: 1.25rem;
+        gap: 3rem;
+        // justify-content: space-around;
+        width: 100%;
 
         input {
             display: none;
@@ -71,8 +74,10 @@ onMounted(() => {
 
         .option {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             align-items: center;
+
+
 
             .radio-input {
                 background-color: $white;

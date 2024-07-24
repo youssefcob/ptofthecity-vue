@@ -8,7 +8,9 @@ const props = defineProps({
     placeHolder: String,
     asteriskPosition: String,
     height: String,
-    mask: String
+    mask: String,
+    disabled: Boolean,
+    error: Boolean
 });
 let input = ref(``);
 const emit = defineEmits([`input`]);
@@ -35,22 +37,24 @@ const CalcTop = () => {
 
 <template>
     <div class="required">
-        <input class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()}`" 
+        <input :disabled="$props.disabled" class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()};${($props.error)?'border-color:red':''}`" 
         v-maska="mask"
             type="text" v-model="input" @input="emitInput">
-        <textarea class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()}`"
+        <textarea :disabled="$props.disabled" class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()};${($props.error)?'border-color:red':''}`"
             floatlabeltype type="text" v-model="input" @input="emitInput" />
         <label class="asterisk" v-if="!input" :style="CalcTop()">{{ $props.placeHolder }}<span style="color:red" v-if="props.required">
                 *</span> <span class='ps' v-if="$props.optional">(Optional)</span></label>
     </div>
 </template>
-
 <style scoped lang="scss">
 .required {
     position: relative;
 
     >.input-field {
     height: 3.75rem;
+    &[disabled]{
+        background-color: $grey;
+    }
 
         @media screen and (max-width: 800px) {
             height: 6rem;

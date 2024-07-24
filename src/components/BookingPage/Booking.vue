@@ -4,30 +4,125 @@ import Calender from '../sharedComponents/Calender.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import InputField from '../sharedComponents/InputField.vue';
 import RadioInputField from '../sharedComponents/RadioInputField.vue';
-
+import insurances from '../HomePage/insuranceSection/Insurances';
+import validation from '@/mixins/Validation';
 const form = reactive({
     location: '',
     firstName: '',
     lastName: '',
-    date: {
-        day: 0,
-        month: 0,
-        year: 0
-    },
+    dob: { day: 0, month: 0, year: 0 },
+    gender: '',
+    phone: '',
+    payment: '',
+    insurance: '',
+    memberId: '',
+    pain: '',
+    date: { day: 0, month: 0, year: 0 },
+    time: ''
+
 })
+
 const locations = [
     "location1",
     'location2',
     'location3'
 ]
 
+
 const inusrances = [
     "Insurance1",
     'Insurance2',
     'Insurance3'
 ]
+
+
 let Availablehours: Ref<string[]> = ref([])
-let refreshList: number = 0;
+
+const formValidation = {
+    location: {
+        rules: ['required', { dropdown: locations }],
+        message: {
+            required: 'Please select a location',
+            dropdown: 'Please select a valid location'
+        }
+    },
+    firstName: {
+        rules: ['required', 'letters'],
+    },
+    lastName: {
+        rules: ['required', 'letters'],
+    },
+    dob: {
+        rules: ['required', 'date:past'],
+
+    },
+    gender: {
+        rules: ['required', { dropdown: ['Male', 'Female', 'Other'] }],
+
+    },
+    phone: {
+        rules: ['required', 'format:##-##-####'],
+
+    },
+    payment: {
+        rules: ['required', { dropdown: ['Insurance', 'Self Pay'] }],
+
+    },
+    insurance: {
+        rules: ['required:if:payment:Insurance', { dropdown: insurances }],
+
+    },
+    memberId: {
+        rules: ['required:if:payment:Insurance'],
+    },
+    pain: {
+    },
+    date: {
+        rules: ['required', 'date:future'],
+
+    },
+    time: {
+        rules: ['required', { dropdown: Availablehours.value }],
+    }
+
+}
+
+const formErrors = reactive({
+    location: false,
+    firstName: false,
+    lastName: false,
+    dob:false,
+    gender: false,
+    phone: false,
+    payment: false,
+    insurance: false,
+    memberId: false,
+    pain: false,
+    date:false,
+    time: false
+});
+
+const validate = () => {
+    let v = new validation(formValidation, form)
+
+    v.validate()
+    let errors = v.errors;
+    let keys = v.keys
+
+    keys.forEach((key) => {
+        console.log(key);
+        setTimeout(() => {
+            formErrors[key as keyof typeof formErrors] = false
+
+        }, 500)
+        console.log(formErrors);
+        formErrors[key as keyof typeof formErrors] = true
+        console.log(formErrors);
+
+    })
+
+}
+
 const updateHours = () => {
     let time = new Date().getHours()
     let month = new Date().getMonth()
@@ -40,15 +135,25 @@ const updateHours = () => {
         hours.push(`${i}:00`)
     }
     Availablehours.value = hours
-    refreshList++;
-    console.log(Availablehours.value)
-    // return hours
+
 }
 const updateDate = (date: { day: number, month: number, year: number }) => {
     form.date = date;
     updateHours();
 }
 
+const assignPayment = (e: string) => {
+    form.payment = e
+}
+const isSelfPay = () => {
+    return form.payment !== 'Insurance'
+
+}
+
+const assignFormDate = (date: string) => {
+    const [month, day, year] = date.split('-')
+    form.dob = { day: parseInt(day), month: parseInt(month), year: parseInt(year) }
+}
 </script>
 <template>
     <div class="booking-container">
@@ -58,41 +163,52 @@ const updateDate = (date: { day: number, month: number, year: number }) => {
             <div class="left">
                 <div>
 
-                    <DropDownInputField id="locations" :list="locations" placeHolder="Find Your nearest clinic"
-                        @input="console.log($event)" required />
+                    <DropDownInputField id="location" :list="locations" placeHolder="Find Your nearest clinic"
+                        @input="form.location = $event" required :error="formErrors.location" />
                     <div class="ps">Make sure to allow location access</div>
 
                 </div>
                 <div>
-                    <div class="split">
-                        <InputField required class="field" placeHolder="First Name" id="firstName" />
-                        <InputField required class="field" placeHolder="Last Name" id="lastName" />
+                    <div class="split name">
+                        <InputField required class="field" placeHolder="First Name" id="firstName"
+                            @input="form.firstName = $event" :error="formErrors.firstName" />
+                        <InputField required class="field" placeHolder="Last Name" id="lastName"
+                            @input="form.lastName = $event" :error="formErrors.lastName" />
                     </div>
                     <div class="ps">Your legal name as shown in the photo ID</div>
 
                 </div>
                 <div class="split">
                     <div class="field">
-                        <InputField  placeHolder="Date of Birth" mask="##-##-####" id="dob" />
+                        <InputField placeHolder="Date of Birth" mask="##-##-####" id="dob" required
+                            @input="assignFormDate($event)" :error="formErrors.dob"/>
                         <div class="ps">MM-DD-YYYY</div>
                     </div>
-                    <RadioInputField @change="console.log($event)" class="field" title="Gender"
-                        :options="['Male', 'Female', 'Other']" />
+                    <DropDownInputField class='field' :list="['Male', 'Female', 'Other']" required id="gender"
+                        placeHolder="Gender" @input="form.gender = $event" :error="formErrors.gender" />
                 </div>
-                <div class="coverage">
-                    <RadioInputField @change="console.log($event)" class="field" title="Coverage"
-                        :options="['Insurance', 'Self Pay']" />
+                <div class="split reverse">
+                    <div class="field coverage">
+                        <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
+                            :options="['Insurance', 'Self Pay']" id="payment" :error="formErrors.payment" />
+                    </div>
+                    <div class="field">
+                        <InputField placeHolder="Phone Number" mask="(###) ###-####" id="phone" required
+                            @input="form.phone = $event" :error="formErrors.phone"/>
+                        <!-- <div class="ps">We will send you a confirmation text</div> -->
+                    </div>
                 </div>
                 <DropDownInputField id="insurance" :list="inusrances" placeHolder="Insurance company name"
-                    @input="console.log($event)" />
-                <InputField placeHolder="Member ID" id="MemberId" />
-                <InputField height="15rem" placeHolder="Tell us more about your pain" id="pain" optional />
+                    @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance"/>
+                <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
+                    :disabled="isSelfPay()" :error="formErrors.memberId" />
+                <InputField @input="form.pain = $event" height="15rem" placeHolder="Tell us more about your pain"
+                    id="pain" optional  :error="formErrors.pain" />
             </div>
             <div class="right">
                 <Calender @input="updateDate($event)" />
-                <DropDownInputField id="time" :list="Availablehours" :refreshList="refreshList" placeHolder="When"
-                    @input="console.log($event)" />
-                <div class="btn responsive">Book Appointment</div>
+                <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When" :error="formErrors.time" />
+                <div @click="validate()" class="btn responsive">Book Appointment</div>
             </div>
         </div>
     </div>
@@ -126,6 +242,24 @@ const updateDate = (date: { day: number, month: number, year: number }) => {
 
                 >.field {
                     width: 50%;
+
+                }
+
+                >.coverage {
+                    display: flex;
+                    align-items: center;
+                }
+
+                @media screen and (max-width: 800px) {
+                    flex-direction: column;
+
+                    >.field {
+                        width: 100%;
+                    }
+
+                    &.reverse {
+                        flex-direction: column-reverse;
+                    }
                 }
             }
         }
@@ -145,5 +279,7 @@ const updateDate = (date: { day: number, month: number, year: number }) => {
             }
         }
     }
+
+
 }
 </style>
