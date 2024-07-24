@@ -84,10 +84,8 @@ class validation {
 
                 if (arr && arr.length > 0) {
                     const firstElement = arr[0];
-                    // console.log(firstElement)
                     let parsedDate = moment(this.data, 'MM-DD-YYYY', true);
                     if (firstElement === 'past') {
-                        console.log('past')
 
                         if (moment(parsedDate).isAfter()) {
                             pushError('cannot be in the past');
@@ -95,7 +93,6 @@ class validation {
                     } else if (firstElement === 'future') {
                         if (moment(parsedDate).isBefore()) {
                             pushError('cannot be in the future');
-                            // console.log('future')
                         }
                     } else {
                         console.error('Invalid date rule');
@@ -131,9 +128,11 @@ class validation {
 
             },
             dropdown: (arr?: string[]) => {
+ 
+               
                 if (this.data && this.data.length > 0) {
-                    if (!arr?.includes(this.data)) {
-                        if (this.element.message && this.element.message.dropdown) {
+                    if (arr && !arr[0].includes(this.data)) {
+                       if (this.element.message && this.element.message.dropdown) {
                             this.errors.push({
                                 [this.key]: this.element.message.dropdown
                             });
@@ -141,7 +140,7 @@ class validation {
                             this.errors.push({
                                 [this.key]: `${this.key} is invalid`
                             });
-                        }
+                        } 
                     }
                 }
 
@@ -173,8 +172,8 @@ class validation {
             this.key = key;
             if (this.element.rules && this.element.rules.length > 0) {
 
-                //   if(this.checkRules()) break;
-                this.checkRules();
+                  if(this.checkRules()) break;
+                // this.checkRules();
 
             }
             // this.checkIfRequired(element, key);
@@ -189,10 +188,10 @@ class validation {
     private checkRules(): any {
         let rules = this.element.rules as (string | dropdown)[];
         for (const rule of rules) {
-            this.handleRule(rule);
-            // if (this.handleRule(rule)) {
-            // return true;
-            // };
+            // this.handleRule(rule);
+            if (this.handleRule(rule)) {
+            return true;
+            };
         }
 
     }
@@ -202,7 +201,6 @@ class validation {
             if (rule.includes(':')) {
                 let ruleArr = rule.split(':');
                 let ruleName = ruleArr[0];
-                // console.log(ruleName)
                 let ruleValue = ruleArr.splice(1);
                 const validationFunction = this.validator[ruleName];
 

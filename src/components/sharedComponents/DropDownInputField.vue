@@ -46,7 +46,6 @@ const filterList = () => {
     if (props.list) {
         filteredList.value = props.list.filter(listItem => listItem.toLowerCase().startsWith(input.value.toLowerCase()));
     }
-    console.log(input.value);
 
     emit(`input`, input.value);
 
@@ -110,6 +109,7 @@ onUnmounted(() => {
 .drpdown-btn {
     >.required {
         >.input-field {
+            transition: all 0.3s ease-in-out;
             @media screen and (max-width: 800px) {
                 height: 6rem;
                 padding: 18px;

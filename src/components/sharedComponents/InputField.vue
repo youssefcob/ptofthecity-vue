@@ -52,6 +52,7 @@ const CalcTop = () => {
 
     >.input-field {
     height: 3.75rem;
+    transition: all 0.3s ease-in-out;
     &[disabled]{
         background-color: $grey;
     }

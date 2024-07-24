@@ -6,6 +6,7 @@ import { onMounted } from 'vue';
 const props = defineProps<{
     title: string,
     options: string[],
+    error: boolean
 }>();
 const emit = defineEmits(['change']);
 onMounted(() => {
@@ -40,13 +41,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="radio-input-field">
-        <span class="text">{{ props.title }}:</span>
+    <div class="radio-input-field" >
+        <span class="text" :style="props.error? `color:red;`:``">{{ props.title }}:</span>
         <div class="options">
             <div class="option" v-for="option in props.options" :key="option">
                 <input type="radio" @change="" :name="props.title" :value="option" />
-                <div class="radio-input" :for="option"></div>
-                <label class="text">{{ option }}</label>
+                <div class="radio-input"  :for="option"></div>
+                <label class="text" :style="props.error? `color:red;`:``">{{ option }}</label>
             </div>
         </div>
     </div>
@@ -57,9 +58,12 @@ onMounted(() => {
     gap: 1.25rem;
     align-items: center;
     width: 100%;
+    height:100%;
+    border-radius: $border-radius;
 
     .text {
         color: $black;
+        transition: all 0.3s ease-in-out;
     }
 
     .options {

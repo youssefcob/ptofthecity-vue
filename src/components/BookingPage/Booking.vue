@@ -111,14 +111,11 @@ const validate = () => {
     console.log(errors)
 
     keys.forEach((key) => {
-        // console.log(key);
         setTimeout(() => {
             formErrors[key as keyof typeof formErrors] = false
 
         }, 500)
-        // console.log(formErrors);
         formErrors[key as keyof typeof formErrors] = true
-        // console.log(formErrors);
 
     })
 
@@ -150,10 +147,7 @@ const isSelfPay = () => {
 
 }
 
-// const assignFormDate = (date: string) => {
-//     const [month, day, year] = date.split('-')
-//     form.dob = { day: parseInt(day), month: parseInt(month), year: parseInt(year) }
-// }
+
 </script>
 <template>
     <div class="booking-container">
@@ -195,7 +189,6 @@ const isSelfPay = () => {
                     <div class="field">
                         <InputField placeHolder="Phone Number" mask="(###) ###-####" id="phone" required
                             @input="form.phone = $event" :error="formErrors.phone"/>
-                        <!-- <div class="ps">We will send you a confirmation text</div> -->
                     </div>
                 </div>
                 <DropDownInputField id="insurance" :list="inusrances" placeHolder="Insurance company name"
