@@ -6,6 +6,9 @@ import InputField from '../sharedComponents/InputField.vue';
 import RadioInputField from '../sharedComponents/RadioInputField.vue';
 import insurances from '../HomePage/insuranceSection/Insurances';
 import validation from '@/mixins/Validation';
+import { useSnackbar } from "vue3-snackbar";
+const snackbar = useSnackbar();
+
 const form = reactive({
     location: '',
     firstName: '',
@@ -47,13 +50,26 @@ const formValidation = {
         }
     },
     firstName: {
-        rules: ['required', 'letters'],
+        rules: ['required', 'letters:only'],
+        message: {
+            required: 'First Name Is Required',
+            letters: 'Name Cannot Contain Numbers Or Special Characters'
+        }
     },
     lastName: {
-        rules: ['required', 'letters'],
+        rules: ['required', 'letters:only'],
+        message: {
+            required: 'Last Name Is Required',
+            letters: 'Name Cannot Contain Numbers Or Special Characters'
+        }
     },
     dob: {
-        rules: ['date:past','required','min:10' ],
+        rules: ['required','date:past',  'min:10'],
+        message: {
+            required: 'Date Of Birth Is Required',
+            date: 'Date Of Birth Must be Valid And In The Past',
+            min: 'Date Of Birth Must Be In The Format MM-DD-YYYY'
+        }
 
     },
     gender: {
@@ -91,14 +107,14 @@ const formErrors = reactive({
     location: false,
     firstName: false,
     lastName: false,
-    dob:false,
+    dob: false,
     gender: false,
     phone: false,
     payment: false,
     insurance: false,
     memberId: false,
     pain: false,
-    date:false,
+    date: false,
     time: false
 });
 
@@ -107,8 +123,19 @@ const validate = () => {
 
     v.validate()
     let errors = v.errors;
+    let errorsArr = Object.values(errors[0])
+    console.log(errorsArr)
     let keys = v.keys
-    console.log(errors)
+    errorsArr.forEach((error) => {
+        // console.log(error)
+        snackbar.add({
+            background: '#F58E8E',
+            text: error,
+     
+        })
+    })
+
+ 
 
     keys.forEach((key) => {
         setTimeout(() => {
@@ -175,7 +202,7 @@ const isSelfPay = () => {
                 <div class="split">
                     <div class="field">
                         <InputField placeHolder="Date of Birth" mask="##-##-####" id="dob" required
-                            @input="form.dob = $event" :error="formErrors.dob"/>
+                            @input="form.dob = $event" :error="formErrors.dob" date minYear="-100" maxYear="+10"/>
                         <div class="ps">MM-DD-YYYY</div>
                     </div>
                     <DropDownInputField class='field' :list="['Male', 'Female', 'Other']" required id="gender"
@@ -188,19 +215,20 @@ const isSelfPay = () => {
                     </div>
                     <div class="field">
                         <InputField placeHolder="Phone Number" mask="(###) ###-####" id="phone" required
-                            @input="form.phone = $event" :error="formErrors.phone"/>
+                            @input="form.phone = $event" :error="formErrors.phone" />
                     </div>
                 </div>
                 <DropDownInputField id="insurance" :list="inusrances" placeHolder="Insurance company name"
-                    @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance"/>
+                    @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
                 <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
                     :disabled="isSelfPay()" :error="formErrors.memberId" />
                 <InputField @input="form.pain = $event" height="15rem" placeHolder="Tell us more about your pain"
-                    id="pain" optional  :error="formErrors.pain" />
+                    id="pain" optional :error="formErrors.pain" />
             </div>
             <div class="right">
                 <Calender @input="updateDate($event)" />
-                <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When" :error="formErrors.time" />
+                <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
+                    :error="formErrors.time" />
                 <div @click="validate()" class="btn responsive">Book Appointment</div>
             </div>
         </div>
@@ -210,7 +238,9 @@ const isSelfPay = () => {
 <style scoped lang="scss">
 .booking-container {
     @include pagePadding;
-    padding-top: calc(8vh + 7.5vh);
+    padding-top: calc(8vh + 7.5vh) !important;
+
+
 
     .form-container {
         display: flex;

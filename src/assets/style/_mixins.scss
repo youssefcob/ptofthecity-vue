@@ -63,7 +63,7 @@
 @mixin pagePadding() {
 
   $pagePadding: 0 6.25rem;
-  $pagePaddingRes: 0 2.5rem;
+  $pagePaddingRes: 0 2.5rem  ;
   padding: $pagePadding;
 
   @media screen and (max-width: 500px) {

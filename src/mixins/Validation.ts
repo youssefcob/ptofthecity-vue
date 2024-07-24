@@ -144,6 +144,28 @@ class validation {
                     }
                 }
 
+            },
+            letters: (arr?: string[]) => {
+                const pushError = (): void => {
+                    if (this.element.message && this.element.message.letters) {
+                        this.errors.push({
+                            [this.key]: this.element.message.letters
+                        });
+                    } else {
+                        this.errors.push({
+                            [this.key]: `${this.key} is invalid`
+                        });
+                    }
+                }
+
+                if (arr && arr.length > 0) {
+                    const firstElement = arr[0];
+                    if (firstElement === 'only') {
+                        if (!this.data.match(/^[a-zA-Z]+$/)) {
+                            pushError();
+                        }
+                    }
+                }
             }
         }
     }
@@ -173,11 +195,8 @@ class validation {
             if (this.element.rules && this.element.rules.length > 0) {
 
                   if(this.checkRules()) break;
-                // this.checkRules();
 
             }
-            // this.checkIfRequired(element, key);
-            // this.checkIfDropdown(element, key);
 
         }
         this.isValid = (this.errors.length === 0);
@@ -188,7 +207,7 @@ class validation {
     private checkRules(): any {
         let rules = this.element.rules as (string | dropdown)[];
         for (const rule of rules) {
-            // this.handleRule(rule);
+            this.handleRule(rule);
             if (this.handleRule(rule)) {
             return true;
             };

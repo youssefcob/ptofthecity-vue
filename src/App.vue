@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HomeView from './views/HomeView.vue';
+import { Vue3Snackbar } from "vue3-snackbar";
 
 
 </script>
@@ -7,5 +7,6 @@ import HomeView from './views/HomeView.vue';
 <template>
   
 <RouterView/>
+<vue3-snackbar  bottom :duration="2000"/>
 
 </template>
