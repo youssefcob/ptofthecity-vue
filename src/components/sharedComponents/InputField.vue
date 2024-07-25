@@ -13,7 +13,8 @@ const props = defineProps({
     error: Boolean,
     date: Boolean,
     minYear:String,
-    maxYear:String
+    maxYear:String,
+    lettersOnly:Boolean
 });
 let input = ref(``);
 const emit = defineEmits([`input`]);
@@ -24,11 +25,8 @@ const emitInput = (e: Event) => {
 
 }
 const handleInput = (e:Event) => {
-    if(!props.date){
-        return;
-    
-    }
-    else{
+
+    if(props.date){
         let value = (e.target as HTMLInputElement).value;
         if(value.length === 2){
             if(parseInt(value) > 12){
@@ -60,6 +58,15 @@ const handleInput = (e:Event) => {
             }
         }
     }
+
+    if(props.lettersOnly){
+        let value = (e.target as HTMLInputElement).value;
+        let regex = /^[a-zA-Z\s]*$/;
+        if(!regex.test(value)){
+            input.value = value.slice(0, -1);
+        }
+    }
+    emitInput(e);
 }
 const CalcHeight = () => {
     if (props.height) {

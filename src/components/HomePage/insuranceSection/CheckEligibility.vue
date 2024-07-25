@@ -1,17 +1,139 @@
 <script setup lang="ts">
 import insurances from "./Insurances";
-import EligibilityFormResponsive from './EligibiltyFormResponsive.vue';
 
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import FileInputField from '@/components/sharedComponents/FileInputField.vue';
+import validation from '@/mixins/Validation';
+import { useSnackbar } from "vue3-snackbar";
+import { reactive } from "vue";
+const snackbar = useSnackbar();
+
+
+const form = reactive({
+    firstName: '',
+    lastName: '',
+    dob: '',
+    insurance: '',
+    gender: '',
+    memberId: '',
+    phone: '',
+    medicareId: '',
+    medicaidId: ''
+})
+
+const formValidation = {
+    firstName: {
+        rules: ['required', 'letters:only'],
+        message: {
+            required: 'First Name Is Required',
+            letters: 'Name Cannot Contain Numbers Or Special Characters'
+        }
+    },
+    lastName: {
+        rules: ['required', 'letters:only'],
+        message: {
+            required: 'Last Name Is Required',
+            letters: 'Name Cannot Contain Numbers Or Special Characters'
+        }
+    },
+    dob: {
+        rules: ['required', 'date:past', 'min:10'],
+        message: {
+            required: 'Date Of Birth Is Required',
+            date: 'Date Of Birth Must be Valid And In The Past',
+            min: 'Date Of Birth Must Be In The Format MM-DD-YYYY'
+        }
+
+    },
+    insurance: {
+        rules: ['required',{ dropdown: insurances }],
+        message: {
+            required: 'Insurance Is Required',
+        }
+    },
+    gender: {
+        rules: ['required', { dropdown: ['Male', 'Female', 'Other'] }],
+
+    },
+    memberId: {
+        rules: ['required'],
+    },
+    phone: {
+        rules: ['required', 'min:14'],
+
+    },
+   
+   medicareId: {
+        rules: [],
+    },
+    medicaidId: {
+        rules: [],
+    }
+   
+
+
+}
+
+const formErrors = reactive({
+    firstName: false,
+    lastName: false,
+    dob: false,
+    insurance: false,
+    gender: false,
+    memberId: false,
+    phone: false,
+    medicareId: false,
+    medicaidId: false
+});
+
+const validate = () => {
+    let v = new validation(formValidation, form)
+
+    v.validate()
+    let errors = v.errors;
+    console.log(errors);
+    if(errors.length){
+        let errorsArr = Object.values(errors[0])
+    console.log(errorsArr)
+    let keys = v.keys
+  
+    errorsArr.forEach((error) => {
+        snackbar.add({
+            background: '#F58E8E',
+            text: error,
+     
+        })
+    })
+
+ 
+
+    keys.forEach((key) => {
+        setTimeout(() => {
+            formErrors[key as keyof typeof formErrors] = false
+
+        }, 500)
+        formErrors[key as keyof typeof formErrors] = true
+
+    })
+    } else {
+        snackbar.add({
+            background: '#8EF5E8',
+            text: 'Form Submitted Successfully',
+     
+        })
+    
+    }
+
+
+}
+
 </script>
 
 
 <template>
     <div class="eligibility-container">
         <h1 class="sectionHeader">Check eligibility</h1>
-        <!-- <EligibilityFormResponsive class="responsive-form-container" /> -->
 
         <div class="form-image-container">
             <div class="image" :style="{ backgroundImage: `url('images/eligibilityFormImage.jpg')` }">
@@ -24,35 +146,29 @@ import FileInputField from '@/components/sharedComponents/FileInputField.vue';
                     <div class="input-fields-container">
                         <div class="left">
                             <div class="split">
-                                <InputField class="field" placeHolder="First Name" id="firstName" required />
-                                <InputField class="field" placeHolder="Last Name" id="lastName" required />
+                                <InputField class="field" :error="formErrors.firstName" @input="form.firstName = $event" placeHolder="First Name" id="firstName" required
+                                    lettersOnly />
+                                <InputField class="field" :error="formErrors.lastName" @input="form.lastName = $event" placeHolder="Last Name" id="lastName" required lettersOnly />
                             </div>
-                            <DropDownInputField :list="insurances" id="insurances" placeHolder="Insurance" required />
-                            <InputField placeHolder="Member ID" id="memberId" required />
-                            <InputField placeHolder="Member ID" id="MemberId" />
+                            <DropDownInputField :error="formErrors.insurance" @input="form.insurance = $event" :list="insurances" id="insurances" placeHolder="Insurance" required />
+                            <InputField @input="form.memberId = $event" :error="formErrors.memberId" placeHolder="Member ID" id="memberId" required />
+                            <InputField @input="form.phone = $event" :error="formErrors.phone" placeHolder="Phone Number" id="phone" required mask="(###) ###-####" />
                             <div class="split">
-                                <InputField class="field" placeHolder="Medicare ID" />
-                                <InputField class="field" placeHolder="Medicaid ID" />
+                                <InputField @input="form.medicareId = $event" class="field" placeHolder="Medicare ID" />
+                                <InputField @input="form.medicaidId = $event" class="field" placeHolder="Medicaid ID" />
                             </div>
                         </div>
 
                         <div class="right">
-                            <InputField placeHolder="Date of Birth" id="dob" required />
-                            <DropDownInputField :list="['male', 'female', 'other']" id="gender" placeHolder="Gender"
+                            <InputField placeHolder="Date of Birth" @input="form.dob = $event" :error="formErrors.dob" id="dob" required mask="##-##-####" date />
+                            <DropDownInputField :list="['Male', 'Female', 'Other']" @input="form.gender = $event" :error="formErrors.gender" id="gender" placeHolder="Gender"
                                 required />
                             <FileInputField placeHolder="Inusrance Card Front" />
                             <FileInputField placeHolder="Inusrance Card Back" />
-                            <button class="btn responsive">Submit</button>
+                            <button @click="validate" class="btn responsive">Submit</button>
 
                         </div>
-                        <!-- <DropDownInputField :list="insurances" id="insurances" placeHolder="Insurance Plan" required />
 
-                        <FileInputField placeHolder="Inusrance Card Front" />
-
-                        <InputField placeHolder="Member ID" id="memberId" required />
-                        <FileInputField placeHolder="Inusrance Card Back" />
-
-                        -->
                     </div>
 
 
@@ -99,11 +215,12 @@ $formGap: 1.2rem;
         }
 
         .form-container {
-       
+
             width: 60%;
             display: flex;
             align-items: center;
             justify-content: center;
+
             @media screen and (max-width: 800px) {
                 width: 100%;
 
@@ -111,49 +228,59 @@ $formGap: 1.2rem;
 
             .form {
                 width: 100%;
-                >span{
+
+                >span {
                     display: block;
                     margin-bottom: $formGap;
-                };
+                }
+
+                ;
             }
 
             .input-fields-container {
                 // flex-shrink: 0;
                 display: flex;
-                gap:$formGap;
+                gap: $formGap;
 
                 // width:100%;
                 @media screen and (max-width: 426px) {
                     flex-direction: column;
 
                 }
-                .left{
-                    width:55%;
+
+                .left {
+                    width: 55%;
                     display: flex;
                     flex-direction: column;
-                    gap:$formGap;
+                    gap: $formGap;
 
 
                 }
-                .right{
-                    width:45%;
+
+                .right {
+                    width: 45%;
                     display: flex;
                     flex-direction: column;
-                    gap:$formGap;
+                    gap: $formGap;
                 }
-                .split{
-                    display:flex;
-                    gap:$formGap;
-                    >.field{
-                        width:100%;
+
+                .split {
+                    display: flex;
+                    gap: $formGap;
+
+                    >.field {
+                        width: 100%;
                     }
                 }
-                @media screen and (max-width: 800px) {
-             .left,.right{
-                    width:100%;
-             }
 
-            }
+                @media screen and (max-width: 800px) {
+
+                    .left,
+                    .right {
+                        width: 100%;
+                    }
+
+                }
             }
         }
     }

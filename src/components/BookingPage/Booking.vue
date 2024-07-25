@@ -123,11 +123,13 @@ const validate = () => {
 
     v.validate()
     let errors = v.errors;
-    let errorsArr = Object.values(errors[0])
+    console.log(errors);
+    if(errors.length){
+        let errorsArr = Object.values(errors[0])
     console.log(errorsArr)
     let keys = v.keys
+  
     errorsArr.forEach((error) => {
-        // console.log(error)
         snackbar.add({
             background: '#F58E8E',
             text: error,
@@ -145,9 +147,17 @@ const validate = () => {
         formErrors[key as keyof typeof formErrors] = true
 
     })
+    } else {
+        snackbar.add({
+            background: '#8EF5E8',
+            text: 'Form Submitted Successfully',
+     
+        })
+    
+    }
+
 
 }
-
 const updateHours = (date: { day: number, month: number, year: number }) => {
     let time = new Date().getHours()
     let month = new Date().getMonth()
@@ -192,9 +202,9 @@ const isSelfPay = () => {
                 <div>
                     <div class="split name">
                         <InputField required class="field" placeHolder="First Name" id="firstName"
-                            @input="form.firstName = $event" :error="formErrors.firstName" />
+                            @input="form.firstName = $event" :error="formErrors.firstName" lettersOnly />
                         <InputField required class="field" placeHolder="Last Name" id="lastName"
-                            @input="form.lastName = $event" :error="formErrors.lastName" />
+                            @input="form.lastName = $event" :error="formErrors.lastName" lettersOnly />
                     </div>
                     <div class="ps">Your legal name as shown in the photo ID</div>
 
