@@ -24,7 +24,7 @@ interface date {
 }
 
 interface Form {
-    [key: string]: string | date | string[];
+    [key: string]: string | string[] | FormData;
 
 }
 
@@ -128,11 +128,11 @@ class validation {
 
             },
             dropdown: (arr?: string[]) => {
- 
-               
+
+
                 if (this.data && this.data.length > 0) {
                     if (arr && !arr[0].includes(this.data)) {
-                       if (this.element.message && this.element.message.dropdown) {
+                        if (this.element.message && this.element.message.dropdown) {
                             this.errors.push({
                                 [this.key]: this.element.message.dropdown
                             });
@@ -140,7 +140,7 @@ class validation {
                             this.errors.push({
                                 [this.key]: `${this.key} is invalid`
                             });
-                        } 
+                        }
                     }
                 }
 
@@ -166,6 +166,32 @@ class validation {
                         }
                     }
                 }
+            },
+            file: (arr?: string[]) => {
+                const pushError = (): void => {
+                    if (this.element.message && this.element.message.file) {
+                        this.errors.push({
+                            [this.key]: this.element.message.file
+                        });
+                    } else {
+                        this.errors.push({
+                            [this.key]: `${this.key} is invalid`
+                        });
+                    }
+                }
+
+                if (arr && arr.length > 0) {
+                    const file = this.data as FormData;
+                    for (let [key, value] of file.entries()) {
+                        if (value instanceof File) {
+                            const fileType = value.name.split('.').pop();
+                            if (fileType && !arr.includes(fileType)) {
+                                pushError();
+                            }
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -194,7 +220,7 @@ class validation {
             this.key = key;
             if (this.element.rules && this.element.rules.length > 0) {
 
-                  if(this.checkRules()) break;
+                if (this.checkRules()) break;
 
             }
 
@@ -207,9 +233,9 @@ class validation {
     private checkRules(): any {
         let rules = this.element.rules as (string | dropdown)[];
         for (const rule of rules) {
-            this.handleRule(rule);
+            // this.handleRule(rule);
             if (this.handleRule(rule)) {
-            return true;
+                return true;
             };
         }
 
@@ -231,6 +257,7 @@ class validation {
 
                 if (validationFunction && typeof validationFunction === 'function') {
                     validationFunction();
+
                 }
             }
 
@@ -240,6 +267,7 @@ class validation {
                 const validationFunction = this.validator[key];
                 if (validationFunction && typeof validationFunction === 'function') {
                     validationFunction([rule[key as keyof typeof rule]]);
+
                 }
             }
         }

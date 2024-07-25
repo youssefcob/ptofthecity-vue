@@ -18,3 +18,27 @@ html {
     /* font-size:clamp(10px,1vw,30px); */
     user-select: none;
 }
+
+.vue3-snackbar-message-title{
+    font-family:'Helvetica Neue', sans-serif; ;
+    font-size: 1rem ;
+    font-weight: 500 ;
+    color: white ;
+    
+}
+
+.vue3-snackbar-message-wrapper{
+    border: 1px solid rgba(255, 0, 0, 0.40);
+
+}
+
+#vue3-snackbar--container {
+    position: fixed;
+    padding: 0;
+    pointer-events: none;
+
+    
+}
+#vue3-snackbar--container.is-bottom{
+    /* bottom:-16px !important; */
+}

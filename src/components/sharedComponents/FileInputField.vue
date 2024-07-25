@@ -1,10 +1,25 @@
 <script setup lang="ts">
+import { error } from 'console';
 import { ref, type Ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
-    id: String,
     placeHolder: String,
+    error: Boolean
 });
+const makeid = (length:number)=> {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
+
+let id = makeid(5);
+
 
 const input: Ref<HTMLElement | null> = ref(null);
 
@@ -16,14 +31,31 @@ const openFileDialog = () => {
         input.value.click();
     }
 }
-
+const emit = defineEmits(['input']);
 const HandleFileUpload = (e: Event) => {
     // console.log((e.target as HTMLInputElement).files);
-    const file = (e.target as HTMLInputElement).value;
-    if (file) {
+   const  files = ((e.target as HTMLInputElement).files)
+   if (files && files.length > 0) {
+        const formData = new FormData();
+        let file = files[0].name;
+        formData.append('file', files[0]); 
+        if (file) {
         fileName.value = file.split('\\').pop() as string;
-        console.log(fileName.value);
+        // console.log(fileName.value);
     }
+        emit('input',formData);
+        
+        // Assuming you're uploading a single file
+        // for (let [key, value] of formData.entries()) {
+        //     console.log(`${key}:`, value);
+        // }
+        // console.log(files[0]);
+    }
+    // console.log((e));
+
+    // const file = (e.target as HTMLInputElement).value;
+    // console.log(file);
+
     // console.log((e.target as HTMLInputElement).value);
 
     // console.log('File uploaded');
@@ -32,9 +64,9 @@ const HandleFileUpload = (e: Event) => {
 
 
 <template>
-    <input type="file" ref="input" :class="`real-file-input ${props.id}`" @change="HandleFileUpload">
+    <input type="file" ref="input" :class="`real-file-input ${id}`" @change="HandleFileUpload">
 
-    <div :class="`file-input ${$props.id} big-screen`" @click="openFileDialog">
+    <div :class="`file-input ${id} big-screen`" :style="`${($props.error)?'border:1px solid red;':''}` "@click="openFileDialog">
         <div class="file-btn">
             <span>Choose File</span>
 
@@ -48,7 +80,7 @@ const HandleFileUpload = (e: Event) => {
                 {{ fileName }}</label></div>
     </div>
 
-    <div :class="`file-input ${$props.id} responsive`" @click="openFileDialog">
+    <div :class="`file-input ${id} responsive`" :style="`${($props.error)?'border:1px solid red;':''}`" @click="openFileDialog">
         <div class="file-btn">
             <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 16" fill="none">
                     <path

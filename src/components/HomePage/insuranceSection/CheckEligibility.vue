@@ -8,6 +8,7 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import { reactive } from "vue";
 const snackbar = useSnackbar();
+// import snackbar from '@/components/snackbar/SnackBar.vue';
 
 
 const form = reactive({
@@ -19,7 +20,9 @@ const form = reactive({
     memberId: '',
     phone: '',
     medicareId: '',
-    medicaidId: ''
+    medicaidId: '',
+    insuranceCardFront: new FormData(),
+    insuranceCardBack: new FormData(),
 })
 
 const formValidation = {
@@ -47,13 +50,17 @@ const formValidation = {
 
     },
     insurance: {
-        rules: ['required',{ dropdown: insurances }],
+        rules: ['required', { dropdown: insurances }],
         message: {
             required: 'Insurance Is Required',
         }
     },
     gender: {
         rules: ['required', { dropdown: ['Male', 'Female', 'Other'] }],
+        message: {
+            required: 'Gender Is Required',
+            dropdown: 'Please Pick A Valid Gender'
+        }
 
     },
     memberId: {
@@ -63,14 +70,20 @@ const formValidation = {
         rules: ['required', 'min:14'],
 
     },
-   
-   medicareId: {
+
+    medicareId: {
         rules: [],
     },
     medicaidId: {
         rules: [],
+    },
+    insuranceCardFront: {
+        rules: [ 'file:pdf:png:jpg:jpeg'],
+    },
+    insuranceCardBack: {
+        rules: ['file:pdf:png:jpg:jpeg'],
     }
-   
+
 
 
 }
@@ -84,7 +97,9 @@ const formErrors = reactive({
     memberId: false,
     phone: false,
     medicareId: false,
-    medicaidId: false
+    medicaidId: false,
+    insuranceCardFront: false,
+    insuranceCardBack: false
 });
 
 const validate = () => {
@@ -93,36 +108,36 @@ const validate = () => {
     v.validate()
     let errors = v.errors;
     console.log(errors);
-    if(errors.length){
+    if (errors.length) {
         let errorsArr = Object.values(errors[0])
-    console.log(errorsArr)
-    let keys = v.keys
-  
-    errorsArr.forEach((error) => {
-        snackbar.add({
-            background: '#F58E8E',
-            text: error,
-     
+        console.log(errorsArr)
+        let keys = v.keys
+
+        errorsArr.forEach((error) => {
+            snackbar.add({
+                background: '#F58E8E',
+                text: error,
+
+            })
         })
-    })
 
- 
 
-    keys.forEach((key) => {
-        setTimeout(() => {
-            formErrors[key as keyof typeof formErrors] = false
 
-        }, 500)
-        formErrors[key as keyof typeof formErrors] = true
+        keys.forEach((key) => {
+            setTimeout(() => {
+                formErrors[key as keyof typeof formErrors] = false
 
-    })
+            }, 500)
+            formErrors[key as keyof typeof formErrors] = true
+
+        })
     } else {
         snackbar.add({
             background: '#8EF5E8',
             text: 'Form Submitted Successfully',
-     
+
         })
-    
+
     }
 
 
@@ -146,13 +161,17 @@ const validate = () => {
                     <div class="input-fields-container">
                         <div class="left">
                             <div class="split">
-                                <InputField class="field" :error="formErrors.firstName" @input="form.firstName = $event" placeHolder="First Name" id="firstName" required
-                                    lettersOnly />
-                                <InputField class="field" :error="formErrors.lastName" @input="form.lastName = $event" placeHolder="Last Name" id="lastName" required lettersOnly />
+                                <InputField class="field" :error="formErrors.firstName" @input="form.firstName = $event"
+                                    placeHolder="First Name" id="firstName" required lettersOnly />
+                                <InputField class="field" :error="formErrors.lastName" @input="form.lastName = $event"
+                                    placeHolder="Last Name" id="lastName" required lettersOnly />
                             </div>
-                            <DropDownInputField :error="formErrors.insurance" @input="form.insurance = $event" :list="insurances" id="insurances" placeHolder="Insurance" required />
-                            <InputField @input="form.memberId = $event" :error="formErrors.memberId" placeHolder="Member ID" id="memberId" required />
-                            <InputField @input="form.phone = $event" :error="formErrors.phone" placeHolder="Phone Number" id="phone" required mask="(###) ###-####" />
+                            <DropDownInputField :error="formErrors.insurance" @input="form.insurance = $event"
+                                :list="insurances" id="insurances" placeHolder="Insurance" required />
+                            <InputField @input="form.memberId = $event" :error="formErrors.memberId"
+                                placeHolder="Member ID" id="memberId" required />
+                            <InputField @input="form.phone = $event" :error="formErrors.phone"
+                                placeHolder="Phone Number" id="phone" required mask="(###) ###-####" />
                             <div class="split">
                                 <InputField @input="form.medicareId = $event" class="field" placeHolder="Medicare ID" />
                                 <InputField @input="form.medicaidId = $event" class="field" placeHolder="Medicaid ID" />
@@ -160,11 +179,12 @@ const validate = () => {
                         </div>
 
                         <div class="right">
-                            <InputField placeHolder="Date of Birth" @input="form.dob = $event" :error="formErrors.dob" id="dob" required mask="##-##-####" date />
-                            <DropDownInputField :list="['Male', 'Female', 'Other']" @input="form.gender = $event" :error="formErrors.gender" id="gender" placeHolder="Gender"
-                                required />
-                            <FileInputField placeHolder="Inusrance Card Front" />
-                            <FileInputField placeHolder="Inusrance Card Back" />
+                            <InputField placeHolder="Date of Birth" @input="form.dob = $event" :error="formErrors.dob"
+                                id="dob" required mask="##-##-####" date />
+                            <DropDownInputField :list="['Male', 'Female', 'Other']" @input="form.gender = $event"
+                                :error="formErrors.gender" id="gender" placeHolder="Gender" required />
+                            <FileInputField placeHolder="Inusrance Card Front" :error="formErrors.insuranceCardFront" @input="form.insuranceCardFront = $event" />
+                            <FileInputField placeHolder="Inusrance Card Back" :error="formErrors.insuranceCardBack" @input="form.insuranceCardBack = $event"/>
                             <button @click="validate" class="btn responsive">Submit</button>
 
                         </div>
