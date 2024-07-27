@@ -5,10 +5,13 @@ import { Vue3Snackbar } from "vue3-snackbar";
 </script>
 
 <template>
-  
-<RouterView/>
 
-<!-- <SnackBar/> -->
-<vue3-snackbar	 bottom :duration="2000"/>
+    <RouterView />
 
+    <!-- <SnackBar/> -->
+    <vue3-snackbar :iconPresets="{
+        path: ` M10 18L8 12L10 6L14 12L10 18Z`
+    }" bottom :duration="2000"
+    limit="1" />
+    <!-- <font-awesome-icon :icon="['fas', 'minus']" /> -->
 </template>

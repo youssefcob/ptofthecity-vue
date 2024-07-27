@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { ref, type Ref } from 'vue';
 import ContactForm from './ContactForm.vue';
 import ContactUsImage from './ContactUsImage.vue';
 
 const props = defineProps({
     header: String,
 });
+
+const contactFormRef: Ref<typeof ContactForm | null> = ref(null);
+const submit = () => {
+    contactFormRef.value?.validate();
+}
 </script>
 
 <template>
@@ -15,13 +21,13 @@ const props = defineProps({
         </div>
         <div class="form-image-container">
             <div class="form-container">
-                <ContactForm />
+                <ContactForm ref="contactFormRef" />
             </div>
             <div class="image-container">
                 <ContactUsImage />
             </div>
         </div>
-        <div class="btn responsive main">Submit</div>
+        <div @click="submit" class="btn responsive main">Submit</div>
 
     </div>
 </template>
