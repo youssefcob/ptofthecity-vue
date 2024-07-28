@@ -6,11 +6,13 @@ import type { Ref } from 'vue';
 
 
 const show: Ref<boolean> = ref(false);
-const lang: Ref<string> = ref('EN');
+const lang: Ref<string> = ref(localStorage.getItem('lang') || 'EN');
 
 const changeLang = (language: string): void => {
     lang.value = language;
+    localStorage.setItem('lang', language);
     show.value = false;
+    window.location.reload();
 }
 
 let handleClickOutside: (e: Event) => void;
