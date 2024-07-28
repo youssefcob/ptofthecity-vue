@@ -36,10 +36,10 @@ const isInverted = ()=>{
 <template>
     <div :class="`accordion ${isInverted()}`" ref="accordion" @click="expandItems">
         <div class="city">
-            <h2>{{ props.location?.name }}</h2>
+            <h2>{{ $translate(props.location?.name) }}</h2>
         </div>
         <div class="number-of-clinics">
-            <h2>{{ props.location?.numberOfClinics }} Clinics</h2>
+            <h2>{{ $transNumber(props.location?.numberOfClinics)}} {{$translate('clinics')}} </h2>
         </div>
     </div>
     <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">

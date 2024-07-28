@@ -18,7 +18,8 @@ const insurances = [
     "friendship",
     "imagination",
     "melody",
-    "adventure"
+    "adventure",
+    'بطاقة التأمين من الأمام'
 ];
 
 export default insurances;

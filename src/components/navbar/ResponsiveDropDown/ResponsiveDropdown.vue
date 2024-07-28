@@ -15,7 +15,7 @@ const toggleDropDown = () => {
     <div class="menu">
         <div class="header">
             <div>
-                <h3>Menu</h3>
+                <h3>{{$translate('menu')}}</h3>
             </div>
             <div class="CloseDropDown" @click="toggleDropDown">
                 <h3>X</h3>

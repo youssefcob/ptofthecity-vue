@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, type Ref } from 'vue';
+import { onMounted, reactive, ref, type Ref } from 'vue';
 import Calender from '../sharedComponents/Calender.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import InputField from '../sharedComponents/InputField.vue';
@@ -30,7 +30,14 @@ const locations = [
     'location2',
     'location3'
 ]
-
+const location = '';
+onMounted(() => {
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position.coords.latitude, position.coords.longitude)
+    })
+}
+})
 
 const inusrances = [
     "Insurance1",
@@ -196,7 +203,8 @@ const isSelfPay = () => {
 
                     <DropDownInputField id="location" :list="locations" placeHolder="Find Your nearest clinic"
                         @input="form.location = $event" required :error="formErrors.location" />
-                    <div class="ps">Make sure to allow location access</div>
+                    <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
+
 
                 </div>
                 <div>

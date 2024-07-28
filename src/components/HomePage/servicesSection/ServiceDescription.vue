@@ -16,7 +16,7 @@ const props = defineProps({
         </div>
         <router-link active-class="navbar-link" class="learn-more btn transparent btnfont"
             :to="{ name: `service`, params: { id: $props.service?.id } }">
-            Learn More
+            {{$translate('learn_more')}}
         </router-link>
     </div>
 </template>

@@ -10,8 +10,8 @@ const isFirstItem=(index:number)=>{
 <template>
     <div class="container">
         <div class="sectionHeader">
-            <h1>Clinics</h1>
-            <p>22 clinics all over New York</p>
+            <h1>{{ $translate('clinics') }}</h1>
+            <p>{{$translate('clinics_phrase')}}</p>
         </div>
 
         <div class="accordionsContainer">
@@ -19,7 +19,7 @@ const isFirstItem=(index:number)=>{
                 <ClinicAccordion :location="location" :active="isFirstItem(index)"/>
             </template>
         </div>
-        <div class="btn transparent responsive main">find your nearest location</div>
+        <div class="btn transparent responsive main">{{$translate('find_your_nearest_location')}}</div>
     </div>
 </template>
 

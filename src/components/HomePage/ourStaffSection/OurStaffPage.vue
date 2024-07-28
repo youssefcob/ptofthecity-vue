@@ -12,8 +12,8 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
 <template>
     <div class="container">
         <div class="sectionHeader-m">
-            <h1>Meet Our Staff</h1>
-            <p>Physical Therapists you can trust</p>
+            <h1>{{$translate('meet_our_staff')}}</h1>
+            <p>{{$translate('meet_our_staff_phrase')}}</p>
         </div>
         <Carousel class="staffMembers">
                 <StaffMember v-for="staffMember in staffMembers" :staffMember="staffMember" />
@@ -29,6 +29,9 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
 .container {
     display: flex;
     flex-direction: column;
+    >.sectionHeader-m {
+        width:100%;
+    }
 
     @media screen and (max-width: 800px) {
         >.title-wrapper {

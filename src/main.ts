@@ -1,5 +1,5 @@
 import './assets/main.css'
-import {translate,lang,dir} from './mixins/Translate';
+import {translate,lang,dir, transNumbers} from './mixins/Translate';
 import { SnackbarService } from "vue3-snackbar";
 import "vue3-snackbar/styles";
 
@@ -17,5 +17,6 @@ app.use(SnackbarService);
 app.config.globalProperties.$translate = translate;
 app.config.globalProperties.$lang = lang;
 app.config.globalProperties.$dir = dir;
+app.config.globalProperties.$transNumber = transNumbers;
 
 app.mount('#app')

@@ -78,7 +78,7 @@ const formValidation = {
         rules: [],
     },
     insuranceCardFront: {
-        rules: [ 'file:pdf:png:jpg:jpeg'],
+        rules: ['file:pdf:png:jpg:jpeg'],
     },
     insuranceCardBack: {
         rules: ['file:pdf:png:jpg:jpeg'],
@@ -148,44 +148,45 @@ const validate = () => {
 
 <template>
     <div class="eligibility-container">
-        <h1 class="sectionHeader">Check eligibility</h1>
+        <h1 class="sectionHeader">{{ $translate('check_eligibility') }}</h1>
 
         <div class="form-image-container">
             <div class="image" :style="{ backgroundImage: `url('images/eligibilityFormImage.jpg')` }">
             </div>
             <div class="form-container">
                 <div class="form">
-                    <span>
-                        Check your benefits and eligibility and our team will get back to you within 30 mintues
-                    </span>
+                    <span :class="$dir()">
+                        {{ $translate('eligibility_check_phrase') }} </span>
                     <div class="input-fields-container">
                         <div class="left">
                             <div class="split">
                                 <InputField class="field" :error="formErrors.firstName" @input="form.firstName = $event"
-                                    placeHolder="First Name" id="firstName" required lettersOnly />
+                                    :placeHolder="$translate('first_name')" id="firstName" required lettersOnly />
                                 <InputField class="field" :error="formErrors.lastName" @input="form.lastName = $event"
-                                    placeHolder="Last Name" id="lastName" required lettersOnly />
+                                    :placeHolder="$translate('last_name')" id="lastName" required lettersOnly />
                             </div>
                             <DropDownInputField :error="formErrors.insurance" @input="form.insurance = $event"
-                                :list="insurances" id="insurances" placeHolder="Insurance" required />
+                                :list="insurances" id="insurances" :placeHolder="$translate('insurance_provider')" required />
                             <InputField @input="form.memberId = $event" :error="formErrors.memberId"
-                                placeHolder="Member ID" id="memberId" required />
+                                :placeHolder="$translate('member_id')" id="memberId" required />
                             <InputField @input="form.phone = $event" :error="formErrors.phone"
-                                placeHolder="Phone Number" id="phone" required mask="(###) ###-####" />
+                                :placeHolder="$translate('phone_number')" id="phone" required mask="(###) ###-####" />
                             <div class="split">
-                                <InputField @input="form.medicareId = $event" class="field" placeHolder="Medicare ID" />
-                                <InputField @input="form.medicaidId = $event" class="field" placeHolder="Medicaid ID" />
+                                <InputField @input="form.medicareId = $event" class="field" :placeHolder="$translate('medicare_id')" />
+                                <InputField @input="form.medicaidId = $event" class="field" :placeHolder="$translate('medicaid_id')" />
                             </div>
                         </div>
 
                         <div class="right">
-                            <InputField placeHolder="Date of Birth" @input="form.dob = $event" :error="formErrors.dob"
+                            <InputField :placeHolder="$translate('date_of_birth')" @input="form.dob = $event" :error="formErrors.dob"
                                 id="dob" required mask="##-##-####" date />
-                            <DropDownInputField :list="['Male', 'Female', 'Other']" @input="form.gender = $event"
-                                :error="formErrors.gender" id="gender" placeHolder="Gender" required />
-                            <FileInputField placeHolder="Inusrance Card Front" :error="formErrors.insuranceCardFront" @input="form.insuranceCardFront = $event" />
-                            <FileInputField placeHolder="Inusrance Card Back" :error="formErrors.insuranceCardBack" @input="form.insuranceCardBack = $event"/>
-                            <button @click="validate" class="btn responsive">Submit</button>
+                            <DropDownInputField :list="[$translate('Male'),$translate('Female'),$translate('Other')]" @input="form.gender = $event"
+                                :error="formErrors.gender" id="gender" :placeHolder="$translate('gender')" required />
+                            <FileInputField :placeHolder="$translate('insurance_card_front')" :error="formErrors.insuranceCardFront"
+                                @input="form.insuranceCardFront = $event" />
+                            <FileInputField :placeHolder="$translate('insurance_card_back')" :error="formErrors.insuranceCardBack"
+                                @input="form.insuranceCardBack = $event" />
+                            <button @click="validate" class="btn responsive">{{$translate('submit')}}</button>
 
                         </div>
 
@@ -252,6 +253,9 @@ $formGap: 1.2rem;
                 >span {
                     display: block;
                     margin-bottom: $formGap;
+                    &.rtl{
+                        direction: rtl;
+                    }
                 }
 
                 ;

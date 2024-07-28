@@ -11,11 +11,11 @@ const isFirstItem=(index:number)=>{
 
 <template>
     <div class="container">
-        <h1 class="sectionHeader">FAQs</h1>
+        <h1 class="sectionHeader">{{ $translate('faqs') }}</h1>
         <div class="questionsContainer">
             <QuestionAccordion v-for="(faq,index) in faqs.home" :faq="faq" :key="index" :active="isFirstItem(index)" />
         </div>
-        <router-link to="/FAQs" class="btn transparent responsive main">learn more</router-link>
+        <router-link to="/FAQs" class="btn transparent responsive main">{{$translate('learn_more')}}</router-link>
     </div>
 </template>
 
@@ -25,6 +25,9 @@ const isFirstItem=(index:number)=>{
     display: flex;
     flex-direction: column;
     @include pagePadding;
+    .sectionHeader{
+        width:100%;
+    }
 
     .questionsContainer{
         display: flex;

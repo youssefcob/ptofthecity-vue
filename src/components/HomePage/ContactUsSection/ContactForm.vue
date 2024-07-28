@@ -105,54 +105,49 @@ const validate = () => {
 
 
 }
-const smth = () => {
-    console.log('smth')
-}
+
 const childValidate = ref(validate)
 defineExpose({
     validate,
-    smth
 })
 </script>
 
 <template>
     <div class="form">
-   <DropDownInputField
-        id="subject"
-        required
-        :list="subjectsList"
-        placeHolder="Subject"
-        asteriskPosition="15%"
-        @input="form.subject = $event"
-        :error="formErrors.subject"
+        <DropDownInputField
+      id="subject"
+      required
+      :list="subjectsList"
+      :placeHolder="$translate('subject')"
+      asteriskPosition="15%"
+      @input="form.subject = $event"
+      :error="formErrors.subject"
     />
     <InputField
-    @input="form.name = $event"
-    required
-    placeHolder="Name"
-    :error="formErrors.name"
+      @input="form.name = $event"
+      required
+      :placeHolder="$translate('name')"
+      :error="formErrors.name"
     />
     <InputField
-    @input="form.email = $event"
-    placeHolder="Email address"
-    required
-    :error="formErrors.email"
+      @input="form.email = $event"
+      :placeHolder="$translate('email')"
+      required
+      :error="formErrors.email"
     />
     <InputField
-    @input="form.phone = $event"
-    placeHolder="Phone number"
-    required
-    :error="formErrors.phone"
-    mask="(###) ###-####"
+      @input="form.phone = $event"
+      :placeHolder="$translate('phone')"
+      required
+      :error="formErrors.phone"
+      mask="(###) ###-####"
     />
-
     <InputField
-    @input="form.message = $event"
-    placeHolder="Tell us how can we help you"
-    height="12.5rem"
-    required
-    :error="formErrors.message"
-
+      @input="form.message = $event"
+      :placeHolder="$translate('message')"
+      height="12.5rem"
+      required
+      :error="formErrors.message"
     />
 </div>
 </template>

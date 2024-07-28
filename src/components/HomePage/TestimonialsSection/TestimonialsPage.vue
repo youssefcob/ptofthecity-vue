@@ -10,7 +10,7 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
 
 <template>
     <div class="container">
-        <h1 class="sectionHeader">Testimonials</h1>
+        <h1 class="sectionHeader">{{$translate('testimonials')}}</h1>
 
         <Carousel class="carousel">
             <SingleTestimonial v-for="testimonial in testimonials" :testimonial="testimonial" />
@@ -25,6 +25,9 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
     margin-top: 12.5rem;
     width: 100%;
     @include flexDirection(column);
+    >.sectionHeader {
+        width:100%;
+    }
     >h1 {
         color: $navy;
         @include pagePadding;

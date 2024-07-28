@@ -18,15 +18,15 @@ let showMore = () => {
 
 <template>
     <div class="insuranceContainer">
-        <h1 class="sectionHeader">Insurance we accept</h1>
+        <h1 class="sectionHeader">{{$translate('insurances_we_accept')}}</h1>
         <div class="insurances some-hidden">
             <div class="single-insurance" v-for="key in keys" :key="key">
                 <img :src="key" alt="">
             </div>
         </div>
         <div class="show-btn" @click="showMore()">
-            <template v-if="!showmore">Show more</template>
-            <template v-else>Show less</template>
+            <template v-if="!showmore">{{$translate('show_more')}}</template>
+            <template v-else>{{$translate('show_less')}}</template>
             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
                 <path d="M1 1L6 6L11 1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>

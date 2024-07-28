@@ -84,13 +84,13 @@ const CalcTop = () => {
 </script>
 
 <template>
-    <div class="required">
+    <div class="required" :dir="$dir()">
         <input :disabled="$props.disabled" class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()};${($props.error)?'border-color:red':''}`" 
         v-maska="mask"
             type="text" v-model="input" @input="handleInput($event)">
         <textarea :disabled="$props.disabled" class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()};${($props.error)?'border-color:red':''}`"
             floatlabeltype type="text" v-model="input" @input="handleInput($event)" />
-        <label class="asterisk" v-if="!input" :style="CalcTop()">{{ $props.placeHolder }}<span style="color:red" v-if="props.required">
+        <label class="asterisk" v-if="!input" :style="`${CalcTop()};${$dir() === 'ltr'? 'left:1.25rem':'right:1.25rem'};`">{{ $props.placeHolder }}<span style="color:red" v-if="props.required">
                 *</span> <span class='ps' v-if="$props.optional">(Optional)</span></label>
     </div>
 </template>

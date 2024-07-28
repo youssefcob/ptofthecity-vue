@@ -53,7 +53,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="navbar horizontal" ref="nav">
+    <nav class="navbar horizontal"  ref="nav">
         <div class="left-container">
             <router-link to="/">
                 <NavLogo />
@@ -68,7 +68,7 @@ onMounted(() => {
         </div>
     </nav>
 
-    <nav class="navbar mobile" ref="mobileNav">
+    <nav class="navbar mobile"  ref="mobileNav">
         <router-link to="/">
             <NavLogo />
         </router-link>

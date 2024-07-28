@@ -6,7 +6,7 @@ import { ref } from 'vue';
 
 <template>
     <div class="trustedBy-container">
-        <h1 class="sectionHeader-m" >Trusted by</h1>
+        <h1 class="sectionHeader-m" >{{ $translate('trusted_by') }}</h1>
         <div class="trustBy-carousel">
             <div class="item" v-for="index in trustedBy" :key="index"></div>
         </div>
