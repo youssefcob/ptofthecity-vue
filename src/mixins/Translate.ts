@@ -7,6 +7,7 @@ interface PhraseDictionary {
 }
 
 const phrase: PhraseDictionary = {
+  
   // navbar
   services: {
     EN: 'Services',
@@ -58,6 +59,8 @@ const phrase: PhraseDictionary = {
     ES: 'Menú',
     AR: 'قائمة'
   },
+
+
   //landing Page
   where_healing_happens: {
     EN: 'Where Healing Happens',
@@ -87,6 +90,8 @@ const phrase: PhraseDictionary = {
     ES: 'Verifique sus beneficios y elegibilidad y nuestro equipo se comunicará con usted dentro de 30 minutos',
     AR: 'تحقق من استحقاقك وأهليتك وسيتصل فريقنا بك خلال 30 دقيقة'
   },
+
+
   // who we are
   successful_cases: {
     EN: 'Successful Cases',
@@ -124,13 +129,15 @@ const phrase: PhraseDictionary = {
     AR: `نقدم لك خطة علاج متخصصة لكل حالة لتحقيق أكثر النتائج فعالية. ستحصل على معلومات مفصلة حول طبيعة الحالة والإصابة وخطة العلاج والأدوات والأجهزة التي ستستخدمها ، بالإضافة إلى النتيجة المتوقعة من العلاج. همنا الأساسي هو راحتك وصحتك. سيتم علاجك بأحدث الإرشادات الدليلية وأحدث الأدوات والتقنيات والأجهزة التي ستساعدك على تحقيق هدف العلاج بأكثر الطرق ملاءمة وفي أقصر مدة زمنية.`
   },
 
+
   //clinics section
   clinics_phrase: {
     EN: "22 clinics all over New York",
     ES: "22 clínicas en todo Nueva York",
     AR: "٢٢ عيادة في جميع أنحاء نيويورك"
   },
-  
+
+
   //cities
   Manhattan: {
     EN: 'Manhattan',
@@ -153,52 +160,57 @@ const phrase: PhraseDictionary = {
     AR: 'كوينز'
   },
 
-  // staff section
 
-  meet_our_staff:{
+  // staff section
+  meet_our_staff: {
     EN: 'Meet Our Staff',
     ES: 'Conoce a Nuestro Personal',
     AR: 'تعرف على فريقنا'
   },
 
-  meet_our_staff_phrase:{
+  meet_our_staff_phrase: {
     EN: 'Physical Therapists you can trust',
     ES: 'Fisioterapeutas en los que puedes confiar',
     AR: 'أخصائيو العلاج الطبيعي الذين يمكنك الوثوق بهم'
   },
 
+  
   //careers
-  join_us:{
+  join_us: {
     EN: 'Join Us',
     ES: 'Únete a Nosotros',
     AR: 'انضم إلينا'
   },
-  now:{
+  now: {
     EN: 'Now',
     ES: 'Ahora',
     AR: 'الآن'
   },
-  we_are_always_hiring:{
+  we_are_always_hiring: {
     EN: 'We are always hiring',
     ES: 'Siempre estamos contratando',
     AR: 'نحن نوظف دائمًا'
   },
+
+
   // trusted by
-  trusted_by:{
+  trusted_by: {
     EN: 'Trusted by',
     ES: 'Confiado por',
     AR: 'موثوق من'
   },
+
+
   //testimonials
-  testimonials:{
+  testimonials: {
     EN: 'Testimonials',
     ES: 'Testimonios',
     AR: 'شهادات'
   },
 
-  
+
   //contact us
-  contact_us_phrase:{
+  contact_us_phrase: {
     EN: 'We would love to hear from you!',
     ES: '¡Nos encantaría saber de ti!',
     AR: 'نود أن نسمع منك!'
@@ -214,11 +226,6 @@ const phrase: PhraseDictionary = {
     ES: 'Nombre',
     AR: 'الاسم'
   },
-  // email: {
-  //   EN: 'Email address',
-  //   ES: 'Dirección de correo electrónico',
-  //   AR: 'البريد الإلكتروني'
-  // },
   phone: {
     EN: 'Phone number',
     ES: 'Número de teléfono',
@@ -244,12 +251,14 @@ const phrase: PhraseDictionary = {
     ES: 'Sáb-Dom: De 9am a 5pm',
     AR: 'من السبت إلى الأحد: من 9 صباحًا إلى 5 مساءً'
   },
+
+
   //buttons
-apply_now:{
-  EN: 'Apply Now',
-  ES: 'Aplica Ahora',
-  AR: 'قدم الآن'
-},
+  apply_now: {
+    EN: 'Apply Now',
+    ES: 'Aplica Ahora',
+    AR: 'قدم الآن'
+  },
 
   show_more: {
     EN: 'Show More',
@@ -366,9 +375,7 @@ apply_now:{
     EN: 'Other',
     ES: 'Otro',
     AR: 'آخر'
-  },
-
-
+  }
 }
 
 

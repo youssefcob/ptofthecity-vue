@@ -33,7 +33,7 @@ onMounted(() => {
         <section class="servicesSection" id="Services">
             <ServicesPage />
         </section>
-        <section class="insuranceSection" id="Insurace">
+        <section class="insuranceSection" id="Insurance">
             <InsurancePage />
         </section>
 

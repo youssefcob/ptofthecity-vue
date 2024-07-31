@@ -7,6 +7,14 @@ import NavBar from '@/components/navbar/NavBar.vue';
 </script>
 
 <template>
-        <NavBar />
-        <router-view/>
+        <div class="main-container">
+                <NavBar />
+                <router-view />
+        </div>
 </template>
+<style scoped lang="scss">
+.main-container{
+ width:100%;
+ overflow: hidden;
+}       
+</style>

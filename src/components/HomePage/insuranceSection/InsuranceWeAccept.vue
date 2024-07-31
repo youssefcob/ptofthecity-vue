@@ -18,7 +18,7 @@ let showMore = () => {
 
 <template>
     <div class="insuranceContainer">
-        <h1 class="sectionHeader">{{$translate('insurances_we_accept')}}</h1>
+        <h1 :class="`sectionHeader ${$dir()}`">{{$translate('insurances_we_accept')}}</h1>
         <div class="insurances some-hidden">
             <div class="single-insurance" v-for="key in keys" :key="key">
                 <img :src="key" alt="">

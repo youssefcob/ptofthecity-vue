@@ -106,7 +106,6 @@ const validate = () => {
 
 }
 
-const childValidate = ref(validate)
 defineExpose({
     validate,
 })

@@ -195,7 +195,8 @@ class validation {
             }
         }
     }
-    // protected validator: { [key: string]: () => void };
+
+    
     protected validator: any;
 
 
