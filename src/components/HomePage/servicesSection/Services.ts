@@ -5,8 +5,9 @@ interface Service {
     description: string;
     listHeader: string;
     list: string[];
-    LearnMore: string;
+    
 }
+
 
     const services = [
         {
@@ -29,8 +30,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'2',
@@ -49,8 +49,7 @@ interface Service {
             list:[
                 "Different joint injuries and pain",
                
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'3',
@@ -72,8 +71,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'4',
@@ -95,8 +93,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'5',
@@ -118,8 +115,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'6',
@@ -141,8 +137,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'7',
@@ -164,8 +159,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'8',
@@ -187,8 +181,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'9',
@@ -210,8 +203,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'10',
@@ -233,8 +225,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'11',
@@ -256,8 +247,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'12',
@@ -279,8 +269,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'13',
@@ -302,8 +291,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'14',
@@ -325,8 +313,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
         {
             id:'15',
@@ -348,8 +335,7 @@ interface Service {
                 "Post-operative rehabilitation",
                 "Musculoskeletal pain and injuries",
                 "Chronic pain conditions such as fibromyalgia, chronic back pain, and chronic neck pain"
-            ],
-            LearnMore:"Learn More"
+            ]
         },
           ] as Service[]
 

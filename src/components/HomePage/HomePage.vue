@@ -26,12 +26,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="home" >
+    <div class="home">
         <section class="landing-page-container">
             <LandingPage />
         </section>
         <section class="servicesSection" id="Services">
-            <ServicesPage />
+                <ServicesPage />
         </section>
         <section class="insuranceSection" id="Insurance">
             <InsurancePage />

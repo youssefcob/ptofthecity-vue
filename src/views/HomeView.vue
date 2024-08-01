@@ -13,8 +13,8 @@ import NavBar from '@/components/navbar/NavBar.vue';
         </div>
 </template>
 <style scoped lang="scss">
-.main-container{
- width:100%;
- overflow: hidden;
-}       
+.main-container {
+        width: 100%;
+        overflow: hidden;
+}
 </style>
