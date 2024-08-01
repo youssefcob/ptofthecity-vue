@@ -86,8 +86,7 @@ onUnmounted(() => {
                 v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''}`" type="text">
 
 
-            <label :class="`asterisk ${$dir()}`" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">
-                    *</span></label>
+            <label :class="`asterisk ${$dir()}`" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">&nbsp;*</span></label>
             <label :class="`arrowdown ${$dir()}`" ref="arrowdown">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 7" fill="none">
                     <path d="M1 1L6 6L11 1" stroke="black" stroke-width="0.5" stroke-linecap="round"

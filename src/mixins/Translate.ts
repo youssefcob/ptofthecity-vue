@@ -332,8 +332,8 @@ const phrase: PhraseDictionary = {
     AR: 'تاريخ الميلاد'
   },
   gender: {
-    EN: 'gender',
-    ES: 'género',
+    EN: 'Gender',
+    ES: 'Género',
     AR: 'جنس'
   },
   member_id: {
