@@ -1,10 +1,28 @@
 <script setup lang="ts">
+import Http from '@/mixins/Http';
 import ClinicAccordion from './ClinicAccordion.vue';
 import { clinicLocations } from './Clinics';
+import { onMounted, reactive, ref, type Ref } from 'vue';
 
 const isFirstItem=(index:number)=>{
     return (index===0);
 }
+
+let clinics= reactive({});
+let clinicNames: Ref<string[]> = ref([]);
+// let service: Ref<Service | null> = ref(null);
+// let filteredServices: Ref<Service[]> = ref([]);
+const getClinics = async () => {
+    let data = await Http.get('clinic/groupByLocation');
+    clinics = data[0];
+    console.log(clinics);
+    clinicNames.value =  Object.keys(clinics);
+    console.log(clinicNames.value);
+}
+onMounted(() => {
+    getClinics();
+
+})
 </script>
 
 <template>
@@ -14,9 +32,9 @@ const isFirstItem=(index:number)=>{
             <p>{{$translate('clinics_phrase')}}</p>
         </div>
 
-        <div class="accordionsContainer">
-            <template v-for="(location,index) in clinicLocations" :key="location">
-                <ClinicAccordion :location="location" :active="isFirstItem(index)"/>
+        <div class="accordionsContainer" v-if="clinics">
+            <template v-for="(clinic,index) in clinicNames" :key="clinic">
+                <ClinicAccordion :clinic="clinics[clinic as keyof typeof clinics]" :location="clinic" :active="isFirstItem(index)"/>
             </template>
         </div>
         <div class="btn transparent responsive main">{{$translate('find_your_nearest_location')}}</div>

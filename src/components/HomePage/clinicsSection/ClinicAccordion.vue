@@ -8,12 +8,17 @@ const accordion = ref<any>(null);
 
 const props = defineProps({
     location: {
-        type: Object as () => ClinicLocations
+        type: String
+    },
+    clinic: {
+        type: Array
     },
     active: {
         type: Boolean
     }
-})
+});
+console.log('location',props.location);
+console.log('clinic',props.clinic?.length);
 
 const expandItems = () => {
 
@@ -36,15 +41,21 @@ const isInverted = ()=>{
 <template>
     <div :class="`accordion ${isInverted()}`" ref="accordion" @click="expandItems">
         <div class="city">
-            <h2>{{ $translate(props.location?.name) }}</h2>
+            <!-- <h2>{{ $translate(props.location?.name) }}</h2> -->
+            <h2>{{ props.location }}</h2>
+
         </div>
         <div class="number-of-clinics">
-            <h2>{{ $transNumber(props.location?.numberOfClinics)}} {{$translate('clinics')}} </h2>
+            <!-- <h2>{{ $transNumber(props.location?.numberOfClinics)}} {{$translate('clinics')}} </h2> -->
+            <h2>{{ props.clinic?.length}} Clinics</h2>
+
         </div>
     </div>
     <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">
 
-        <div class="item" v-for="index in props.location?.numberOfClinics" :key="index"></div>
+        <div class="item" v-for="(clinic,index) in props.clinic" :key="index">
+            <!-- <h2 style="color:white;">{{ clinic.name }}</h2> -->
+        </div>
 
     </div>
 </template>

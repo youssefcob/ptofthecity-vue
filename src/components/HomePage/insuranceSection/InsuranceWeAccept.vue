@@ -6,7 +6,7 @@ let insurances:any = ref([]);
 
 const getInsurances = async () => {
     insurances.value = await Http.get('images/insurance');
-    console.log(insurances.value);
+    // console.log(insurances.value);
 }
 onMounted(() => {
     getInsurances();

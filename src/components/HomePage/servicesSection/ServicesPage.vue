@@ -9,7 +9,7 @@ let services:any = ref([]);
 
 const getServices = async () => {
     services.value = await Http.get('services');
-    console.log(services);
+    // console.log(services);
 }
 onMounted(() => {
     getServices();
