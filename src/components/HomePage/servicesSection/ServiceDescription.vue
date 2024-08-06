@@ -15,10 +15,10 @@ const trans = (languagesObject:any) => {
 
 <template>
     <div class="ser">
-        <h1 class="title">{{ trans(props.service?.title) }}</h1>
-        <!-- <p class="description">{{ trans(props.service?.listHeader) }}</p> -->
-        <div class="list" v-if="trans(props.service?.list)">
-            <li v-for="list_item in trans(props.service?.list)"> {{ list_item }}</li>
+        <h1 class="title">{{ props.service?.title }}</h1>
+        <!-- <p class="description">{{ props.service?.listHeader }}</p> -->
+        <div class="list" v-if="props.service?.list">
+            <li v-for="list_item in props.service?.list"> {{ list_item }}</li>
         </div>
         <router-link active-class="navbar-link" class="learn-more btn transparent btnfont"
             :to="{ name: `service`, params: { id: $props.service?.id } }">

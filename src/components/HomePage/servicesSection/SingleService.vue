@@ -3,6 +3,7 @@
 import { useRouter } from 'vue-router';
 import ServiceDescription from './ServiceDescription.vue';
 import type { Service } from './Services';
+import { lang } from '@/mixins/Translate';
 const props = defineProps({
     service: {
         type: Object as () => Service
@@ -28,6 +29,12 @@ const scroll = (direction: number) => {
         emit('prev');
     }
     
+}
+
+
+const trans = (languagesObject:any) => {
+    if(!languagesObject) return;
+    return languagesObject[lang()];
 }
 
 

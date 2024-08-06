@@ -1,28 +1,56 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
-import { services, type Service } from '@/components/HomePage/servicesSection/Services';
+import { onMounted, ref, type Ref } from 'vue';
+import { type Service } from '@/components/HomePage/servicesSection/Services';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from './SingleService.vue';
-
-
+import Http from '@/mixins/Http';
+import { lang } from '@/mixins/Translate';
 
 const props = defineProps({
     id: String,
 });
-let service:Ref< Service | undefined >= ref(services.find(service => service.id == props.id));
+let services: Ref<Service[] | null> = ref(null);
+let service: Ref<Service | null> = ref(null);
+let filteredServices: Ref<Service[]> = ref([]);
+const getServices = async () => {
+    console.log(props.id);
+    services.value = await Http.get(`services`);
+    if (services.value) {
+        let servicePH = services.value.find(service => service.id == props.id);
 
-const formatText = (text: string | undefined): string => {
+        filteredServices.value = services.value.filter(service => service.id != props.id);
+        if (servicePH) {
+            service.value = servicePH;
+        }
+    }
+
+
+}
+const navigateTo = (id: string) => {
+    let servicePH = services.value?.find(service => service.id == id);
+    if (servicePH) {
+        service.value = servicePH;
+    }
+    filteredServices.value = services.value?.filter(service => service.id != id) || services.value || [];
+    console.log(id);
+}
+onMounted(() => {
+    getServices();
+})
+
+
+
+const formatText = (text: any): string => {
     if (!text) return '';
     return text.replace(/\n/g, '<br>');
 }
-// console.log(service?.path);
-const filteredServices:Ref<Service[]> =  ref(services.filter(service => service.id !== props.id));
 
-const navigateTo = (id: string) => {
-    service.value = services.find(service => service.id == id);
-    filteredServices.value = services.filter(service => service.id !== id);
-    
+const trans = (languagesObject: any) => {
+    if (!languagesObject) return;
+    return languagesObject[lang()];
 }
+// console.log(service?.path);
+
 </script>
 
 <template>
@@ -32,7 +60,7 @@ const navigateTo = (id: string) => {
             <div class="info">
                 <h1>{{ service?.title }}</h1>
                 <p class="text-s" v-html="formatText(service?.description)"></p>
-                
+
                 <div class="btn responsive main">Book Now</div>
             </div>
             <!-- <div class="image" ></div> -->
@@ -43,21 +71,24 @@ const navigateTo = (id: string) => {
         </div>
         <router-link to="/" class="btn transparent responsive main back">Back To Homepage</router-link>
     </div>
-        <h1 class="carousel-header">Services</h1>
-        <Carousel class="carousel">
-          <SingleService class="singleService" v-for="service in filteredServices" :service="service" @navigate="navigateTo" />
-        </Carousel>
+    <h1 class="carousel-header">Services</h1>
+    <Carousel class="carousel">
+        <SingleService class="singleService" v-for="service in filteredServices" :service="service"
+            @navigate="navigateTo(service.id)" />
+    </Carousel>
 </template>
 
 <style scoped lang="scss">
 .container {
-    .back{
-        @media screen and (min-width: 500px){
-            display:none;
+    .back {
+        @media screen and (min-width: 500px) {
+            display: none;
         }
+
         display:block;
         width:100%;
     }
+
     width: 100%;
     // background-color: blueviolet;
     @include pagePadding;
@@ -130,7 +161,7 @@ const navigateTo = (id: string) => {
         >.image {
             width: 50%;
             height: clamp(300px, 40vw, 40rem);
-            
+
             @media screen and (max-width: 800px) {
                 width: 100%;
                 height: 300px;
@@ -144,47 +175,55 @@ const navigateTo = (id: string) => {
     }
 
 }
-.carousel-wrapper{
-    height:fit-content;
+
+.carousel-wrapper {
+    height: fit-content;
 }
-.carousel-header{
+
+.carousel-header {
     @include pagePadding;
-    color:$navy;
-    margin-top:2rem;
-    @media screen and (max-width: 500px){
-        margin-top:10rem;
+    color: $navy;
+    margin-top: 2rem;
 
-        }
+    @media screen and (max-width: 500px) {
+        margin-top: 10rem;
+
+    }
 }
-.carousel{
-    margin-top:2rem;
-    @media screen and (max-width: 500px){
-        margin-top:5rem;
 
-        }
-        height:300px;
-        width:100%;
-        @media screen and (max-width: 500px){
-                @include pagePadding;
-        }
-        .singleService{
+.carousel {
+    margin-top: 2rem;
+
+    @media screen and (max-width: 500px) {
+        margin-top: 5rem;
+
+    }
+
+    height:300px;
+    width:100%;
+
+    @media screen and (max-width: 500px) {
+        @include pagePadding;
+    }
+
+    .singleService {
         @include carouselItem2(5);
-        @media screen and (max-width: 1024px){
+
+        @media screen and (max-width: 1024px) {
             @include carouselItem2(4);
 
         }
 
-        @media screen and (max-width: 800px){
+        @media screen and (max-width: 800px) {
             @include carouselItem2(3);
 
         }
 
-        @media screen and (max-width: 500px){
+        @media screen and (max-width: 500px) {
             @include carouselItem2(1);
 
         }
-   
-    }
-    }
 
+    }
+}
 </style>

@@ -53,12 +53,7 @@ const router = createRouter({
 
   ],
   scrollBehavior(to, from, savedPosition) {
-    console.log('scrollBehavior called');
-    console.log('to:', to);
-    console.log('from:', from);
-    console.log('savedPosition:', savedPosition);
     if (to.hash) {
-      console.log('to.hash', to.hash);
       return {
         el: to.hash,
         behavior: 'smooth',
