@@ -1,11 +1,17 @@
 <script setup lang="ts">
 
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import StaffMember from './StaffMember.vue';
-import { staffMembers } from './StaffMembers';
+import { staff, getStaff } from './StaffMembers';
 import Carousel from '@/components/sharedComponents/Carousel.vue';
+import Http from '@/mixins/Http';
 
+onMounted(() => {
+    if(staff.value.length==0){
+        getStaff();
+    }
+})
 
 
 </script>
@@ -16,7 +22,7 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
             <p>{{$translate('meet_our_staff_phrase')}}</p>
         </div>
         <Carousel class="staffMembers">
-                <StaffMember v-for="staffMember in staffMembers" :staffMember="staffMember" />
+                <StaffMember v-for="staffMember in staff" :staffMember="staffMember" />
         </Carousel>
       <!-- <div class="btn-wrapper">
         <div class="btn-transparent main btnfont">Learn More</div>

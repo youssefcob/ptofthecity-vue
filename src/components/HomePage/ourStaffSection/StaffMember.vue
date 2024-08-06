@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { StaffMember } from './StaffMembers';
+// import type { StaffMember } from './StaffMembers';
 import { useRouter } from 'vue-router';
+import type { Staff } from './StaffMembers';
 
 
 
 const props = defineProps({
     staffMember: {
-        type: Object as () => StaffMember
+        type: Object as () => Staff
     }
 });
 
@@ -23,14 +24,14 @@ const reRoute = () => {
     <div class="staffMember" @click="reRoute">
         <div class="image" :style="{ backgroundImage: `url(${props.staffMember?.image})` }">
             <div class="staffMemberDescription">
-                <h2>{{ props.staffMember?.name }}</h2>
-                <div class="desc">
-                    <p>{{ props.staffMember?.name }}</p>
-                </div>
+                <h2>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</h2>
+                <!-- <div class="desc">
+                    <p>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</p>
+                </div> -->
             </div>
         </div>
 
-        <h4 class="responsive-name">{{ props.staffMember?.name }}</h4>
+        <h4 class="responsive-name">{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</h4>
 
     </div>
 </template>

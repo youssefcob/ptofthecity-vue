@@ -1,25 +1,47 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
-import { staffMembers, type StaffMember } from '@/components/HomePage/ourStaffSection/StaffMembers';
+import { onMounted, ref, type Ref } from 'vue';
+// import { staffMembers, type StaffMember } from '@/components/HomePage/ourStaffSection/StaffMembers';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleStaffMember from './SingleStaffMember.vue';
 
+import { getStaff, staff, type Staff } from '@//components/HomePage/ourStaffSection/StaffMembers';
+import { get } from 'node_modules/axios/index.cjs';
 
 const props = defineProps({
     id: String,
 });
-let staff: Ref<StaffMember | undefined> = ref(staffMembers.find(member => member.id == props.id));
+let staffMember: Ref<Staff | undefined> = ref(undefined);
+const filteredStaff: Ref<Staff[]> = ref(staff);
+    const renderStaff = async () => {
+        await getStaff();
+        staffMember.value = staff.value.find( member => props.id? member.id == parseInt(props.id):navigatetoHome());
+        filteredStaff.value = staff.value.filter(member => props.id? member.id !== parseInt(props.id):navigatetoHome());
+    }
+
+    if(staff.value.length==0){
+        renderStaff();
+    }
+    
+// onMounted(() => {
+    
+
+   
+// })
+const navigatetoHome = () => {
+    window.location.href = '/';
+}
+
 
 const formatText = (text: string | undefined): string => {
     if (!text) return '';
     return text.replace(/\n/g, '<br>');
 }
 // console.log(service?.path);
-const filteredStaff: Ref<StaffMember[]> = ref(staffMembers.filter(member => member.id !== props.id));
+// const filteredStaff: Ref<Staff[]> = ref(staff.value.filter(member =>{props.id? member.id !== parseInt(props.id):null}));
 
 const navigateTo = (id: string) => {
-    staff.value = staffMembers.find(member => member.id == id);
-    filteredStaff.value = staffMembers.filter(member => member.id !== id);
+    staffMember.value = staff.value.find(member => member.id == parseInt(id));
+    filteredStaff.value = staff.value.filter(member => member.id !== parseInt(id));
 
 }
 </script>
@@ -27,14 +49,14 @@ const navigateTo = (id: string) => {
 <template>
     <div class="container">
         <div class="staff-container">
-            <h1 class="responsive-header">{{ staff?.name }}</h1>
+            <h1 class="responsive-header">{{ staffMember?.title }} {{ staffMember?.first_name }} {{ staffMember?.last_name }}</h1>
 
-            <div class="image" :style="{ backgroundImage: `url(${staff?.image})` }"></div>
+            <div class="image" :style="{ backgroundImage: `url(${staffMember?.image})` }"></div>
             <!-- <div class="image"></div> -->
 
             <div class="info">
-                <h1>{{ staff?.name }}</h1>
-                <p class="text-s" v-html="formatText(staff?.description)"></p>
+                <h1>{{ staffMember?.title }} {{ staffMember?.first_name }} {{ staffMember?.last_name }}</h1>
+                <p class="text-s" v-html="formatText(staffMember?.bio)"></p>
                 <div class="btn responsive main">Book Now</div>
             </div>
             <!-- <div class="image" ></div> -->
@@ -43,7 +65,7 @@ const navigateTo = (id: string) => {
         </div>
         <router-link to="/" class="btn transparent responsive main back">Back To Homepage</router-link>
     </div>
-    <h1 class="carousel-header">Services</h1>
+    <h1 class="carousel-header">Our Staff</h1>
     <Carousel class="carousel">
         <SingleStaffMember class="s-staff" v-for="member in filteredStaff" :staffMember="member"
             @navigate="navigateTo" />
