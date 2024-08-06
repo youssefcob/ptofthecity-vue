@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Http from '@/mixins/Http';
 import ClinicAccordion from './ClinicAccordion.vue';
-import { clinicLocations } from './Clinics';
+// import { clinicLocations } from './Clinics';
 import { onMounted, reactive, ref, type Ref } from 'vue';
 
 const isFirstItem=(index:number)=>{
@@ -10,11 +10,9 @@ const isFirstItem=(index:number)=>{
 
 let clinics= reactive({});
 let clinicNames: Ref<string[]> = ref([]);
-// let service: Ref<Service | null> = ref(null);
-// let filteredServices: Ref<Service[]> = ref([]);
 const getClinics = async () => {
     let data = await Http.get('clinic/groupByLocation');
-    clinics = data[0];
+    clinics = data;
     console.log(clinics);
     clinicNames.value =  Object.keys(clinics);
     console.log(clinicNames.value);

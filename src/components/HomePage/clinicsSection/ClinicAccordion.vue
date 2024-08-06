@@ -2,6 +2,8 @@
 import { ref, onMounted, } from 'vue';
 import type { Ref } from 'vue';
 
+import {type Clinic, type Media} from '@/interfaces/content';
+
 import type { ClinicLocations } from './Clinics';
 const accordionItemsContainer = ref<any>(null);
 const accordion = ref<any>(null);
@@ -11,7 +13,7 @@ const props = defineProps({
         type: String
     },
     clinic: {
-        type: Array
+        type: Object as () => Clinic[]
     },
     active: {
         type: Boolean
@@ -36,6 +38,14 @@ const isInverted = ()=>{
     return props.active ? 'invert' : '';
 }
 
+const getBackGroundImage = (media:Media[])=>{
+    if(media.length>0){
+        return {
+            backgroundImage: `url(${media[0].path})`
+        }
+    }
+  
+}
 </script>
 
 <template>
@@ -53,7 +63,7 @@ const isInverted = ()=>{
     </div>
     <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">
 
-        <div class="item" v-for="(clinic,index) in props.clinic" :key="index">
+        <div class="item" v-for="(clinic,index) in props.clinic" :key="index" :style="getBackGroundImage(clinic.media)">
             <!-- <h2 style="color:white;">{{ clinic.name }}</h2> -->
         </div>
 
@@ -108,6 +118,9 @@ h2 {
             border-radius: 1.125rem;
 
             background-color: $navy;
+            background-size:cover ;
+            background-position: center;
+
         }
     }
 }
