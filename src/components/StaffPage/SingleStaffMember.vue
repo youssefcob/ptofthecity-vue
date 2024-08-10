@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { type StaffMember } from '@/components/HomePage/ourStaffSection/StaffMembers';
+// import { type StaffMember } from '@/components/HomePage/ourStaffSection/StaffMembers';
 import router from '@/router';
+import type { Staff } from '../HomePage/ourStaffSection/StaffMembers';
 
 const props = defineProps({
     staffMember: {
-        type: Object as () => StaffMember
+        type: Object as () => Staff
     }
 });
 
@@ -23,7 +24,8 @@ const reRoute = () => {
 
 <template>
     <div  @click="reRoute" class="image" :style="{ backgroundImage: `url(${props.staffMember?.image})` }">
-        <h3 class="title">{{ $props.staffMember?.name }}</h3>
+        <h3 class="title">{{ staffMember?.title }} {{ staffMember?.first_name }} {{
+                staffMember?.last_name }}</h3>
     </div>
 </template>
 

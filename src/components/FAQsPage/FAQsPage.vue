@@ -1,54 +1,42 @@
 <script setup lang="ts">
 import QuestionAccordion from '@/components/sharedComponents/FAQs/QuestionAccordion.vue';
-import { faqs } from '@/components/sharedComponents/FAQs/FAQs';
 import ContactForm from '../HomePage/ContactUsSection/ContactForm.vue';
 import ContactUsPage from '../HomePage/ContactUsSection/ContactUsPage.vue';
+import { onMounted, ref, type Ref } from 'vue';
+import Http from '@/mixins/Http';
 
 const isFirstItem = (index: number) => {
     return (index === 0);
 }
+
+const faqs = ref([]);
+const faqsHeaders: Ref<string[]> = ref([]);
+const getFaqs = async () => {
+    let data = await Http.get('content/faqs');
+    faqs.value = data;
+    faqsHeaders.value = (Object.keys(data));
+}
+onMounted(() => {
+    getFaqs();
+})
 
 
 </script>
 <template>
     <div class="page-container">
         <div class="questions">
-            <div class="wrapper">
-                <h1 class="sectionHeader">
-                    General Questions
-                </h1>
-                <div class="questionsContainer">
-                    <QuestionAccordion v-for="(faq, index) in faqs.general" :faq="faq" :key="index"
-                        :active="isFirstItem(index)" />
+            <template v-for="(header, index) in faqsHeaders">
+                <div class="wrapper">
+                    <h1 class="sectionHeader">
+                        {{ header }}
+                    </h1>
+                    <div class="questionsContainer">
+                        <QuestionAccordion v-for="(faq, index) in faqs[header as keyof typeof faqs]" :faq="faq" :key="index"
+                            :active="isFirstItem(index)" />
+                    </div>
                 </div>
-            </div>
-            <div class="wrapper">
-                <h1 class="sectionHeader">
-                    Physical Therapy FAQs
-                </h1>
-                <div class="questionsContainer">
-                    <QuestionAccordion v-for="(faq, index) in faqs.pt" :faq="faq" :key="index"
-                        :active="isFirstItem(index)" />
-                </div>
-            </div>
-            <div class="wrapper">
-                <h1 class="sectionHeader">
-                    Pelvic FAQs
-                </h1>
-                <div class="questionsContainer">
-                    <QuestionAccordion v-for="(faq, index) in faqs.pel" :faq="faq" :key="index"
-                        :active="isFirstItem(index)" />
-                </div>
-            </div>
-            <div class="wrapper">
-                <h1 class="sectionHeader">
-                    Billing-Insurance FAQs
-                </h1>
-                <div class="questionsContainer">
-                    <QuestionAccordion v-for="(faq, index) in faqs.billing" :faq="faq" :key="index"
-                        :active="isFirstItem(index)" />
-                </div>
-            </div>
+                </template>
+   
          
 
         

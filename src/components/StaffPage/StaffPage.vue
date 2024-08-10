@@ -1,32 +1,27 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue';
-// import { staffMembers, type StaffMember } from '@/components/HomePage/ourStaffSection/StaffMembers';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleStaffMember from './SingleStaffMember.vue';
 
 import { getStaff, staff, type Staff } from '@//components/HomePage/ourStaffSection/StaffMembers';
-import { get } from 'node_modules/axios/index.cjs';
 
 const props = defineProps({
     id: String,
 });
 let staffMember: Ref<Staff | undefined> = ref(undefined);
-const filteredStaff: Ref<Staff[]> = ref(staff);
-    const renderStaff = async () => {
-        await getStaff();
-        staffMember.value = staff.value.find( member => props.id? member.id == parseInt(props.id):navigatetoHome());
-        filteredStaff.value = staff.value.filter(member => props.id? member.id !== parseInt(props.id):navigatetoHome());
-    }
-
-    if(staff.value.length==0){
+const filteredStaff: Ref<Staff[]> = ref(staff.value);
+const renderStaff = async (id = props.id) => {
+    await getStaff();
+    staffMember.value = staff.value.find(member => id ? member.id == parseInt(id) : navigatetoHome());
+    filteredStaff.value = staff.value.filter(member => id ? member.id !== parseInt(id) : navigatetoHome());
+}
+onMounted(() => {
+    if (staff.value.length == 0) {
         renderStaff();
     }
-    
-// onMounted(() => {
-    
+})
 
-   
-// })
+
 const navigatetoHome = () => {
     window.location.href = '/';
 }
@@ -40,8 +35,7 @@ const formatText = (text: string | undefined): string => {
 // const filteredStaff: Ref<Staff[]> = ref(staff.value.filter(member =>{props.id? member.id !== parseInt(props.id):null}));
 
 const navigateTo = (id: string) => {
-    staffMember.value = staff.value.find(member => member.id == parseInt(id));
-    filteredStaff.value = staff.value.filter(member => member.id !== parseInt(id));
+    renderStaff(id);
 
 }
 </script>
@@ -49,7 +43,8 @@ const navigateTo = (id: string) => {
 <template>
     <div class="container">
         <div class="staff-container">
-            <h1 class="responsive-header">{{ staffMember?.title }} {{ staffMember?.first_name }} {{ staffMember?.last_name }}</h1>
+            <h1 class="responsive-header">{{ staffMember?.title }} {{ staffMember?.first_name }} {{
+                staffMember?.last_name }}</h1>
 
             <div class="image" :style="{ backgroundImage: `url(${staffMember?.image})` }"></div>
             <!-- <div class="image"></div> -->

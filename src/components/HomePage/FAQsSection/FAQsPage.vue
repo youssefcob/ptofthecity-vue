@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import QuestionAccordion from '@/components/sharedComponents/FAQs/QuestionAccordion.vue';
-import { faqs } from '../../sharedComponents/FAQs/FAQs';
+import Http from '@/mixins/Http';
+import { onMounted, ref } from 'vue';
 
+const faqs = ref([]);
+const getFaqs = async () => {
+    let data = await Http.get('content/faqs/main');
+    faqs.value = data;
+}
+onMounted(() => {
+    getFaqs();
+})
 const isFirstItem=(index:number)=>{
     return (index===0);
 }
@@ -13,7 +22,7 @@ const isFirstItem=(index:number)=>{
     <div class="container">
         <h1 class="sectionHeader">{{ $translate('faqs') }}</h1>
         <div class="questionsContainer">
-            <QuestionAccordion v-for="(faq,index) in faqs.home" :faq="faq" :key="index" :active="isFirstItem(index)" />
+            <QuestionAccordion v-for="(faq,index) in faqs" :faq="faq" :key="index" :active="isFirstItem(index)" />
         </div>
         <router-link to="/FAQs" class="btn transparent responsive main">{{$translate('learn_more')}}</router-link>
     </div>
