@@ -17,9 +17,9 @@ const targetDivRef: Ref<HTMLElement | null> = ref(null);
 <li><RouterLink active-class="navbar-link" to="/#WhoWeAre">
         {{ $translate('whoWeAre') }}
     </RouterLink></li>
-<li><RouterLink active-class="navbar-link" to="/Blog">
+<!-- <li><RouterLink active-class="navbar-link" to="/Blog">
         {{ $translate('blog') }}
-    </RouterLink></li>
+    </RouterLink></li> -->
 <li><RouterLink active-class="navbar-link" to="/#Careers">
         {{ $translate('careers') }}
     </RouterLink></li>

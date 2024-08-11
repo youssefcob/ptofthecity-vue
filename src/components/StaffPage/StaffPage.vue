@@ -16,9 +16,9 @@ const renderStaff = async (id = props.id) => {
     filteredStaff.value = staff.value.filter(member => id ? member.id !== parseInt(id) : navigatetoHome());
 }
 onMounted(() => {
-    if (staff.value.length == 0) {
+    // if (staff.value.length == 0) {
         renderStaff();
-    }
+    // }
 })
 
 

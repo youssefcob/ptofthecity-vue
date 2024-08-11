@@ -39,11 +39,11 @@ const handleScrollToTarget = (id: any) => {
           {{ $translate('whoWeAre') }}
         </RouterLink>
       </li>
-      <li>
+      <!-- <li>
         <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/Blog">
           {{ $translate('blog') }}
         </RouterLink>
-      </li>
+      </li> -->
       <li>
         <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#Careers">
           {{ $translate('careers') }}

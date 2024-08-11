@@ -1,38 +1,52 @@
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from 'vue';
-import { type Service } from '@/components/HomePage/servicesSection/Services';
+import { onMounted, ref, render, type Ref } from 'vue';
+import { type Service, services,getServices } from '@/components/HomePage/servicesSection/Services';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from './SingleService.vue';
-import Http from '@/mixins/Http';
 import { lang } from '@/mixins/Translate';
 
 const props = defineProps({
     id: String,
 });
-let services: Ref<Service[] | null> = ref(null);
-let service: Ref<Service | null> = ref(null);
-let filteredServices: Ref<Service[]> = ref([]);
-const getServices = async () => {
-    console.log(props.id);
-    services.value = await Http.get(`services`);
-    if (services.value) {
-        let servicePH = services.value.find(service => service.id == props.id);
+// let services: Ref<Service[] | null> = ref(null);
+let service: Ref<Service | undefined> = ref(undefined);
+let filteredServices: Ref<Service[]> = ref(services.value || []);
 
-        filteredServices.value = services.value.filter(service => service.id != props.id);
-        if (servicePH) {
-            service.value = servicePH;
-        }
-    }
-
-
+const renderServices = async (id = props.id) => {
+    await getServices();
+    service.value = services.value?.find(service => id ? service.id == id : navigatetoHome());
+    filteredServices.value = services.value?.filter(service => id ? service.id != id : navigatetoHome());
 }
+const navigatetoHome = () => {
+    window.location.href = '/';
+}
+onMounted(() => {
+    // if (services.value.length == 0) {
+        renderServices();
+    // }
+})
+// const getServices = async () => {
+//     console.log(props.id);
+//     services.value = await Http.get(`services`);
+//     if (services.value) {
+//         let servicePH = services.value.find(service => service.id == props.id);
+
+//         filteredServices.value = services.value.filter(service => service.id != props.id);
+//         if (servicePH) {
+//             service.value = servicePH;
+//         }
+//     }
+
+
+// }
 const navigateTo = (id: string) => {
-    let servicePH = services.value?.find(service => service.id == id);
-    if (servicePH) {
-        service.value = servicePH;
-    }
-    filteredServices.value = services.value?.filter(service => service.id != id) || services.value || [];
-    console.log(id);
+    renderServices(id);
+    // let servicePH = services.value?.find(service => service.id == id);
+    // if (servicePH) {
+    //     service.value = servicePH;
+    // }
+    // filteredServices.value = services.value?.filter(service => service.id != id) || services.value || [];
+    // console.log(id);
 }
 onMounted(() => {
     getServices();
@@ -61,7 +75,7 @@ const trans = (languagesObject: any) => {
                 <h1>{{ service?.title }}</h1>
                 <p class="text-s" v-html="formatText(service?.description)"></p>
 
-                <div class="btn responsive main">Book Now</div>
+                <router-link to="/booking" class="btn responsive main">Book Now</router-link>
             </div>
             <!-- <div class="image" ></div> -->
 

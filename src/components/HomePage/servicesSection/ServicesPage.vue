@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import SingleService from './SingleService.vue';
-// import { services } from './Services';
+import { services, getServices } from './Services';
 import Carousel from '@/components/sharedComponents/Carousel.vue';
 import Http from '@/mixins/Http';
 import { onMounted, ref } from 'vue';
 
-let services:any = ref([]);
+// let services:any = ref([]);
 
-const getServices = async () => {
-    services.value = await Http.get('services');
-    // console.log(services);
-}
+// const getServices = async () => {
+//     services.value = await Http.get('services');
+//     // console.log(services);
+// }
 onMounted(() => {
     getServices();
 })

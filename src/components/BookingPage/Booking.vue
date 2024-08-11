@@ -4,9 +4,10 @@ import Calender from '../sharedComponents/Calender.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import InputField from '../sharedComponents/InputField.vue';
 import RadioInputField from '../sharedComponents/RadioInputField.vue';
-import insurances from '../HomePage/insuranceSection/Insurances';
+// import insurances from '../HomePage/insuranceSection/Insurances';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
+import Http from '@/mixins/Http';
 const snackbar = useSnackbar();
 
 const form = reactive({
@@ -25,32 +26,69 @@ const form = reactive({
 
 })
 
-const locations = [
-    "location1",
-    'location2',
-    'location3'
-]
+let Httplocations = [];
+const locations = ref([]);
 const location = '';
+let cords = ref({
+    lat: 0,
+    long: 0
+})
+const getLocations = async () => {
+    let data = await Http.get('clinic/names');
+    data = sortLocations(data)
+    Httplocations = data;
+    locations.value = data.map((location: { name: string }) => location.name);
+
+}
+const sortLocations = (data:any) => {
+    if(!cords.value.lat || !cords.value.long) return data;
+    data.forEach((location: { name: string, lat: string, long: string, distance?:number }) => {
+        location.distance = getDistance(cords.value.lat, cords.value.long, parseFloat(location.lat), parseFloat(location.long));
+    });
+    data.sort((a: { distance: number }, b: { distance: number }) => a.distance - b.distance);
+    return data;
+}
+
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const toRad = (value: number) => value * Math.PI / 180;
+    const R = 6371; // Radius of the Earth in km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+}
+
+let HttpInsurances = [];
+const insurances = ref([]);
+const getInsurances = async () => {
+    let data = await Http.get('images/insurance/names');
+    HttpInsurances = data;
+    insurances.value = data.map((insurance: { title: string }) => insurance.title);
+}
 onMounted(() => {
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords.latitude, position.coords.longitude)
+        cords.value.lat = position.coords.latitude
+        cords.value.long = position.coords.longitude
     })
 }
+getLocations()
+getInsurances()
 })
 
-const inusrances = [
-    "Insurance1",
-    'Insurance2',
-    'Insurance3'
-]
+
+
+
 
 
 let Availablehours: Ref<string[]> = ref([])
 
 const formValidation = {
     location: {
-        rules: ['required', { dropdown: locations }],
+        rules: ['required', { dropdown: locations.value }],
         message: {
             required: 'Please select a location',
             dropdown: 'Please select a valid location'
@@ -92,7 +130,7 @@ const formValidation = {
 
     },
     insurance: {
-        rules: ['required:if:payment:Insurance', { dropdown: insurances }],
+        rules: ['required:if:payment:Insurance', { dropdown: insurances.value }],
 
     },
     memberId: {
@@ -236,7 +274,7 @@ const isSelfPay = () => {
                             @input="form.phone = $event" :error="formErrors.phone" />
                     </div>
                 </div>
-                <DropDownInputField id="insurance" :list="inusrances" placeHolder="Insurance company name"
+                <DropDownInputField id="insurance" :list="insurances" placeHolder="Insurance company name"
                     @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
                 <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
                     :disabled="isSelfPay()" :error="formErrors.memberId" />

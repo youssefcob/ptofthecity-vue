@@ -64,7 +64,7 @@ onMounted(() => {
         <div class="right-container">
             <SearchBar />
             <!-- <ProfileSignup /> -->
-            <Lang />
+            <!-- <Lang /> -->
         </div>
     </nav>
 

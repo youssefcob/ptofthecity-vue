@@ -5,7 +5,6 @@ import { onMounted, ref } from 'vue';
 import StaffMember from './StaffMember.vue';
 import { staff, getStaff } from './StaffMembers';
 import Carousel from '@/components/sharedComponents/Carousel.vue';
-import Http from '@/mixins/Http';
 
 onMounted(() => {
     if(staff.value.length==0){
