@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
+import Http from '@/mixins/Http';
 import validation from '@/mixins/Validation';
 import { reactive, ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
 const snackbar = useSnackbar();
 
-const subjectsList = [
-    "subject",
-    'test',
-    'smth'
-]
+// const subjectsList = [
+//     "subject",
+//     'test',
+//     'smth'
+// ]
 
 const form = reactive({
     subject: '',
@@ -22,14 +23,13 @@ const form = reactive({
 
 const formValidation = {
     subject: {
-        rules: ['required', { dropdown: subjectsList }],
+        rules: ['required'],
         message: {
             required: 'Please select a subject',
-            dropdown: 'Please select a valid subject'
         }
     },
     name: {
-        rules: ['required', 'letters:only'],
+        rules: ['required', 'letters'],
         message: {
             required: 'Name Is Required',
             letters: 'Name Cannot Contain Numbers Or Special Characters'
@@ -67,15 +67,21 @@ const formErrors = reactive({
 
 const validate = () => {
     let v = new validation(formValidation, form)
-
     v.validate()
     let errors = v.errors;
-    console.log(errors);
+    // console.log(errors);
     if(errors.length){
-        let errorsArr = Object.values(errors[0])
-    console.log(errorsArr)
+    handleErrors(v);
+    } else {
+    submitForm();
+    }
+}
+
+const handleErrors = (v: validation) => {
+    let errors = v.errors;
+    let errorsArr = Object.values(errors[0])
+    // console.log(errorsArr)
     let keys = v.keys
-  
     errorsArr.forEach((error) => {
         snackbar.add({
             background: '#F58E8E',
@@ -83,8 +89,6 @@ const validate = () => {
      
         })
     })
-
- 
 
     keys.forEach((key) => {
         setTimeout(() => {
@@ -94,16 +98,27 @@ const validate = () => {
         formErrors[key as keyof typeof formErrors] = true
 
     })
-    } else {
+}
+
+const submitForm = async () => {
+    try{
+        let ModdedForm = form;
+        ModdedForm.phone = ModdedForm.phone.replace(/\D/g, '');
+        console.log(ModdedForm.phone); 
+        let response = await Http.post('message', ModdedForm);
         snackbar.add({
             background: '#8EF5E8',
             text: 'Form Submitted Successfully',
      
         })
-    
+        // console.log(response)
+    } catch (e) {
+        snackbar.add({
+            background: '#F58E8E',
+            text: e,
+     
+        })
     }
-
-
 }
 
 defineExpose({
@@ -113,15 +128,11 @@ defineExpose({
 
 <template>
     <div class="form">
-        <DropDownInputField
-      id="subject"
-      required
-      :list="subjectsList"
-      :placeHolder="$translate('subject')"
-      asteriskPosition="15%"
+    <InputField
       @input="form.subject = $event"
-      :error="formErrors.subject"
-    />
+      required
+      :placeHolder="$translate('subject')"
+      :error="formErrors.subject"/>
     <InputField
       @input="form.name = $event"
       required

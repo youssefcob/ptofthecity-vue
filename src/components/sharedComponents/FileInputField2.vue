@@ -2,10 +2,23 @@
 import { ref, type Ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
-    id: String,
     placeHolder: String,
     required: Boolean
 });
+
+const makeid = (length:number)=> {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
+
+let id = makeid(5);
 
 const input: Ref<HTMLElement | null> = ref(null);
 let initialFileName = props.placeHolder || '';
@@ -21,24 +34,28 @@ const openFileDialog = () => {
     }
 }
 
+const emit = defineEmits(['input']);
 const HandleFileUpload = (e: Event) => {
-    // console.log((e.target as HTMLInputElement).files);
-    const file = (e.target as HTMLInputElement).value;
-    if (file) {
+   const  files = ((e.target as HTMLInputElement).files)
+   if (files && files.length > 0) {
+        const formData = new FormData();
+        let file = files[0].name;
+        formData.append('file', files[0]); 
+        if (file) {
         fileName.value = file.split('\\').pop() as string;
-        console.log(fileName.value);
     }
-    // console.log((e.target as HTMLInputElement).value);
+        emit('input',formData);
 
-    // console.log('File uploaded');
+    }
+
 }
 </script>
 
 
 <template>
-    <input type="file" ref="input" :class="`real-file-input ${props.id}`" @change="HandleFileUpload">
+    <input type="file" ref="input" :class="`real-file-input ${id}`" @change="HandleFileUpload">
 
-    <div :class="`file-input ${$props.id} big-screen`" @click="openFileDialog">
+    <div :class="`file-input ${id} big-screen`" @click="openFileDialog">
 
         <div class="file-placeHolder">
             <label>
@@ -56,7 +73,7 @@ const HandleFileUpload = (e: Event) => {
         </div>
     </div>
 
-    <div :class="`file-input ${$props.id} responsive`" @click="openFileDialog">
+    <div :class="`file-input ${id} responsive`" @click="openFileDialog">
        
         <div class="file-placeHolder"> 
             <label>

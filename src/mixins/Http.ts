@@ -9,8 +9,8 @@ const Http = {
             try {
                 const response = await axios.get(url);
                 return response.data;
-            } catch (error) {
-                console.error(error);
+            } catch (error: any) {
+                throw (error.response.data.message);
             }
         },
         async post(url: string, data: any) {
@@ -19,8 +19,8 @@ const Http = {
             try {
                 const response = await axios.post(url, data);
                 return response.data;
-            } catch (error) {
-                console.error(error);
+            } catch (error:any) {
+                throw (error.response.data.message);
             }
         },
         async put(url: string, data: any) {
@@ -29,8 +29,8 @@ const Http = {
             try {
                 const response = await axios.put(url, data);
                 return response.data;
-            } catch (error) {
-                console.error(error);
+            } catch (error: any) {
+                console.error(error.response.data.message);
             }
         },
         async delete(url: string) {
@@ -39,8 +39,8 @@ const Http = {
             try {
                 const response = await axios.delete(url);
                 return response.data;
-            } catch (error) {
-                console.error(error);
+            } catch (error: any) {
+                console.error(error.response.data.message);
             }
         },
     }

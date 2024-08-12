@@ -107,7 +107,7 @@ const CalcTop = () => {
 
         @media screen and (max-width: 800px) {
             height: 6rem;
-            padding: 18px;
+            // padding: 18px;
         }
 
     }

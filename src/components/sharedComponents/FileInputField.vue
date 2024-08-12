@@ -33,7 +33,6 @@ const openFileDialog = () => {
 }
 const emit = defineEmits(['input']);
 const HandleFileUpload = (e: Event) => {
-    // console.log((e.target as HTMLInputElement).files);
    const  files = ((e.target as HTMLInputElement).files)
    if (files && files.length > 0) {
         const formData = new FormData();
@@ -41,24 +40,11 @@ const HandleFileUpload = (e: Event) => {
         formData.append('file', files[0]); 
         if (file) {
         fileName.value = file.split('\\').pop() as string;
-        // console.log(fileName.value);
     }
         emit('input',formData);
-        
-        // Assuming you're uploading a single file
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}:`, value);
-        // }
-        // console.log(files[0]);
+
     }
-    // console.log((e));
 
-    // const file = (e.target as HTMLInputElement).value;
-    // console.log(file);
-
-    // console.log((e.target as HTMLInputElement).value);
-
-    // console.log('File uploaded');
 }
 </script>
 

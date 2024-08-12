@@ -19,8 +19,8 @@ const props = defineProps({
         type: Boolean
     }
 });
-console.log('location',props.location);
-console.log('clinic',props.clinic?.length);
+// console.log('location',props.location);
+// console.log('clinic',props.clinic?.length);
 
 const expandItems = () => {
 
