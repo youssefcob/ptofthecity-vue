@@ -167,7 +167,6 @@ const formErrors = reactive({
 
 const validate = () => {
     let v = new validation(formValidation, form)
-    console.log(formValidation.job.rules[1]);
     v.validate()
     let errors = v.errors;
     if (errors.length) {
@@ -201,7 +200,7 @@ const validate = () => {
     //     })
 
     // }
-    console.log(form);
+    // console.log(form);
     return v.isValid;
 
 
@@ -209,7 +208,7 @@ const validate = () => {
 
 const submit = async () => {
     let isValid = validate();
-    console.log(isValid);
+    // console.log(isValid);
 
     if (isValid) {
         let ModdedForm = modifyForm();
@@ -222,6 +221,7 @@ const submit = async () => {
 
             })
         } catch (e) {
+            console.error(e);
             snackbar.add({
                 background: '#F58E8E',
                 text: e,

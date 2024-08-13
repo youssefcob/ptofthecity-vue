@@ -180,9 +180,10 @@ class validation {
                     }
                 }
                 if (arr && arr.length > 0) {
-                console.log(arr)
+                // console.log(arr)
 
                     const file = this.data as FormData;
+                    if(!file) return;
                     for (let [key, value] of file.entries()) {
                         if (value instanceof File) {
                             console.log(value);

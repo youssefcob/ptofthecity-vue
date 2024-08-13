@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Http from '@/mixins/Http';
+import { insurances,getInsurances } from './Insurances';
+// let insurances:any = ref([]);
 
-let insurances:any = ref([]);
-
-const getInsurances = async () => {
-    insurances.value = await Http.get('images/insurance');
-    // console.log(insurances.value);
-}
+// const getInsurances = async () => {
+//     insurances.value = await Http.get('images/insurance');
+//     // console.log(insurances.value);
+// }
 onMounted(() => {
     getInsurances();
 })

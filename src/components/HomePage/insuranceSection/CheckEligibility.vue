@@ -1,16 +1,33 @@
 <script setup lang="ts">
-import insurances from "./Insurances";
+// import {insurancesArr} from "./Insurances";
 
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import FileInputField from '@/components/sharedComponents/FileInputField.vue';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
-import { reactive } from "vue";
+import { onMounted, reactive, ref, type Ref } from "vue";
+import Http from "@/mixins/Http";
 const snackbar = useSnackbar();
 // import snackbar from '@/components/snackbar/SnackBar.vue';
 
+let insurancesArr:Ref<string[]> = ref([]);
 
+const getInsurances = async () => {
+    setTimeout(async () => {
+        if(!insurancesArr.value.length){
+        let data = await Http.get('images/insurance');
+        insurancesArr.value = data.map((insurance: any) => insurance.title);
+    }
+    formValidation.insurance.rules[1] ={dropdown: insurancesArr.value};
+    }, 1000)
+
+
+}
+
+onMounted(() => {
+    getInsurances();
+})
 const form = reactive({
     firstName: '',
     lastName: '',
@@ -21,9 +38,10 @@ const form = reactive({
     phone: '',
     medicareId: '',
     medicaidId: '',
-    insuranceCardFront: new FormData(),
-    insuranceCardBack: new FormData(),
+    insuranceCardFront: null,
+    insuranceCardBack: null,
 })
+
 
 const formValidation = {
     firstName: {
@@ -50,7 +68,7 @@ const formValidation = {
 
     },
     insurance: {
-        rules: ['required', { dropdown: insurances }],
+        rules: ['required', { dropdown: insurancesArr.value }],
         message: {
             required: 'Insurance Is Required',
         }
@@ -107,10 +125,8 @@ const validate = () => {
 
     v.validate()
     let errors = v.errors;
-    console.log(errors);
     if (errors.length) {
         let errorsArr = Object.values(errors[0])
-        console.log(errorsArr)
         let keys = v.keys
 
         errorsArr.forEach((error) => {
@@ -131,18 +147,73 @@ const validate = () => {
             formErrors[key as keyof typeof formErrors] = true
 
         })
-    } else {
-        snackbar.add({
-            background: '#8EF5E8',
-            text: 'Form Submitted Successfully',
+    } 
+    // else {
+    //     snackbar.add({
+    //         background: '#8EF5E8',
+    //         text: 'Form Submitted Successfully',
 
-        })
+    //     })
 
-    }
-
+    // }
+    return v.isValid;
 
 }
+const submit= async ()=>{
+    let isValid = validate();
 
+    if(isValid) {
+        let ModdedForm = modifyForm();
+        try {
+            let response = await Http.post('insurance/create', ModdedForm);
+            console.log(response);
+            snackbar.add({
+                background: '#8EF5E8',
+                text: 'Form Submitted Successfully',
+
+            })
+        } catch (e) {
+            snackbar.add({
+                background: '#F58E8E',
+                text: 'Form Submission Failed',
+
+            })
+        }
+    }
+}
+
+const modifyForm = () => {
+    let formData = new FormData();
+    formData.append('firstName', form.firstName);
+    formData.append('lastName', form.lastName);
+    formData.append('dob', form.dob);
+    formData.append('insurance_provider', form.insurance);
+    formData.append('gender',form.gender)
+    formData.append('member_id', form.memberId);
+    formData.append('phone', form.phone.replace(/\D/g, ''));
+    if(form.medicareId) formData.append('medicare_id', form.medicareId);
+    if(form.medicaidId) formData.append('medicaid_id', form.medicaidId);
+    if(form.insuranceCardFront) {
+        let insuranceCardFront = form.insuranceCardFront as FormData;
+        for (let [key,value] of insuranceCardFront.entries()) {
+            if(value instanceof File) {
+                formData.append('insurance_card_front', value);
+                break;
+            }
+        }
+    };
+    if(form.insuranceCardBack) {
+        let insuranceCardBack = form.insuranceCardBack as FormData;
+        for (let [key,value] of insuranceCardBack.entries()) {
+            if(value instanceof File) {
+                formData.append('insurance_card_back', value);
+                break;
+            }
+        }
+    };
+
+    return formData;
+}
 </script>
 
 
@@ -166,7 +237,7 @@ const validate = () => {
                                     :placeHolder="$translate('last_name')" id="lastName" required lettersOnly />
                             </div>
                             <DropDownInputField :error="formErrors.insurance" @input="form.insurance = $event"
-                                :list="insurances" id="insurances" :placeHolder="$translate('insurance_provider')" required />
+                                :list="insurancesArr" id="insurances" :placeHolder="$translate('insurance_provider')" required />
                             <InputField @input="form.memberId = $event" :error="formErrors.memberId"
                                 :placeHolder="$translate('member_id')" id="memberId" required />
                             <InputField @input="form.phone = $event" :error="formErrors.phone"
@@ -186,7 +257,7 @@ const validate = () => {
                                 @input="form.insuranceCardFront = $event" />
                             <FileInputField :placeHolder="$translate('insurance_card_back')" :error="formErrors.insuranceCardBack"
                                 @input="form.insuranceCardBack = $event" />
-                            <button @click="validate" class="btn responsive">{{$translate('submit')}}</button>
+                            <button @click="submit" class="btn responsive">{{$translate('submit')}}</button>
 
                         </div>
 
