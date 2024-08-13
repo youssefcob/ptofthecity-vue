@@ -2,16 +2,25 @@
 import InputField from '../sharedComponents/InputField.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import FileInputField2 from '../sharedComponents/FileInputField2.vue';
+import { onMounted, reactive, ref, type Ref } from 'vue';
+import validation from '@/mixins/Validation';
+import { useSnackbar } from "vue3-snackbar";
+import Http from '@/mixins/Http';
+const snackbar = useSnackbar();
+let jobs: Ref<string[]> = ref([]);
+// let jobsList: any[] = [];
+const getJobs = async () => {
+    let data = await Http.get('career/jobs');
+    // jobsList = data;
+    
+    jobs.value = data.map((job: any) => job.title);
+    formValidation.job.rules[1] ={dropdown: jobs.value};
 
-const jobs = [
-    "doctor",
-    "nurse",
-    "receptionist",
-    "cleaner",
-    "security",
-    "driver",
-]
-
+    // console.log(data);
+}
+onMounted(() => {
+    getJobs();
+})
 const states = [
     "Alabama",
     "Alaska",
@@ -65,107 +74,290 @@ const states = [
     "Wyoming",
 
 ]
+
+const form = reactive({
+    job: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    resume: null,
+    street_address: '',
+    city: '',
+    state: '',
+    zip_code: '',
+})
+
+const formValidation = {
+    job: {
+        rules: ['required', { dropdown: jobs.value }],
+        message: {
+            required: 'Please Select A Job',
+            dropdown: 'Please Select A Valid Job'
+        },
+    },
+    first_name: {
+        rules: ['required', 'letters'],
+        message: {
+            required: 'First Name Is Required',
+            letters: 'First Name Cannot Contain Numbers Or Special Characters'
+        }
+    },
+    last_name: {
+        rules: ['required', 'letters'],
+        message: {
+            required: 'Last Name Is Required',
+            letters: 'Last Name Cannot Contain Numbers Or Special Characters'
+        }
+    },
+    email: {
+        rules: ['required', 'email'],
+        message: {
+            required: 'Email Is Required',
+            email: 'Please Enter A Valid Email'
+        }
+    },
+    phone: {
+        rules: ['required'],
+        message: {
+            required: 'Phone Number Is Required',
+            phone: 'Please Enter A Valid Phone Number'
+        }
+    },
+    resume: {
+        rules: ['required', 'file:pdf'],
+        message: {
+            required: 'Resume Is Required',
+            file: 'Resume must be in pdf format'
+        }
+    },
+    street_address: {
+        rules: [],
+
+    },
+    city: {
+        rules: [],
+
+    },
+    state: {
+        rules: [{ dropdown: states }],
+        message: {
+            dropdown: 'Please Select A Valid State'
+        }
+    },
+    zip_code: {
+        rules: [],
+        message: {
+        }
+    }
+}
+
+const formErrors = reactive({
+    job: false,
+    first_name: false,
+    last_name: false,
+    email: false,
+    phone: false,
+    resume: false,
+    street_address: false,
+    city: false,
+    state: false,
+    zip_code: false,
+})
+
+const validate = () => {
+    let v = new validation(formValidation, form)
+    console.log(formValidation.job.rules[1]);
+    v.validate()
+    let errors = v.errors;
+    if (errors.length) {
+        let errorsArr = Object.values(errors[0])
+        let keys = v.keys
+
+        errorsArr.forEach((error) => {
+            snackbar.add({
+                background: '#F58E8E',
+                text: error,
+
+            })
+        })
+
+
+
+        keys.forEach((key) => {
+            setTimeout(() => {
+                formErrors[key as keyof typeof formErrors] = false
+
+            }, 500)
+            formErrors[key as keyof typeof formErrors] = true
+
+        })
+    }
+    //  else {
+    //     snackbar.add({
+    //         background: '#8EF5E8',
+    //         text: 'Form Submitted Successfully',
+
+    //     })
+
+    // }
+    console.log(form);
+    return v.isValid;
+
+
+}
+
+const submit = async () => {
+    let isValid = validate();
+    console.log(isValid);
+
+    if (isValid) {
+        let ModdedForm = modifyForm();
+        try {
+            let response = await Http.post('career', ModdedForm);
+            console.log(response);
+            snackbar.add({
+                background: '#8EF5E8',
+                text: 'Form Submitted Successfully',
+
+            })
+        } catch (e) {
+            snackbar.add({
+                background: '#F58E8E',
+                text: e,
+
+            })
+        }
+    }
+}
+
+const modifyForm = () => {
+    let formData = new FormData();
+
+    formData.append('job', form.job);
+    formData.append('first_name', form.first_name);
+    formData.append('last_name', form.last_name);
+    formData.append('email', form.email);
+    formData.append('phone', form.phone.replace(/\D/g, ''));
+    if (form.street_address) formData.append('street_address', form.street_address);
+    if (form.city) formData.append('city', form.city);
+    if (form.state) formData.append('state', form.state);
+    if (form.zip_code) formData.append('zip_code', form.zip_code);
+    if (form.resume) {
+        let resume = form.resume as FormData;
+        for (let [key, value] of resume.entries()) {
+            if (value instanceof File) {
+                formData.append('resume', value);
+                break;
+            }
+        }
+    }
+
+    return formData;
+
+}
 </script>
 <template>
-      <div class="form-wrapper">
-                <div>
-                    <div class="ps">Fields marked with an <span style="color:red">*</span> are required</div>
-                    <DropDownInputField placeHolder="Job you're applying for" required :list="jobs" id="jobs" />
-                </div>
-                <div class="name-wrapper">
-                    <InputField class="field" placeHolder="First Name" required />
-                    <InputField class="field" placeHolder="Last Name" required />
-                </div>
-                <InputField placeHolder="Email adress" required />
-                <InputField placeHolder="Phone number" required />
-                <div>
-                    <FileInputField2 placeHolder="Upload your CV" required />
-                    <div class="ps">Please upload your document in PDF format (`.pdf`).</div>
-                </div>
-                <InputField placeHolder="Street address" />
-                <div class="location-wrapper">
-                    <InputField class="field" placeHolder="City" />
-                    <DropDownInputField class="field" placeHolder="State" :list="states" id="states" />
-                    <InputField class="field" placeHolder="Zip code" />
-                </div>
-                <div class="recaptcha"></div>
-                <div class="btn responsive main btnfont" style="margin-top: 0;">Submit</div>
-                <div class="btn responsive main transparent" style="margin-top: 0;">Back to Homepage</div>
-            </div>
+    <div class="form-wrapper">
+        <div>
+            <div class="ps">Fields marked with an <span style="color:red">*</span> are required</div>
+            <DropDownInputField placeHolder="Job you're applying for" required :list="jobs" @input="form.job = $event"
+                id="jobs" />
+        </div>
+        <div class="name-wrapper">
+            <InputField class="field" placeHolder="First Name" @input="form.first_name = $event" required />
+            <InputField class="field" placeHolder="Last Name" @input="form.last_name = $event" required />
+        </div>
+        <InputField placeHolder="Email adress" @input="form.email = $event" required />
+        <InputField placeHolder="Phone number" @input="form.phone = $event" mask="(###) ###-####" required />
+        <div>
+            <FileInputField2 placeHolder="Upload your CV" @input="form.resume = $event" required />
+            <div class="ps">Please upload your document in PDF format (`.pdf`).</div>
+        </div>
+        <InputField placeHolder="Street address" @input="form.street_address = $event" />
+        <div class="location-wrapper">
+            <InputField class="field" placeHolder="City" @input="form.city = $event" />
+            <DropDownInputField class="field" placeHolder="State" @input="form.state = $event" :list="states"
+                id="states" />
+            <InputField class="field" placeHolder="Zip code" @input="form.zip_code = $event" />
+        </div>
+        <div class="recaptcha"></div>
+        <div class="btn responsive main btnfont" @click="submit()" style="margin-top: 0;">Submit</div>
+        <div class="btn responsive main transparent" style="margin-top: 0;">Back to Homepage</div>
+    </div>
 </template>
 
 <style scoped lang="scss">
 $formgap: 1.25rem;
 
 .form-wrapper {
-            width: 60%;
+    width: 60%;
 
-            @media screen and (max-width: 800px) {
-                width: 100%;
+    @media screen and (max-width: 800px) {
+        width: 100%;
 
-            }
+    }
 
-            display: flex;
+    display: flex;
+    flex-direction: column;
+    gap: $formgap;
+
+    .name-wrapper {
+        width: 100%;
+        display: flex;
+        gap: $formgap;
+
+        @media screen and (max-width: 500px) {
             flex-direction: column;
-            gap: $formgap;
-
-            .name-wrapper {
-                width: 100%;
-                display: flex;
-                gap: $formgap;
-
-                @media screen and (max-width: 500px) {
-                    flex-direction: column;
 
 
-                }
-
-                >.field {
-                    @media screen and (min-width: 501px) {
-                        width: 50%;
-                    }
-
-
-                }
-            }
-
-            .location-wrapper {
-                width: 100%;
-                display: flex;
-                gap: $formgap;
-
-                @media screen and (max-width: 501px) {
-                    flex-direction: column;
-                }
-
-                >.field {
-                    @media screen and (min-width: 501px) {
-                        width: 33.33%;
-                    }
-                }
-            }
-
-            .recaptcha {
-                @media screen and (max-width: 501px) {
-                    width: 100%;
-                    height: 6rem;
-
-                }
-
-                width: 14rem;
-                height: 4rem;
-                background-color: $darkgrey;
-                border-radius: $border-radius;
-
-            }
-
-            .btn {
-                @media screen and (min-width: 501px) {
-                    width: 40%;
-
-
-                }
-            }
         }
 
+        >.field {
+            @media screen and (min-width: 501px) {
+                width: 50%;
+            }
+
+
+        }
+    }
+
+    .location-wrapper {
+        width: 100%;
+        display: flex;
+        gap: $formgap;
+
+        @media screen and (max-width: 501px) {
+            flex-direction: column;
+        }
+
+        >.field {
+            @media screen and (min-width: 501px) {
+                width: 33.33%;
+            }
+        }
+    }
+
+    .recaptcha {
+        @media screen and (max-width: 501px) {
+            width: 100%;
+            height: 6rem;
+
+        }
+
+        width: 14rem;
+        height: 4rem;
+        background-color: $darkgrey;
+        border-radius: $border-radius;
+
+    }
+
+    .btn {
+        @media screen and (min-width: 501px) {
+            width: 40%;
+
+
+        }
+    }
+}
 </style>
