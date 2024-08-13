@@ -57,10 +57,10 @@ onMounted(() => {
         <section class="TrustedBySection" id="TrustedBy">
             <TrustedByPage />
         </section>
-
+<!-- 
         <section class="TestimonialsSection" id="Testimonials">
             <TestimonialsPage />
-        </section>
+        </section> -->
 
         <section class="FAQsSection" id="FAQs">
             <FAQsPage />

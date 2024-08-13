@@ -61,7 +61,7 @@ const formatText = (text: string | undefined): string => {
 
                     </div>
                 </div>
-                <router-link to="/whoWeAre" class="btn transparent responsive main">{{$translate('learn_more')}}</router-link>
+                <router-link to="/WhoWeAre" class="btn transparent responsive main">{{$translate('learn_more')}}</router-link>
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@ import Socials from './Socials.vue';
 
 <style scoped lang="scss">
 .container {
-  margin: 12.5rem 0;
+  margin-top: 12.5rem;
 
     width: 100%;
     background: linear-gradient(90deg, #236681 0%, #07151B 100%);
