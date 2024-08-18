@@ -26,7 +26,7 @@ const form = reactive({
 
 })
 
-let Httplocations = [];
+let Httplocations:{name:string,id:number}[] = [];
 const locations = ref([]);
 const location = '';
 let cords = ref({
@@ -38,6 +38,7 @@ const getLocations = async () => {
     data = sortLocations(data)
     Httplocations = data;
     locations.value = data.map((location: { name: string }) => location.name);
+    formValidation.location.rules[1] = { dropdown: locations.value };
 
 }
 const sortLocations = (data:any) => {
@@ -139,7 +140,7 @@ const formValidation = {
     pain: {
     },
     date: {
-        rules: ['required', 'date:future'],
+        rules: ['required'],
 
     },
     time: {
@@ -165,55 +166,125 @@ const formErrors = reactive({
 
 const validate = () => {
     let v = new validation(formValidation, form)
-
     v.validate()
     let errors = v.errors;
-    console.log(errors);
-    if(errors.length){
+    if (errors.length) {
         let errorsArr = Object.values(errors[0])
-    console.log(errorsArr)
-    let keys = v.keys
-  
-    errorsArr.forEach((error) => {
-        snackbar.add({
-            background: '#F58E8E',
-            text: error,
-     
+        let keys = v.keys
+
+        errorsArr.forEach((error) => {
+            snackbar.add({
+                background: '#F58E8E',
+                text: error,
+
+            })
         })
-    })
 
- 
 
-    keys.forEach((key) => {
-        setTimeout(() => {
-            formErrors[key as keyof typeof formErrors] = false
 
-        }, 500)
-        formErrors[key as keyof typeof formErrors] = true
+        keys.forEach((key) => {
+            setTimeout(() => {
+                formErrors[key as keyof typeof formErrors] = false
 
-    })
-    } else {
-        snackbar.add({
-            background: '#8EF5E8',
-            text: 'Form Submitted Successfully',
-     
+            }, 500)
+            formErrors[key as keyof typeof formErrors] = true
+
         })
-    
     }
+    //  else {
+    //     snackbar.add({
+    //         background: '#8EF5E8',
+    //         text: 'Form Submitted Successfully',
+
+    //     })
+
+    // }
+    // console.log(form);
+    return v.isValid;
 
 
 }
+
+
+const submit= async ()=>{
+    let isValid = validate();
+    if(isValid) {
+        let moddedForm = modifyForm();
+        console.log(moddedForm);
+        try{
+            let response = await Http.post('reservation',moddedForm);
+            console.log(response);
+            snackbar.add({
+                background: '#8EF5E8',
+                text: 'Form Submitted Successfully',
+
+            })
+        }catch(e){
+            console.error(e);
+            snackbar.add({
+                background: '#F58E8E',
+                text: 'Something went wrong, Please try again later',
+
+            })
+        }
+
+    }
+}
+
+const modifyForm = () => {
+    let moddedform = {};
+    let clinic_id = () => {
+            let clinic = Httplocations.find((location) => location.name === form.location);
+            if(!clinic) return;
+            return clinic.id;
+        }
+    let formPayment = () => {
+        if(form.payment === 'Insurance') return 'insurance';
+        return 'self_pay';
+    }
+    Object.assign(moddedform, {
+        clinic_id: clinic_id(),
+        first_name: form.firstName,
+        last_name: form.lastName,
+        dob: form.dob,
+        gender:form.gender,
+        phone: form.phone.replace(/\D/g, ''),
+        payment: formPayment(),
+        date: convertTotimeStamp(form.date,form.time),
+
+    });
+    if(form.payment === 'Insurance') {
+        Object.assign(moddedform, {
+            insurance_company: form.insurance,
+            member_id: form.memberId
+        });
+    }
+    return moddedform;
+}
+
+const convertTotimeStamp = (date:string,time:string)=>{
+    const [month,day,year] = date.split('-').map((e)=>parseInt(e));
+    const [hour,minute] = time.split(':').map((e)=>parseInt(e));
+    const dateObj = new Date(year,month,day,hour,minute);
+    console.log(dateObj);
+    let d = new Date(dateObj);
+    let utc = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes());
+    return utc;
+
+}
 const updateHours = (date: { day: number, month: number, year: number }) => {
-    let time = new Date().getHours()
-    let month = new Date().getMonth()
-    let day = new Date().getDate()
-    let year = new Date().getFullYear()
+    const dateObj = new Date();
+    let time = dateObj.getHours()
+    let month = dateObj.getMonth()
+    let day = dateObj.getDate()
+    let year = dateObj.getFullYear()
     let hours = [];
     for (let i = 8; i < 16; i++) {
         if (i < time && month === date.month && day === date.day && year === date.year) continue
         hours.push(`${i}:00`)
     }
     Availablehours.value = hours
+    formValidation.time.rules[1] = { dropdown: Availablehours.value }
 
 }
 const updateDate = (date: { day: number, month: number, year: number }) => {
@@ -285,7 +356,7 @@ const isSelfPay = () => {
                 <Calender @input="updateDate($event)" />
                 <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
                     :error="formErrors.time" />
-                <div @click="validate()" class="btn responsive">Book Appointment</div>
+                <div @click="submit()" class="btn responsive">Book Appointment</div>
             </div>
         </div>
     </div>
