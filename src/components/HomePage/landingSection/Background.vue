@@ -1,49 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import Carousel from '@/components/sharedComponents/Carousel.vue';
+import { onMounted, ref, type Ref } from 'vue';
+import BackGroundImage from './BackGroundImage.vue';
 
+const background: Ref<typeof BackGroundImage | null> = ref(null);
 
+const initiateScroll = () => {
+    background.value?.scroll(1);
+}
 
-let glob = import.meta.glob('@/assets/images/landingPageCarousel/*.jpg', { eager: true })
-let keys = Object.keys(glob);
+onMounted(() => {
+    setInterval(initiateScroll, 5000);
+})
+let images = [
+    '/images/careers.png',
+    '/images/contactUs.jpg',
+    '/images/eligibilityFormImage.jpg',
+]
 
-let imageslength = keys.length;
-
-let currentImageIndex = 0;
-
-let image = ref(glob[keys[currentImageIndex]])
-
-// setInterval(() => {
-//     let img: any = document.querySelector('.image');
-//     let overlay:any = document.querySelector('.overlay');
-
-//     img.classList.add('fade-out');
-//     overlay.classList.add('overlay-dark')
-//     overlay.classList.remove('overlay-light')
-
-//     setTimeout( ()=> {
-//     (currentImageIndex != imageslength - 1) ? currentImageIndex++ : currentImageIndex = 0;
-//     image.value = glob[keys[currentImageIndex]];
-//     img.classList.remove('fade-out');
-//     overlay.classList.remove('overlay-dark')
-//     overlay.classList.add('overlay-light')
-// },200)
-
-// }, 4000)
-
-let getBackgroundImageUrl = function (src: any) {
-    if (typeof src === 'object') {
-        return src.default;
-    } else {
-        console.warn('Invalid image URL in glob data:', src);
-        return '';
-    }
-};
 
 </script>
 
 <template>
     <div class="image-container">
-        <div class="image" :style="{ backgroundImage: `url(${getBackgroundImageUrl(image)})` }"></div>
+        <!-- <div class="image" :style="{ backgroundImage: `url(${getBackgroundImageUrl(image)})` }"></div> -->
+         <Carousel ref='background' class="image" NoButtons NoIndicator>
+            <BackGroundImage v-for="image in images" :image="image" />
+         </Carousel>
         <div class="overlay overlay-light"></div>
         <slot class="content"></slot>
 
