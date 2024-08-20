@@ -3,6 +3,7 @@
 import { useRouter } from 'vue-router';
 import ServiceDescription from './ServiceDescription.vue';
 import type { Service } from './Services';
+import { lang } from '@/mixins/Translate';
 const props = defineProps({
     service: {
         type: Object as () => Service
@@ -30,6 +31,13 @@ const scroll = (direction: number) => {
     
 }
 
+
+const trans = (languagesObject:any) => {
+    if(!languagesObject) return;
+    return languagesObject[lang()];
+}
+
+
 </script>
 
 <template>
@@ -42,18 +50,7 @@ const scroll = (direction: number) => {
         <div class="mobile-description">
             <div class="header-buttons-wrapper">
                 <h2 class="smallHeader">{{ props.service?.title }}</h2>
-                <!-- <div class="btns">
-                    <div class="btn left" @click="scroll(-1)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="8"
-                            viewBox="0 0 12 7" fill="none">
-                            <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg></div>
-                    <div class="btn right" @click="scroll(1)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="8"
-                            viewBox="0 0 12 7" fill="none">
-                            <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg></div>
-                </div> -->
+             
             </div>
             <p class="text-s">{{ $props.service?.description }}</p>
         </div>

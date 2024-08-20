@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { reactive, ref, type Ref } from 'vue';
+import { onMounted, reactive, ref, type Ref } from 'vue';
 import Calender from '../sharedComponents/Calender.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import InputField from '../sharedComponents/InputField.vue';
 import RadioInputField from '../sharedComponents/RadioInputField.vue';
-import insurances from '../HomePage/insuranceSection/Insurances';
+// import insurances from '../HomePage/insuranceSection/Insurances';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
+import Http from '@/mixins/Http';
 const snackbar = useSnackbar();
 
 const form = reactive({
@@ -25,25 +26,70 @@ const form = reactive({
 
 })
 
-const locations = [
-    "location1",
-    'location2',
-    'location3'
-]
+let Httplocations:{name:string,id:number}[] = [];
+const locations = ref([]);
+const location = '';
+let cords = ref({
+    lat: 0,
+    long: 0
+})
+const getLocations = async () => {
+    let data = await Http.get('clinic/names');
+    data = sortLocations(data)
+    Httplocations = data;
+    locations.value = data.map((location: { name: string }) => location.name);
+    formValidation.location.rules[1] = { dropdown: locations.value };
+
+}
+const sortLocations = (data:any) => {
+    if(!cords.value.lat || !cords.value.long) return data;
+    data.forEach((location: { name: string, lat: string, long: string, distance?:number }) => {
+        location.distance = getDistance(cords.value.lat, cords.value.long, parseFloat(location.lat), parseFloat(location.long));
+    });
+    data.sort((a: { distance: number }, b: { distance: number }) => a.distance - b.distance);
+    return data;
+}
+
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const toRad = (value: number) => value * Math.PI / 180;
+    const R = 6371; // Radius of the Earth in km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+}
+
+let HttpInsurances = [];
+const insurances = ref([]);
+const getInsurances = async () => {
+    let data = await Http.get('images/insurance/names');
+    HttpInsurances = data;
+    insurances.value = data.map((insurance: { title: string }) => insurance.title);
+}
+onMounted(() => {
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        cords.value.lat = position.coords.latitude
+        cords.value.long = position.coords.longitude
+    })
+}
+getLocations()
+getInsurances()
+})
 
 
-const inusrances = [
-    "Insurance1",
-    'Insurance2',
-    'Insurance3'
-]
+
+
 
 
 let Availablehours: Ref<string[]> = ref([])
 
 const formValidation = {
     location: {
-        rules: ['required', { dropdown: locations }],
+        rules: ['required', { dropdown: locations.value }],
         message: {
             required: 'Please select a location',
             dropdown: 'Please select a valid location'
@@ -85,7 +131,7 @@ const formValidation = {
 
     },
     insurance: {
-        rules: ['required:if:payment:Insurance', { dropdown: insurances }],
+        rules: ['required:if:payment:Insurance', { dropdown: insurances.value }],
 
     },
     memberId: {
@@ -94,7 +140,7 @@ const formValidation = {
     pain: {
     },
     date: {
-        rules: ['required', 'date:future'],
+        rules: ['required'],
 
     },
     time: {
@@ -120,55 +166,125 @@ const formErrors = reactive({
 
 const validate = () => {
     let v = new validation(formValidation, form)
-
     v.validate()
     let errors = v.errors;
-    console.log(errors);
-    if(errors.length){
+    if (errors.length) {
         let errorsArr = Object.values(errors[0])
-    console.log(errorsArr)
-    let keys = v.keys
-  
-    errorsArr.forEach((error) => {
-        snackbar.add({
-            background: '#F58E8E',
-            text: error,
-     
+        let keys = v.keys
+
+        errorsArr.forEach((error) => {
+            snackbar.add({
+                background: '#F58E8E',
+                text: error,
+
+            })
         })
-    })
 
- 
 
-    keys.forEach((key) => {
-        setTimeout(() => {
-            formErrors[key as keyof typeof formErrors] = false
 
-        }, 500)
-        formErrors[key as keyof typeof formErrors] = true
+        keys.forEach((key) => {
+            setTimeout(() => {
+                formErrors[key as keyof typeof formErrors] = false
 
-    })
-    } else {
-        snackbar.add({
-            background: '#8EF5E8',
-            text: 'Form Submitted Successfully',
-     
+            }, 500)
+            formErrors[key as keyof typeof formErrors] = true
+
         })
-    
     }
+    //  else {
+    //     snackbar.add({
+    //         background: '#8EF5E8',
+    //         text: 'Form Submitted Successfully',
+
+    //     })
+
+    // }
+    // console.log(form);
+    return v.isValid;
 
 
 }
+
+
+const submit= async ()=>{
+    let isValid = validate();
+    if(isValid) {
+        let moddedForm = modifyForm();
+        console.log(moddedForm);
+        try{
+            let response = await Http.post('reservation',moddedForm);
+            console.log(response);
+            snackbar.add({
+                background: '#8EF5E8',
+                text: 'Form Submitted Successfully',
+
+            })
+        }catch(e){
+            console.error(e);
+            snackbar.add({
+                background: '#F58E8E',
+                text: 'Something went wrong, Please try again later',
+
+            })
+        }
+
+    }
+}
+
+const modifyForm = () => {
+    let moddedform = {};
+    let clinic_id = () => {
+            let clinic = Httplocations.find((location) => location.name === form.location);
+            if(!clinic) return;
+            return clinic.id;
+        }
+    let formPayment = () => {
+        if(form.payment === 'Insurance') return 'insurance';
+        return 'self_pay';
+    }
+    Object.assign(moddedform, {
+        clinic_id: clinic_id(),
+        first_name: form.firstName,
+        last_name: form.lastName,
+        dob: form.dob,
+        gender:form.gender,
+        phone: form.phone.replace(/\D/g, ''),
+        payment: formPayment(),
+        date: convertTotimeStamp(form.date,form.time),
+
+    });
+    if(form.payment === 'Insurance') {
+        Object.assign(moddedform, {
+            insurance_company: form.insurance,
+            member_id: form.memberId
+        });
+    }
+    return moddedform;
+}
+
+const convertTotimeStamp = (date:string,time:string)=>{
+    const [month,day,year] = date.split('-').map((e)=>parseInt(e));
+    const [hour,minute] = time.split(':').map((e)=>parseInt(e));
+    const dateObj = new Date(year,month,day,hour,minute);
+    console.log(dateObj);
+    let d = new Date(dateObj);
+    let utc = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes());
+    return utc;
+
+}
 const updateHours = (date: { day: number, month: number, year: number }) => {
-    let time = new Date().getHours()
-    let month = new Date().getMonth()
-    let day = new Date().getDate()
-    let year = new Date().getFullYear()
+    const dateObj = new Date();
+    let time = dateObj.getHours()
+    let month = dateObj.getMonth()
+    let day = dateObj.getDate()
+    let year = dateObj.getFullYear()
     let hours = [];
     for (let i = 8; i < 16; i++) {
         if (i < time && month === date.month && day === date.day && year === date.year) continue
         hours.push(`${i}:00`)
     }
     Availablehours.value = hours
+    formValidation.time.rules[1] = { dropdown: Availablehours.value }
 
 }
 const updateDate = (date: { day: number, month: number, year: number }) => {
@@ -196,7 +312,8 @@ const isSelfPay = () => {
 
                     <DropDownInputField id="location" :list="locations" placeHolder="Find Your nearest clinic"
                         @input="form.location = $event" required :error="formErrors.location" />
-                    <div class="ps">Make sure to allow location access</div>
+                    <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
+
 
                 </div>
                 <div>
@@ -228,7 +345,7 @@ const isSelfPay = () => {
                             @input="form.phone = $event" :error="formErrors.phone" />
                     </div>
                 </div>
-                <DropDownInputField id="insurance" :list="inusrances" placeHolder="Insurance company name"
+                <DropDownInputField id="insurance" :list="insurances" placeHolder="Insurance company name"
                     @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
                 <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
                     :disabled="isSelfPay()" :error="formErrors.memberId" />
@@ -239,7 +356,7 @@ const isSelfPay = () => {
                 <Calender @input="updateDate($event)" />
                 <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
                     :error="formErrors.time" />
-                <div @click="validate()" class="btn responsive">Book Appointment</div>
+                <div @click="submit()" class="btn responsive">Book Appointment</div>
             </div>
         </div>
     </div>

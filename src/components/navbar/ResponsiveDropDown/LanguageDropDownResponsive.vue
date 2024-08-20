@@ -6,11 +6,13 @@ import type { Ref } from 'vue';
 
 
 const show: Ref<boolean> = ref(false);
-const lang: Ref<string> = ref('EN');
+const lang: Ref<string> = ref(localStorage.getItem('lang') || 'EN');
 
 const changeLang = (language: string): void => {
     lang.value = language;
+    localStorage.setItem('lang', language);
     show.value = false;
+    window.location.reload();
 }
 
 let handleClickOutside: (e: Event) => void;
@@ -35,7 +37,7 @@ onUnmounted(() => {
     <div class="lang-container">
         <NavLogoInverted class="logo"/>
 
-        <div class="language">
+        <!-- <div class="language">
             <div class="language-dropdown-responsive">
                 <div class="language-btn" @click="show = !show">
                     <span>
@@ -53,13 +55,15 @@ onUnmounted(() => {
                     <div class="language-item" @click="changeLang('ES')">ES</div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </template>
 
 <style scoped lang="scss">
 .lang-container {
+    padding:1.25rem;
+
     >.logo{
     margin-left:2.5rem;
 

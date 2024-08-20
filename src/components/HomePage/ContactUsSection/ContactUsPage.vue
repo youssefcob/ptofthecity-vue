@@ -16,8 +16,8 @@ const submit = () => {
 <template>
     <div class="container">
         <div class="sectionHeader">
-            <h1>{{header || 'Contact us'}}</h1>
-            <p>We would love to hear from you!</p>
+            <h1>{{header || $translate('contactUs')}}</h1>
+            <p>{{$translate('contact_us_phrase')}}</p>
         </div>
         <div class="form-image-container">
             <div class="form-container">
@@ -27,7 +27,7 @@ const submit = () => {
                 <ContactUsImage />
             </div>
         </div>
-        <div @click="submit" class="btn responsive main">Submit</div>
+        <div @click="submit" class="btn responsive main">{{ $translate('submit') }}</div>
 
     </div>
 </template>
@@ -37,7 +37,9 @@ const submit = () => {
     display: flex;
     flex-direction: column;
     @include pagePadding;
-
+    .sectionHeader{
+        width:100%;
+    }
  
     .form-image-container {
         display: flex;

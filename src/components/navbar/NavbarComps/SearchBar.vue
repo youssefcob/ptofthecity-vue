@@ -1,11 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
     <div class="search-bar">
         <div class="search-icon-mobile">
             <img src="@/assets/icons/SearchIcon.svg" alt="">
         </div>
-        <input class='search-input' type="text" placeholder="Search...">
+        <input lang="ar" :dir="$dir()" class='search-input' type="text" :placeholder="$translate('search')">
 
         <div class="search-icon">
             <img src="@/assets/icons/SearchIcon.svg" alt="">

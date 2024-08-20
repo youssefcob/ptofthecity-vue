@@ -51,11 +51,7 @@ defineExpose({
 
 <style scoped lang="scss">
 dialog {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // height: 100vh;
-    // width: 100vw;
+
     background-color: rgba(44, 50, 51, 0.40);
     position: fixed;
     border: none;

@@ -1,43 +1,38 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue';
+import { RouterLink } from 'vue-router';
 const targetDivRef: Ref<HTMLElement | null> = ref(null);
 
-const handleScrollToTarget = (id:any) => {
-  targetDivRef.value = document.getElementById(id);
-  if (targetDivRef.value) {
-    targetDivRef.value.scrollIntoView({ behavior: 'smooth', block: 'start'});
-  } else {
-    console.warn(`Div with ID "${id}" not found.`);
-  }
-};
+
 </script>
 
 <template>
-      <ul>
-            <li><router-link active-class="navbar-link" to="/#Services">
-                    Services
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/#Insurace">
-                    Insurance
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/#WhoWeAre">
-                    Who We Are
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/Blog">
-                    Blog
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/#Careers">
-                    Careers
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/#TrustedBy">
-                    Trusted by
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/#FAQs">
-                    FAQs
-                </router-link></li>
-            <li><router-link active-class="navbar-link" to="/#ContactUs">
-                    Contact us
-                </router-link></li>
+      <ul  >
+<li><RouterLink  active-class="navbar-link" to="/#Services">
+        {{ $translate('services') }}
+    </RouterLink></li>
+<li><RouterLink active-class="navbar-link" to="/#Insurance">
+        {{ $translate('insurance') }}
+    </RouterLink></li>
+<li><RouterLink active-class="navbar-link" to="/#WhoWeAre">
+        {{ $translate('whoWeAre') }}
+    </RouterLink></li>
+<!-- <li><RouterLink active-class="navbar-link" to="/Blog">
+        {{ $translate('blog') }}
+    </RouterLink></li> -->
+<li><RouterLink active-class="navbar-link" to="/#Careers">
+        {{ $translate('careers') }}
+    </RouterLink></li>
+<li><RouterLink active-class="navbar-link" to="/#TrustedBy">
+        {{ $translate('trustedBy') }}
+    </RouterLink></li>
+<li><RouterLink active-class="navbar-link" to="/#FAQs">
+        {{ $translate('faqs') }}
+    </RouterLink></li>
+<li><RouterLink active-class="navbar-link" to="/#ContactUs">
+        {{ $translate('contactUs') }}
+    </RouterLink></li>
+
 
         </ul>
 </template>
@@ -56,6 +51,8 @@ ul {
 
   }
 
-
+// .navbar-link:focus{
+//   color:red;
+// }
 
 </style>

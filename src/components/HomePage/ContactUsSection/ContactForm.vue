@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
+import Http from '@/mixins/Http';
 import validation from '@/mixins/Validation';
 import { reactive, ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
 const snackbar = useSnackbar();
 
-const subjectsList = [
-    "subject",
-    'test',
-    'smth'
-]
+// const subjectsList = [
+//     "subject",
+//     'test',
+//     'smth'
+// ]
 
 const form = reactive({
     subject: '',
@@ -22,14 +23,13 @@ const form = reactive({
 
 const formValidation = {
     subject: {
-        rules: ['required', { dropdown: subjectsList }],
+        rules: ['required'],
         message: {
             required: 'Please select a subject',
-            dropdown: 'Please select a valid subject'
         }
     },
     name: {
-        rules: ['required', 'letters:only'],
+        rules: ['required', 'letters'],
         message: {
             required: 'Name Is Required',
             letters: 'Name Cannot Contain Numbers Or Special Characters'
@@ -67,15 +67,21 @@ const formErrors = reactive({
 
 const validate = () => {
     let v = new validation(formValidation, form)
-
     v.validate()
     let errors = v.errors;
-    console.log(errors);
+    // console.log(errors);
     if(errors.length){
-        let errorsArr = Object.values(errors[0])
-    console.log(errorsArr)
+    handleErrors(v);
+    } else {
+    submitForm();
+    }
+}
+
+const handleErrors = (v: validation) => {
+    let errors = v.errors;
+    let errorsArr = Object.values(errors[0])
+    // console.log(errorsArr)
     let keys = v.keys
-  
     errorsArr.forEach((error) => {
         snackbar.add({
             background: '#F58E8E',
@@ -83,8 +89,6 @@ const validate = () => {
      
         })
     })
-
- 
 
     keys.forEach((key) => {
         setTimeout(() => {
@@ -94,65 +98,66 @@ const validate = () => {
         formErrors[key as keyof typeof formErrors] = true
 
     })
-    } else {
+}
+
+const submitForm = async () => {
+    try{
+        let ModdedForm = form;
+        ModdedForm.phone = ModdedForm.phone.replace(/\D/g, '');
+        console.log(ModdedForm.phone); 
+        let response = await Http.post('message', ModdedForm);
         snackbar.add({
             background: '#8EF5E8',
             text: 'Form Submitted Successfully',
      
         })
-    
+        // console.log(response)
+    } catch (e) {
+        snackbar.add({
+            background: '#F58E8E',
+            text: e,
+     
+        })
     }
-
-
 }
-const smth = () => {
-    console.log('smth')
-}
-const childValidate = ref(validate)
+
 defineExpose({
     validate,
-    smth
 })
 </script>
 
 <template>
     <div class="form">
-   <DropDownInputField
-        id="subject"
-        required
-        :list="subjectsList"
-        placeHolder="Subject"
-        asteriskPosition="15%"
-        @input="form.subject = $event"
-        :error="formErrors.subject"
+    <InputField
+      @input="form.subject = $event"
+      required
+      :placeHolder="$translate('subject')"
+      :error="formErrors.subject"/>
+    <InputField
+      @input="form.name = $event"
+      required
+      :placeHolder="$translate('name')"
+      :error="formErrors.name"
     />
     <InputField
-    @input="form.name = $event"
-    required
-    placeHolder="Name"
-    :error="formErrors.name"
+      @input="form.email = $event"
+      :placeHolder="$translate('email')"
+      required
+      :error="formErrors.email"
     />
     <InputField
-    @input="form.email = $event"
-    placeHolder="Email address"
-    required
-    :error="formErrors.email"
+      @input="form.phone = $event"
+      :placeHolder="$translate('phone')"
+      required
+      :error="formErrors.phone"
+      mask="(###) ###-####"
     />
     <InputField
-    @input="form.phone = $event"
-    placeHolder="Phone number"
-    required
-    :error="formErrors.phone"
-    mask="(###) ###-####"
-    />
-
-    <InputField
-    @input="form.message = $event"
-    placeHolder="Tell us how can we help you"
-    height="12.5rem"
-    required
-    :error="formErrors.message"
-
+      @input="form.message = $event"
+      :placeHolder="$translate('message')"
+      height="12.5rem"
+      required
+      :error="formErrors.message"
     />
 </div>
 </template>

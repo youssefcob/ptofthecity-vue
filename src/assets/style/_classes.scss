@@ -141,6 +141,9 @@ a {
   @extend h1;
   align-self: baseline;
   margin-bottom: 1.25rem;
+  &.rtl{
+    text-align: right;
+  }
 
 
 }
@@ -156,12 +159,25 @@ input[type="text"] {
 
 .sectionHeader-m {
   @extend .sectionHeader;
-  margin-left: 6.25rem;
 
-  @media screen and (max-width: 500px) {
-    margin-left: 2.5rem;
+    margin-left: 6.25rem;
 
+    @media screen and (max-width: 500px) {
+      margin-left: 2.5rem;
+    }
+  
+  &.rtl{
+    margin-left: 0;
+    padding-right: 6.25rem;
+
+    text-align: right;
+
+    @media screen and (max-width: 500px) {
+      padding-right: 2.5rem;
+  
+    }
   }
+
 }
 
 .smallHeader {
@@ -212,16 +228,25 @@ input[type="text"] {
   font-family: $helvetica;
   font-size: 1.5rem;
   font-weight: 700;
+  &.rtl{
+    text-align: right
+  }
 }
 
 .header-q {
   @extend .header-t;
   font-weight: 500;
+  &.rtl{
+    text-align: right
+  }
 }
 
 .secondary-landing-header {
   @extend h2;
   color: $white;
+  &.rtl{
+    text-align: right
+  }
 
   @media screen and (max-width: 500px) {
     font-size: 4rem;

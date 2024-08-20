@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type Service } from '@/components/HomePage/servicesSection/Services';
+import { lang } from '@/mixins/Translate';
 import router from '@/router';
 
 const props = defineProps({
@@ -16,7 +17,10 @@ const reRoute = () => {
     emits('navigate',props.service?.id);
     router.push({ name: 'service', params: { id: props.service?.id } });
 }
-
+const trans = (languagesObject:any) => {
+    if(!languagesObject) return;
+    return languagesObject[lang()];
+}
 
 
 </script>

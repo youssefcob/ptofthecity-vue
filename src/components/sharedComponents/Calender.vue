@@ -44,6 +44,10 @@ const generateDays = (month: number, year: number) => {
 
 }
 
+const generateDate = () => {
+    let currDate = new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate()))
+}
+
 const getDate = () => {
     let currDate = new Date()
     month.value = currDate.getMonth()

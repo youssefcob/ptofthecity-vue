@@ -8,17 +8,17 @@ const props = defineProps({
     placeHolder: String,
     watch: Boolean,
     disabled: Boolean,
-    error:Boolean
+    error: Boolean
 });
 let filteredList = ref(props.list);
-const makeid = (length:number)=> {
+const makeid = (length: number) => {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
     }
     return result;
 }
@@ -82,21 +82,24 @@ onUnmounted(() => {
     <div :class="`drpdown-btn ${id}`" @click="showDropDown">
 
         <div class="required">
-            <input :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()"
-                v-model="input" :style="`width:100%;$;${($props.error)?'border-color:red':''}`" type="text">
-            <label class="asterisk" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">
-                    *</span></label>
-            <label class="arrowdown" ref="arrowdown">
+            <input :dir="$dir()" :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()"
+                v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''}`" type="text">
+
+
+            <label :class="`asterisk ${$dir()}`" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">&nbsp;*</span></label>
+            <label :class="`arrowdown ${$dir()}`" ref="arrowdown">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 7" fill="none">
                     <path d="M1 1L6 6L11 1" stroke="black" stroke-width="0.5" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
             </label>
 
+
+
         </div>
         <div class="dropdown-wrapper {{ id }}" v-if="show && filteredList?.length && !$props.disabled">
             <div class="dropdown-list {{ identifier }}">
-                <div class="dropdown-item " v-for="insurance in filteredList" :key="insurance"
+                <div class="dropdown-item " :dir="$dir()" v-for="insurance in filteredList" :key="insurance"
                     @click="changeInput(insurance)">{{ insurance }}</div>
 
             </div>
@@ -110,6 +113,7 @@ onUnmounted(() => {
     >.required {
         >.input-field {
             transition: all 0.3s ease-in-out;
+
             @media screen and (max-width: 800px) {
                 height: 6rem;
                 padding: 18px;
@@ -217,13 +221,26 @@ onUnmounted(() => {
     .arrowdown,
     .asterisk {
         position: absolute;
+        display: flex;
+
+     
     }
 
     .asterisk {
         left: 1.25rem;
+        &.rtl {
+            flex-direction: row-reverse;
+            right:1.25rem;
+
+        }
 
         @media screen and (max-width: 800px) {
             left: 18px;
+            &.rtl {
+            flex-direction: row-reverse;
+            right:18px;
+
+        }
         }
 
         top: 35%;
@@ -245,6 +262,9 @@ onUnmounted(() => {
     .arrowdown {
         right: 3%;
         top: 34%;
+        &.rtl {
+            left: 3%;
+        }
     }
 }
 </style>

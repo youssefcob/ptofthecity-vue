@@ -3,10 +3,10 @@
     <div class="main-image-content">
         <div class="info">
             <h1 class="landing-header">PT Of The City</h1>
-            <h2 class="secondary-landing-header">Where Healing Happens</h2>
+            <h2 class="secondary-landing-header">{{$translate('where_healing_happens')}}</h2>
             <div class="btn-container">
                 <router-link to="booking" >
-                    <div to="booking" class="btn bigScreen">Book Now</div >
+                    <div to="booking" class="btn bigScreen">{{$translate('book_now')}}</div >
                 </router-link >
 
                 <div class="number">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <router-link to="booking" class="btn responsive main">Book Now</router-link>
+        <router-link to="booking" class="btn responsive main">{{$translate('book_now')}}</router-link>
 
 
     </div>

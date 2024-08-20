@@ -24,7 +24,7 @@ interface date {
 }
 
 interface Form {
-    [key: string]: string | string[] | FormData;
+    [key: string]: string | string[] | FormData |null;
 
 }
 
@@ -179,12 +179,16 @@ class validation {
                         });
                     }
                 }
-
                 if (arr && arr.length > 0) {
+                // console.log(arr)
+
                     const file = this.data as FormData;
+                    if(!file) return;
                     for (let [key, value] of file.entries()) {
                         if (value instanceof File) {
+                            console.log(value);
                             const fileType = value.name.split('.').pop();
+                            console.log(fileType);
                             if (fileType && !arr.includes(fileType)) {
                                 pushError();
                             }
@@ -192,10 +196,30 @@ class validation {
                     }
                 }
 
+            },
+            email: (arr?: string[]) => {
+                const pushError = (): void => {
+                    if (this.element.message && this.element.message.email) {
+                        this.errors.push({
+                            [this.key]: this.element.message.email
+                        });
+                    } else {
+                        this.errors.push({
+                            [this.key]: `${this.key} is invalid`
+                        });
+                    }
+                }
+
+                if (!(arr && arr.length > 0)) {
+                    if (!this.data.match(/\S+@\S+\.\S+/)) {
+                        pushError();
+                    }
+                }
             }
         }
     }
-    // protected validator: { [key: string]: () => void };
+
+    
     protected validator: any;
 
 

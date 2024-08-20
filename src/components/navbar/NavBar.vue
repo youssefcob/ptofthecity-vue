@@ -28,7 +28,7 @@ onMounted(() => {
             if (prevScrollpos > currentScrollPos) {
                 nav.value.style.top = "0";
             } else {
-                nav.value.style.top = "-8vh";
+                nav.value.style.top = "-9.5vh";
             }
             prevScrollpos = currentScrollPos;
         } else {
@@ -36,7 +36,7 @@ onMounted(() => {
             if (prevScrollpos > currentScrollPos) {
                 mobileNav.value.style.top = "0";
             } else {
-                mobileNav.value.style.top = "-8vh";
+                mobileNav.value.style.top = "-9.5vh";
             }
             prevScrollpos = currentScrollPos;
         }
@@ -53,7 +53,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="navbar horizontal" ref="nav">
+    <nav class="navbar horizontal"  ref="nav">
         <div class="left-container">
             <router-link to="/">
                 <NavLogo />
@@ -64,11 +64,11 @@ onMounted(() => {
         <div class="right-container">
             <SearchBar />
             <!-- <ProfileSignup /> -->
-            <Lang />
+            <!-- <Lang /> -->
         </div>
     </nav>
 
-    <nav class="navbar mobile" ref="mobileNav">
+    <nav class="navbar mobile"  ref="mobileNav">
         <router-link to="/">
             <NavLogo />
         </router-link>
@@ -84,7 +84,7 @@ onMounted(() => {
     background-color: $grey;
     width: 100%;
     height: 8vh;
-    min-height: 50px;
+    min-height: 60px;
     box-shadow: 0px 8px 50px 0px rgba(42, 192, 212, 0.15);
     padding: 1.25rem 0rem;
     user-select: none;

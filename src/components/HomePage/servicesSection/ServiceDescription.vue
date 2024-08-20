@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { Service } from './Services';
+import { lang } from '@/mixins/Translate';
 const props = defineProps({
     service: {
         type: Object as () => Service,
     }
 });
+
+const trans = (languagesObject:any) => {
+    if(!languagesObject) return;
+    return languagesObject[lang()];
+}
 </script>
 
 <template>
@@ -12,11 +18,11 @@ const props = defineProps({
         <h1 class="title">{{ props.service?.title }}</h1>
         <!-- <p class="description">{{ props.service?.listHeader }}</p> -->
         <div class="list" v-if="props.service?.list">
-            <li v-for="list_item in props.service.list"> {{ list_item }}</li>
+            <li v-for="list_item in props.service?.list"> {{ list_item }}</li>
         </div>
         <router-link active-class="navbar-link" class="learn-more btn transparent btnfont"
             :to="{ name: `service`, params: { id: $props.service?.id } }">
-            Learn More
+            {{$translate('learn_more')}}
         </router-link>
     </div>
 </template>
@@ -30,6 +36,7 @@ const props = defineProps({
     padding-bottom: 2.13rem;
     display: flex;
     flex-direction: column;
+    gap:3rem;
 
     >.title {
         color: $white;

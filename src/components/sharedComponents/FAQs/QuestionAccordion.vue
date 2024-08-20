@@ -37,11 +37,11 @@ const isInverted = ()=>{
 
 
 <template>
-    <div :class="`accordion ${isInverted()}`" ref="accordion" @click="expandItems">
+    <div :class="`accordion ${isInverted()} ${$dir()}`" ref="accordion" @click="expandItems">
         <span>{{ props.faq?.question }}</span>
 
     </div>
-    <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">
+    <div :class="`accordionItemsContainer ${isActive()} ${$dir()}`" ref="accordionItemsContainer">
 
         <div class="item" v-html="formatAnswer(props.faq?.answer)"></div>
 
@@ -53,6 +53,9 @@ h2 {
     color: $navy;
 }
 
+.rtl{
+    direction: rtl;
+}
 .accordion {
     display: flex;
     align-items: center;

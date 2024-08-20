@@ -1,14 +1,15 @@
 <script setup lang="ts">
 
 import Carousel from '../sharedComponents/Carousel.vue';
-import { staffMembers, type StaffMember } from '@/components/HomePage/ourStaffSection/StaffMembers';
+import { staff, getStaff } from '@/components/HomePage/ourStaffSection/StaffMembers';
 import SingleStaffMember from '../StaffPage/SingleStaffMember.vue';
 import ServicesPage from '../HomePage/servicesSection/ServicesPage.vue';
 import infoSection from './InfoSection.vue';
-import Modal from '../sharedComponents/modal.vue';
 import { onMounted, ref } from 'vue';
 
-
+onMounted(() => {
+    getStaff();
+})
 </script>
 
 <template>
@@ -21,7 +22,7 @@ import { onMounted, ref } from 'vue';
             <ServicesPage NoTitle />
         </div>
         <Carousel NoIndicator class="carousel">
-            <SingleStaffMember class="s-staff" v-for="member in staffMembers" :staffMember="member" />
+            <SingleStaffMember class="s-staff" v-for="member in staff" :staffMember="member" />
         </Carousel>
         <div class="btns-container">
             <router-link active-class="navbar-link" class="btn btnfont" to="/booking" >

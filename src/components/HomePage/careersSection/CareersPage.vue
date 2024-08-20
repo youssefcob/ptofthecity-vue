@@ -5,19 +5,19 @@
 
 <template>
     <div class="careers-container">
-        <h1 class="sectionHeader">Careers</h1>
+        <h1 class="sectionHeader">{{$translate('careers')}}</h1>
         <div class="careers-wrapper">
             <div class="careers-background">
                 <div class="careers-content">
                     <div class="text">
-                        <h2>Join Us <span>Now</span></h2>
-                        <p>We Are Always Hiring</p>
+                        <h2>{{ $translate('join_us') }} <span>{{$translate('now')}}</span></h2>
+                        <p>{{$translate('we_are_always_hiring')}}</p>
                     </div>
-                    <router-link to="careers" class="btn">Apply Now</router-link>
+                    <router-link to="careers" class="btn">{{$translate('apply_now')}}</router-link>
                 </div>
             </div>
         </div>
-        <router-link to="careers" class="btn mobile responsive main">Apply Now</router-link>
+        <router-link to="careers" class="btn mobile responsive main">{{$translate('apply_now')}}</router-link>
 
     </div>
 </template>

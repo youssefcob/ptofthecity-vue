@@ -8,15 +8,17 @@ let currentIndex = ref(0);
 let carouselItemsNo = ref(0);
 
 
-const props= defineProps({
-   NoIndicator: Boolean
+const props = defineProps({
+    NoIndicator: Boolean,
+    NoButtons: Boolean,
+    behavior: String,
 });
 
 onMounted(() => {
     if (wheel.value) {
         wheel.value.addEventListener('scroll', updateCurrentIndexBasedOnScroll);
     }
-carouselItemsNo.value = wheel.value?.childElementCount || 0;
+    carouselItemsNo.value = wheel.value?.childElementCount || 0;
 
 });
 
@@ -28,7 +30,7 @@ const updateCurrentIndexBasedOnScroll = () => {
     // Update currentIndex based on the scroll position
     // For simplicity, dividing the scrollable area into equal parts based on the number of services
     const parts = carouselItemsNo.value;
-    if(!parts) return;
+    if (!parts) return;
     const scrollPerPart = totalScroll / parts;
     currentIndex.value = Math.min(parts - 1, Math.floor(currentScroll / scrollPerPart));
 
@@ -36,39 +38,39 @@ const updateCurrentIndexBasedOnScroll = () => {
 };
 
 const scroll = (direction: number) => {
-    console.log('smth')
     if (wheel.value) {
         const el = wheel.value as HTMLElement;
         if (el) {
             // console.log(el.scrollLeft, el.clientWidth, el.scrollWidth)
             const width = el.clientWidth;
 
-            const threshold = 100; 
+            const threshold = 100;
             const isNearEnd = el.scrollLeft + threshold >= el.scrollWidth - el.clientWidth;
 
             if (direction === 1 && (isNearEnd || el.scrollLeft + el.clientWidth >= el.scrollWidth)) {
                 currentIndex.value = 0;
                 el.scrollTo({ left: 0, behavior: 'smooth' });
             } else {
-                if(direction === -1 && currentIndex.value === 0 ){
-                    currentIndex.value= 0;
-                } else if(direction === 1 && carouselItemsNo.value && currentIndex.value === carouselItemsNo.value - 1){
+                if (direction === -1 && currentIndex.value === 0) {
+                    currentIndex.value = 0;
+                } else if (direction === 1 && carouselItemsNo.value && currentIndex.value === carouselItemsNo.value - 1) {
                     currentIndex.value = 0;
                 } else {
                     currentIndex.value += direction;
                 }
                 el.scrollTo({
-                    left: el.scrollLeft + ((width * direction)-width/4),
+                    left: el.scrollLeft + ((width * direction) - width / 4),
                     behavior: 'smooth'
                 });
 
             }
         }
     }
-    // console.log(currentIndex.value);
 };
 
-
+defineExpose({
+    scroll,
+})
 
 
 </script>
@@ -77,27 +79,27 @@ const scroll = (direction: number) => {
     <div class="carousel-wrapper">
         <div class="carousel">
 
-            <div class="btn left" @click="scroll(-1)"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10.5" viewBox="0 0 12 7"
-                    fill="none">
+            <div class="btn left" v-if="!NoButtons" @click="scroll(-1)"> <svg xmlns="http://www.w3.org/2000/svg"
+                    width="18" height="10.5" viewBox="0 0 12 7" fill="none">
                     <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1.5" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg></div>
 
             <div class="carousel-items" ref="wheel">
-                <slot  ></slot>
-             
+                <slot></slot>
+
 
             </div>
 
-            <div class="btn right" @click="scroll(1)"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10.5" viewBox="0 0 12 7"
-                    fill="none">
+            <div class="btn right" v-if="!NoButtons" @click="scroll(1)"> <svg xmlns="http://www.w3.org/2000/svg"
+                    width="18" height="10.5" viewBox="0 0 12 7" fill="none">
                     <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1.5" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg></div>
 
         </div>
         <div class="indicator-container" v-if="!NoIndicator">
-            <div class="indicator" v-for="i in carouselItemsNo" :key="i" :class="{active: i-1 === currentIndex}">
+            <div class="indicator" v-for="i in carouselItemsNo" :key="i" :class="{ active: i - 1 === currentIndex }">
             </div>
 
         </div>
@@ -109,7 +111,7 @@ const scroll = (direction: number) => {
 
 <style scoped lang="scss">
 .carousel-wrapper {
-    display:flex;
+    display: flex;
     flex-direction: column;
 
     .indicator-container {
@@ -119,13 +121,14 @@ const scroll = (direction: number) => {
         gap: 0.5rem;
         margin-top: 1rem;
 
-        .indicator{
+        .indicator {
             width: 0.5rem;
             height: 0.5rem;
             margin-top: 0.5rem;
             border-radius: 50%;
             background-color: $darkgrey;
             transition: background-color 0.3s ease-in-out;
+
             &.active {
                 background-color: $blue;
             }
@@ -136,11 +139,11 @@ const scroll = (direction: number) => {
         height: 100%;
         display: flex;
         justify-content: space-between;
-        gap:1rem;
+        gap: 1rem;
 
 
         >.carousel-items {
-            width:fit-content;
+            width: fit-content;
             width: 100%;
             display: flex;
             scroll-snap-type: x mandatory;
@@ -148,13 +151,14 @@ const scroll = (direction: number) => {
             justify-content: flex-start;
 
 
-            gap:1rem;
+            gap: 1rem;
+
             &::-webkit-scrollbar {
                 @media screen and (min-width: 800px) {
-                display: none;
+                    display: none;
                 }
             }
-  
+
         }
 
         >.btn {

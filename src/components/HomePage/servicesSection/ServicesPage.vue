@@ -1,7 +1,19 @@
 <script setup lang="ts">
 import SingleService from './SingleService.vue';
-import { services } from './Services';
+import { services, getServices } from './Services';
 import Carousel from '@/components/sharedComponents/Carousel.vue';
+import Http from '@/mixins/Http';
+import { onMounted, ref } from 'vue';
+
+// let services:any = ref([]);
+
+// const getServices = async () => {
+//     services.value = await Http.get('services');
+//     // console.log(services);
+// }
+onMounted(() => {
+    getServices();
+})
 
 const props = defineProps({
     NoTitle: Boolean,
@@ -9,7 +21,7 @@ const props = defineProps({
 </script>
 <template>
     <div class="container">
-        <h1 class="sectionHeader-m" v-if="!NoTitle">Services</h1>
+        <h1 class="sectionHeader-m" v-if="!NoTitle">{{$translate('services')}}</h1>
 
         <Carousel NoIndicator class="carousel" v-slot="scope">
             <SingleService  class="singleService" v-for="service in services" :service="service" />

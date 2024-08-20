@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import Http from '@/mixins/Http';
+import { insurances,getInsurances } from './Insurances';
+// let insurances:any = ref([]);
 
+// const getInsurances = async () => {
+//     insurances.value = await Http.get('images/insurance');
+//     // console.log(insurances.value);
+// }
+onMounted(() => {
+    getInsurances();
+})
 
-let glob = import.meta.glob('@/assets/images/insurances/*.png', { eager: true })
-let keys = Object.keys(glob).map(key => key.replace('/public', ''));
 
 let showmore = ref(false);
 let showMore = () => {
@@ -18,15 +26,17 @@ let showMore = () => {
 
 <template>
     <div class="insuranceContainer">
-        <h1 class="sectionHeader">Insurance we accept</h1>
+        <h1 :class="`sectionHeader ${$dir()}`">{{$translate('insurances_we_accept')}}</h1>
         <div class="insurances some-hidden">
-            <div class="single-insurance" v-for="key in keys" :key="key">
-                <img :src="key" alt="">
+            
+            <div class="single-insurance" v-for="insurance in insurances" :key="insurance.title">
+                <img :src="insurance.path" alt="">
+                <div><span>{{ insurance.title }}</span></div>
             </div>
         </div>
         <div class="show-btn" @click="showMore()">
-            <template v-if="!showmore">Show more</template>
-            <template v-else>Show less</template>
+            <template v-if="!showmore">{{$translate('show_more')}}</template>
+            <template v-else>{{$translate('show_less')}}</template>
             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
                 <path d="M1 1L6 6L11 1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -61,18 +71,26 @@ let showMore = () => {
         grid-template-columns: repeat(auto-fit, minmax(12.375rem, 1fr));
         gap: 1.25rem;
         transition: all 0.5s ease-in-out;
-        max-height:26rem;
+        max-height:28.2rem;
         overflow: hidden;
 
 
         >.single-insurance {
-            width: 12.375rem;
-            height: 12.375rem;
+            width: 13.375rem;
+            height: 13.375rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap:.75rem;
             // margin-right:1.25rem;
 
             >img {
-                width: 100%;
-                height: 100%;
+                width: 90%;
+                height: 90%;
+            }
+            >span{
+                display:block;
             }
 
         }

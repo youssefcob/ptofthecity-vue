@@ -5,15 +5,15 @@ const targetDivRef: Ref<HTMLElement | null> = ref(null);
 const emit = defineEmits(['dropdown']);
 
 const toggleDropDown = () => {
-    emit('dropdown'); 
+  emit('dropdown');
 }
-const handleScrollToTarget = (id:any) => {
+const handleScrollToTarget = (id: any) => {
   targetDivRef.value = document.getElementById(id);
   if (targetDivRef.value) {
-  toggleDropDown();
+    toggleDropDown();
 
     targetDivRef.value.scrollIntoView({ behavior: 'smooth' });
-    
+
   } else {
     console.warn(`Div with ID "${id}" not found.`);
   }
@@ -24,32 +24,48 @@ const handleScrollToTarget = (id:any) => {
 <template>
   <div class="dropdown">
     <ul>
-      <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#Services">
-                    Services
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#Insurace">
-                    Insurance
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#WhoWeAre">
-                    Who We Are
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/Blog">
-                    Blog
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#Careers">
-                    Careers
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#TrustedBy">
-                    Trusted by
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#FAQs">
-                    FAQs
-                </router-link></li>
-            <li><router-link active-class="navbar-link" @click="toggleDropDown()" to="/#ContactUs">
-                    Contact us
-                </router-link></li>
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#Services">
+          {{ $translate('services') }}
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#Insurance">
+          {{ $translate('insurance') }}
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#WhoWeAre">
+          {{ $translate('whoWeAre') }}
+        </RouterLink>
+      </li>
+      <!-- <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/Blog">
+          {{ $translate('blog') }}
+        </RouterLink>
+      </li> -->
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#Careers">
+          {{ $translate('careers') }}
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#TrustedBy">
+          {{ $translate('trustedBy') }}
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#FAQs">
+          {{ $translate('faqs') }}
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink active-class="navbar-link" @click="toggleDropDown()" to="/#ContactUs">
+          {{ $translate('contactUs') }}
+        </RouterLink>
+      </li>
 
-        </ul>
+    </ul>
   </div>
 </template>
 
@@ -64,12 +80,12 @@ ul {
   flex-direction: column;
   align-items: start;
   padding: 0;
-  gap:3rem;
+  gap: 3rem;
 
   a {
-   @extend h4;
-   font-size:2rem;
-   font-weight: bolder;
+    @extend h4;
+    font-size: 2rem;
+    font-weight: bolder;
 
   }
 }
