@@ -2,7 +2,7 @@ import './assets/main.css'
 import { translate, lang, dir, transNumbers } from './mixins/Translate';
 import { SnackbarService } from "vue3-snackbar";
 import "vue3-snackbar/styles";
-
+import  VueGtag  from 'vue-gtag';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -27,5 +27,11 @@ app.config.globalProperties.$transNumber = transNumbers;
 
 app.use(createPinia())
 app.use(router)
+
+app.use(VueGtag, {
+    appName: 'PtOfTheCity',
+    // pageTrackerScreenviewEnabled: true,
+    config: { id: "G-93CT249TES" }
+},router);
 app.use(SnackbarService);
 app.mount('#app')
