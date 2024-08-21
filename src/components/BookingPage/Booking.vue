@@ -8,6 +8,7 @@ import RadioInputField from '../sharedComponents/RadioInputField.vue';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
+import { recaptcha } from '@/mixins/Recaptcha';
 const snackbar = useSnackbar();
 
 const form = reactive({
@@ -210,7 +211,10 @@ const submit= async ()=>{
     let isValid = validate();
     if(isValid) {
         let moddedForm = modifyForm();
-        console.log(moddedForm);
+        let recapatchaToken = await recaptcha('career');
+        if(recapatchaToken) Object.assign(moddedForm, {
+            recaptcha: recapatchaToken
+        });
         try{
             let response = await Http.post('reservation',moddedForm);
             console.log(response);

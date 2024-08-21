@@ -2,6 +2,7 @@
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import Http from '@/mixins/Http';
+import { recaptcha } from '@/mixins/Recaptcha';
 import validation from '@/mixins/Validation';
 import { reactive, ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
@@ -104,7 +105,10 @@ const submitForm = async () => {
     try{
         let ModdedForm = form;
         ModdedForm.phone = ModdedForm.phone.replace(/\D/g, '');
-        console.log(ModdedForm.phone); 
+        let recapatchaToken = await recaptcha('career');
+        if(recapatchaToken) Object.assign(ModdedForm, {
+            recaptcha: recapatchaToken
+        });
         let response = await Http.post('message', ModdedForm);
         snackbar.add({
             background: '#8EF5E8',

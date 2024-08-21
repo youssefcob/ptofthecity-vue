@@ -8,6 +8,7 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import { onMounted, reactive, ref, type Ref } from "vue";
 import Http from "@/mixins/Http";
+import { recaptcha } from '@/mixins/Recaptcha';
 const snackbar = useSnackbar();
 // import snackbar from '@/components/snackbar/SnackBar.vue';
 
@@ -164,6 +165,8 @@ const submit= async ()=>{
 
     if(isValid) {
         let ModdedForm = modifyForm();
+        let recapatchaToken = await recaptcha('career');
+        if(recapatchaToken) ModdedForm.append('recaptcha', recapatchaToken);
         try {
             let response = await Http.post('insurance/create', ModdedForm);
             console.log(response);

@@ -7,6 +7,8 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 import { event } from 'vue-gtag'
+import {recaptcha} from '@/mixins/Recaptcha';
+
 
 const btnClicked = () => {
     event('recaptchaClick', {
@@ -14,7 +16,9 @@ const btnClicked = () => {
         'event_label': 'recaptcha button clicked',
         'value': 1
       })
+    
 }
+
 const snackbar = useSnackbar();
 let jobs: Ref<string[]> = ref([]);
 // let jobsList: any[] = [];
@@ -221,6 +225,8 @@ const submit = async () => {
 
     if (isValid) {
         let ModdedForm = modifyForm();
+        let recapatchaToken = await recaptcha('career');
+        if(recapatchaToken) ModdedForm.append('recaptcha', recapatchaToken);
         try {
             let response = await Http.post('career', ModdedForm);
             console.log(response);
@@ -290,7 +296,6 @@ const modifyForm = () => {
                 id="states" />
             <InputField class="field" placeHolder="Zip code" @input="form.zip_code = $event" />
         </div>
-        <div class="recaptcha" @click="btnClicked"></div>
         <div class="btn responsive main btnfont" @click="submit()" style="margin-top: 0;">Submit</div>
         <div class="btn responsive main transparent" style="margin-top: 0;">Back to Homepage</div>
     </div>
