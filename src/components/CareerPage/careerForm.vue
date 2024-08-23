@@ -7,7 +7,7 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 import { event } from 'vue-gtag'
-import {recaptcha} from '@/mixins/Recaptcha';
+import {recaptcha} from '@/components/Recaptcha';
 
 
 const btnClicked = () => {

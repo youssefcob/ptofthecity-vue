@@ -4,11 +4,36 @@ import Calender from '../sharedComponents/Calender.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import InputField from '../sharedComponents/InputField.vue';
 import RadioInputField from '../sharedComponents/RadioInputField.vue';
-// import insurances from '../HomePage/insuranceSection/Insurances';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
-import { recaptcha } from '@/mixins/Recaptcha';
+// import { recaptcha } from '@/components/Recaptcha';
+import { useReCaptcha } from 'vue-recaptcha-v3'
+
+const recaptcha = async (action: string) => {
+    const useRecap = useReCaptcha();
+  if(useRecap === undefined) {
+    console.error('recaptcha not loaded');
+    return false;
+  }
+    // Wait until recaptcha has been loaded.
+    if (await useRecap?.recaptchaLoaded()) {
+      console.log('recaptcha loaded');
+  
+      // Execute reCAPTCHA with action "login".
+      try {
+        const token = await useRecap?.executeRecaptcha(action);
+        console.log('token', token);
+        return token;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
+  
+  };
+
+
 const snackbar = useSnackbar();
 
 const form = reactive({
@@ -207,14 +232,18 @@ const validate = () => {
 }
 
 
+
 const submit= async ()=>{
     let isValid = validate();
     if(isValid) {
         let moddedForm = modifyForm();
         let recapatchaToken = await recaptcha('career');
-        if(recapatchaToken) Object.assign(moddedForm, {
+        if(recapatchaToken){
+        console.log(recapatchaToken);
+        Object.assign(moddedForm, {
             recaptcha: recapatchaToken
-        });
+        });}
+        console.log(moddedForm);
         try{
             let response = await Http.post('reservation',moddedForm);
             console.log(response);

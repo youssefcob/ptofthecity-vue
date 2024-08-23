@@ -2,7 +2,7 @@
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import Http from '@/mixins/Http';
-import { recaptcha } from '@/mixins/Recaptcha';
+import { recaptcha } from '@/components/Recaptcha';
 import validation from '@/mixins/Validation';
 import { reactive, ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
