@@ -63,9 +63,9 @@ const getBackGroundImage = (media:Media[])=>{
     </div>
     <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">
 
-        <div class="item" v-for="(clinic,index) in props.clinic" :key="index" :style="getBackGroundImage(clinic.media)">
-            <!-- <h2 style="color:white;">{{ clinic.name }}</h2> -->
-        </div>
+        <router-link  class="item" v-for="(clinic,index) in props.clinic" :to="`clinic/${clinic.id.toString()}`" :key="index" :style="getBackGroundImage(clinic.media)">
+            <h2 class="smallHeader" style="color:white;">{{ clinic.name }}</h2>
+        </router-link>
 
     </div>
 </template>
@@ -120,6 +120,10 @@ h2 {
             background-color: $navy;
             background-size:cover ;
             background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
 
         }
     }
