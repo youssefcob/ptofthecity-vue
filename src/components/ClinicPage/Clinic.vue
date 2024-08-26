@@ -2,6 +2,9 @@
 import type { Clinic } from '@/interfaces/content';
 import Http from '@/mixins/Http';
 import { onMounted, ref, type Ref } from 'vue';
+import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
+const center:Ref<{lat:number,lng:number}> = ref({ lat: 0, lng: 0 })
+
 const props = defineProps({
     id: {
         type: String
@@ -13,12 +16,27 @@ let clinic: Ref<Clinic | null> = ref(null);
 const getClinic = async () => {
     let data = await Http.get(`clinic/${props.id}`);
     clinic.value = data;
-    console.log(clinic);
+    if(clinic.value){
+        center.value = { lat: parseInt(clinic.value?.lat), lng: parseInt(clinic.value?.long) }
+    }
+    // console.log(clinic);
 }
 
+// const getGeoLocation = async () => {
+//     let data = await Http.get(`maps.googleapis.com/maps/api/place/details/json?placeid=ChIJuxgJK2REwokR-1lY8_OqM0Y`);
+//     console.log(data);
+// }
+
+// https://maps.googleapis.com/maps/api/place/details/json?placeid= ChIJuxgJK2REwokR-1lY8_OqM0Y&key=AIzaSyDolB5zXSKaL7Y3e08W9WLSwQYWaXVfYIQ
 onMounted(() => {
     getClinic();
+    // getGeoLocation();
 })
+const infowindow = ref(true); // Will be open when mounted
+
+const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
+
+// const geocoder = new google.maps.Geocoder();
 
 </script>
 
@@ -28,6 +46,37 @@ onMounted(() => {
         <div class="clinic-container">
             <h1 class="responsive-header">{{ clinic?.name }}</h1>
             <div class="address-container">
+                <div class="address ">
+                    <div class="street-address">
+                        <svg fill="#236681" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px"
+                            viewBox="0 0 395.71 395.71" xml:space="preserve" stroke="#236681">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g>
+                                    <path
+                                        d="M197.849,0C122.131,0,60.531,61.609,60.531,137.329c0,72.887,124.591,243.177,129.896,250.388l4.951,6.738 c0.579,0.792,1.501,1.255,2.471,1.255c0.985,0,1.901-0.463,2.486-1.255l4.948-6.738c5.308-7.211,129.896-177.501,129.896-250.388 C335.179,61.609,273.569,0,197.849,0z M197.849,88.138c27.13,0,49.191,22.062,49.191,49.191c0,27.115-22.062,49.191-49.191,49.191 c-27.114,0-49.191-22.076-49.191-49.191C148.658,110.2,170.734,88.138,197.849,88.138z">
+                                    </path>
+                                </g>
+                            </g>
+                        </svg>
+                        <h3>
+                            {{ clinic?.street_address }},
+                            {{ clinic?.city }},
+                            {{ clinic?.state }},
+                            {{ clinic?.zip_code }}
+                        </h3>
+                    </div>
+                    <div class="map">
+                        <GoogleMap api-key="AIzaSyDolB5zXSKaL7Y3e08W9WLSwQYWaXVfYIQ" style="width: 100%; height: 500px"
+                            :center="center" :zoom="4">
+                            <Marker :options="{ position: center }" />
+                        </GoogleMap>
+                    </div>
+
+
+                </div>
                 <div class="phone-hours">
                     <div class="phone">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -42,57 +91,42 @@ onMounted(() => {
                     </div>
                     <div class="hours"></div>
                 </div>
-                <div class="address ">
-                    <svg fill="#236681" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px"
-                        viewBox="0 0 395.71 395.71" xml:space="preserve" stroke="#236681">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <g>
-                                <path
-                                    d="M197.849,0C122.131,0,60.531,61.609,60.531,137.329c0,72.887,124.591,243.177,129.896,250.388l4.951,6.738 c0.579,0.792,1.501,1.255,2.471,1.255c0.985,0,1.901-0.463,2.486-1.255l4.948-6.738c5.308-7.211,129.896-177.501,129.896-250.388 C335.179,61.609,273.569,0,197.849,0z M197.849,88.138c27.13,0,49.191,22.062,49.191,49.191c0,27.115-22.062,49.191-49.191,49.191 c-27.114,0-49.191-22.076-49.191-49.191C148.658,110.2,170.734,88.138,197.849,88.138z">
-                                </path>
-                            </g>
-                        </g>
-                    </svg> 
-                    <h3> 
-                        {{ clinic?.street_address }},
-                        {{ clinic?.city }},
-                        {{ clinic?.state }},
-                        {{ clinic?.zip_code }}
-                    </h3>
-                </div>
             </div>
 
         </div>
     </div>
+
+
+
 
 </template>
 
 <style scoped lang="scss">
 .container {
     @include pagePadding;
+    width: 100%;
 
     .clinic-container {
         padding-top: calc(8vh + 7.5vh);
+        width: 100%;
 
     }
 
     .address-container {
         padding-top: 2.5rem;
-        display: flex;
-        // justify-content: space-between;
+        // display: flex;
+        display: grid;
+        grid-template-columns: auto-fit, minmax(20.5rem, 1fr);
         gap: 5rem;
 
         >.phone-hours {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
 
             >.phone {
                 display: flex;
+                align-items: center;
+
 
                 >h3 {
                     color: $navy;
@@ -105,15 +139,25 @@ onMounted(() => {
         }
 
         >.address {
-            display: flex;
-            align-items: center;
-            >h3{
-            color: $navy;
+            // width: 70%;
 
+            >.street-address {
+                display: flex;
+                align-items: center;
+
+                >h3 {
+                    color: $navy;
+
+                }
+
+                >svg {
+                    margin-right: 1rem;
+                }
             }
 
-            >svg {
-                margin-right: 1rem;
+            >.map {
+                width: 100%;
+                // height: 500px;
             }
         }
     }
