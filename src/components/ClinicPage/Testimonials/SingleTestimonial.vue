@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import type { Testimonial } from './Testimonial';
+import type { Review } from '@/interfaces/content';
 
 
 
 const props = defineProps({
-    testimonial: {
-        type: Object as () => Testimonial
+    review: {
+        type: Object as () => Review
     }
 });
+
+console.log(props.review)
 
 </script>
 
@@ -15,11 +17,15 @@ const props = defineProps({
 
     <div class="testimonial">
         <div class="header">
-            <div class="image"></div>
-            <span class="headline">{{ $props.testimonial?.headline }}</span>
+            <div class="image" :style="`background-image: url(${props.review?.profile_photo_url})`"></div>
+            <div class="headline">
+                {{ $props.review?.author_name }}<br>
+                <span class="ps">{{ $props.review?.relative_time_description }}</span>
+            </div>
         </div>
+      
         <div class="content">
-            <p>{{$props.testimonial?.comment}} </p>
+            <p>{{$props.review?.text}} </p>
         </div>
     </div>
 </template>
@@ -65,8 +71,10 @@ const props = defineProps({
         >.image {
             width: 5rem;
             height: 5rem;
-            background-color: $blue;
+            // background-color: $blue;
             border-radius: 1.125rem;
+            background-size: cover;
+            background-position: center;
             @media screen and (max-width: 500px) {
                 width: 10rem;
                 height: 10rem;
@@ -76,6 +84,8 @@ const props = defineProps({
 
         >.headline {
             margin-left: 1rem;
+            font-weight: bolder;
+            color:$navy;
             @extend .text;
             @media screen and (max-width: 500px) {
                 margin-top:1rem;

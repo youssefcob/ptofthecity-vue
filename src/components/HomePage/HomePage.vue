@@ -7,7 +7,7 @@ import ClinicsPage from './clinicsSection/ClinicsPage.vue';
 import OurStaffPage from './ourStaffSection/OurStaffPage.vue';
 import CareersPage from './careersSection/CareersPage.vue';
 import TrustedByPage from './TrustedBySection/TrustedByPage.vue';
-import TestimonialsPage from './TestimonialsSection/TestimonialsPage.vue';
+import TestimonialsPage from '../ClinicPage/Testimonials/Testimonials.vue';
 import FAQsPage from './FAQsSection/FAQsPage.vue';
 import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
 import { dir } from '@/mixins/Translate';
