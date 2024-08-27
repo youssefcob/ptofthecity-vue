@@ -9,6 +9,7 @@ import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 // import { recaptcha } from '@/components/Recaptcha';
 import { useReCaptcha } from 'vue-recaptcha-v3'
+import type { Schedule } from '@/interfaces/content';
 
 const recaptcha = async (action: string) => {
     const useRecap = useReCaptcha();
@@ -52,7 +53,7 @@ const form = reactive({
 
 })
 
-let Httplocations:{name:string,id:number}[] = [];
+let Httplocations:{name:string,id:number,schedule:Schedule}[] = [];
 const locations = ref([]);
 const location = '';
 let cords = ref({
@@ -65,6 +66,17 @@ const getLocations = async () => {
     Httplocations = data;
     locations.value = data.map((location: { name: string }) => location.name);
     formValidation.location.rules[1] = { dropdown: locations.value };
+
+}
+const getSchedule = () => {
+    let clinic = Httplocations.find((location) => location.name === form.location);
+    if (!clinic) return;
+    return clinic.schedule;
+}
+const schedule:Ref<Schedule | undefined> = ref(undefined);
+const updateLocation = (e: string) => {
+    form.location = e;
+    schedule.value = getSchedule();
 
 }
 const sortLocations = (data:any) => {
@@ -305,24 +317,40 @@ const convertTotimeStamp = (date:string,time:string)=>{
     return utc;
 
 }
-const updateHours = (date: { day: number, month: number, year: number }) => {
-    const dateObj = new Date();
-    let time = dateObj.getHours()
-    let month = dateObj.getMonth()
-    let day = dateObj.getDate()
-    let year = dateObj.getFullYear()
+// const updateHours = (date: { day: number, month: number, year: number }) => {
+//     const dateObj = new Date();
+//     let time = dateObj.getHours()
+//     let month = dateObj.getMonth()
+//     let day = dateObj.getDate()
+//     let year = dateObj.getFullYear()
+//     let hours = [];
+//     for (let i = 8; i < 16; i++) {
+//         if (i < time && month === date.month && day === date.day && year === date.year) continue
+//         hours.push(`${i}:00`)
+//     }
+//     Availablehours.value = hours
+//     formValidation.time.rules[1] = { dropdown: Availablehours.value }
+
+// }
+
+const updateHours = (date:{start:string,end:string}) =>{
+    const getHours = (time:string) => {
+        const [hours, minutes,seconds] = time.split(':');
+        return parseInt(hours);
+    }
     let hours = [];
-    for (let i = 8; i < 16; i++) {
-        if (i < time && month === date.month && day === date.day && year === date.year) continue
-        hours.push(`${i}:00`)
+
+    for (let i = getHours(date.start); i < getHours(date.end); i++) {
+                hours.push(`${i}:00`)    
     }
     Availablehours.value = hours
     formValidation.time.rules[1] = { dropdown: Availablehours.value }
 
+    console.log(date);
 }
 const updateDate = (date: { day: number, month: number, year: number }) => {
     form.date = `${date.month}-${date.day}-${date.year}`;
-    updateHours(date);
+    // updateHours(date);
 }
 
 const assignPayment = (e: string) => {
@@ -344,7 +372,7 @@ const isSelfPay = () => {
                 <div>
 
                     <DropDownInputField id="location" :list="locations" placeHolder="Find Your nearest clinic"
-                        @input="form.location = $event" required :error="formErrors.location" />
+                        @input="updateLocation($event)" required :error="formErrors.location" />
                     <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
 
 
@@ -386,7 +414,7 @@ const isSelfPay = () => {
                     id="pain" optional :error="formErrors.pain" />
             </div>
             <div class="right">
-                <Calender @input="updateDate($event)" />
+                <Calender @input="updateDate($event)" @hours="updateHours($event)" :schedule="schedule"/>
                 <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
                     :error="formErrors.time" />
                 <div @click="submit()" class="btn responsive">Book Appointment</div>

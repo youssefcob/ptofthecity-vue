@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import type { Schedule } from '@/interfaces/content';
 import { onMounted, ref, type Ref } from 'vue';
 
+const props = defineProps({
+    schedule: {
+        type: Object as () => Schedule
+    }
+})
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const month_abb = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 let days_of_month: number[] = []
 let date = new Date()
 let month: Ref<number> = ref(0)
+let monthStartDay: Ref<number> = ref(0)
 let year: Ref<number> = ref(0)
 let curr_month: Ref<string> = ref('')
 let first_day: Ref<number> = ref(0);
@@ -20,7 +27,7 @@ let selectedDay: Ref<{
     year: date.getFullYear()
 });
 
-const emit = defineEmits(['input'])
+const emit = defineEmits(['input','hours'])
 
 let monthsGrid = ref<HTMLElement | null>(null)
 
@@ -53,6 +60,8 @@ const getDate = () => {
     month.value = currDate.getMonth()
     year.value = currDate.getFullYear()
     curr_month.value = `${month_names[month.value]}`
+    getMonthStartDay(year.value, month.value)
+
     generateDays(month.value, year.value)
     emit('input', selectedDay.value)
     // generateCalender(month, year)
@@ -65,9 +74,17 @@ const changeMonth = (newMonth: string) => {
         curr_month.value = `${month_names[index]}`
     }
     generateDays(month.value, year.value)
+    getMonthStartDay(year.value, month.value)
+    // console.log(getMonthStartDay(year.value, month.value))
     toggleMonthGrid()
     // console.log(isValidMonth(index));
 }
+const getMonthStartDay = (year:number, month:number) => {
+    // Create a Date object for the first day of the month
+    const firstDay = new Date(year, month, 1);
+    // Get the day of the week (0 for Sunday, 1 for Monday, etc.)
+    monthStartDay.value = firstDay.getDay();
+};
 const changeyear = (val: number) => {
     let currentYear = (new Date()).getFullYear()
 
@@ -110,6 +127,7 @@ const validateMonth = (index: number) => {
 
 const isValidDay = (day: number) => {
 
+    // console.log(day)
     let currentDate = new Date()
     let currentYear = currentDate.getFullYear()
     let currentMonth = currentDate.getMonth()
@@ -121,18 +139,29 @@ const isValidDay = (day: number) => {
             if (day >= currentDay) return true
         }
     }
+
     return false
 }
-
+const isNotWeekend = (day: number) => {
+    let date = new Date(year.value, month.value, day);
+    let dayName = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    // console.log(date);
+    if (props.schedule && props.schedule[dayName as keyof typeof props.schedule] == 'off') return false
+    // if(props.schedule) console.log(dayName, props.schedule[dayName as keyof typeof props.schedule])
+    return true
+}
 const validateDay = (day: number) => {
-    if (isValidDay(day)) return 'valid'
+    if(!props.schedule) return 'invalid'
+    if (isValidDay(day) 
+    && isNotWeekend(day)
+) return 'valid'
     return 'invalid'
 }
 
 const isSelectedDay = (day: number) => {
 
-    if(selectedDay.value.month != month.value) return '';
-    if(selectedDay.value.year != year.value) return '';
+    if (selectedDay.value.month != month.value) return '';
+    if (selectedDay.value.year != year.value) return '';
     if ((day === selectedDay.value.day)
     ) return 'selected';
 
@@ -147,7 +176,16 @@ const updateSelectedDay = (day: number) => {
             year: year.value
         }
     }
+    let date = new Date(year.value, month.value, day);
+    let dayName = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    // console.log(dayName);
     emit('input', selectedDay.value)
+
+    if (props.schedule && props.schedule[dayName as keyof typeof props.schedule]){
+        emit('hours', props.schedule[dayName as keyof typeof props.schedule])
+
+    }
+
 
 }
 onMounted(() => {
@@ -210,8 +248,9 @@ onMounted(() => {
             </div>
         </div>
         <div class="calender-body">
-            <div v-for="i in (35 - days)"></div>
-            <div :class="`day ${validateDay(i)} ${isSelectedDay(i)}`" :value="i" @click="updateSelectedDay(i)" v-for="i in days"> {{ i }}
+            <div v-for="i in monthStartDay"></div>
+            <div :class="`day ${validateDay(i)} ${isSelectedDay(i)}`" :value="i" @click="updateSelectedDay(i)"
+                v-for="i in days"> {{ i }}
             </div>
         </div>
 
@@ -344,7 +383,8 @@ $padding: 1.3rem 2rem;
                     background-color: rgba(42, 192, 212, 0.30);
                     border-radius: 0.5rem;
                 }
-                &.selected{
+
+                &.selected {
                     background-color: $navy;
                     color: $white;
                     border-radius: 0.5rem;
