@@ -317,21 +317,7 @@ const convertTotimeStamp = (date:string,time:string)=>{
     return utc;
 
 }
-// const updateHours = (date: { day: number, month: number, year: number }) => {
-//     const dateObj = new Date();
-//     let time = dateObj.getHours()
-//     let month = dateObj.getMonth()
-//     let day = dateObj.getDate()
-//     let year = dateObj.getFullYear()
-//     let hours = [];
-//     for (let i = 8; i < 16; i++) {
-//         if (i < time && month === date.month && day === date.day && year === date.year) continue
-//         hours.push(`${i}:00`)
-//     }
-//     Availablehours.value = hours
-//     formValidation.time.rules[1] = { dropdown: Availablehours.value }
 
-// }
 
 const updateHours = (date:{start:string,end:string}) =>{
     const getHours = (time:string) => {
