@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { Ref } from 'vue';
-import insurances from "./Insurances";
+// import insurances from "./Insurances";
 import EligibilityFormResponsive from './EligibiltyFormResponsive.vue';
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
@@ -10,8 +10,8 @@ import FileInputField from '@/components/sharedComponents/FileInputField.vue';
 
 const show: Ref<boolean> = ref(false);
 const company: Ref<string> = ref('');
-const insurancesList = insurances;
-let filteredList = ref(insurancesList);
+// const insurancesList = insurances;
+// let filteredList = ref(insurancesList);
 
 
 
@@ -22,7 +22,7 @@ let filteredList = ref(insurancesList);
         </span>
         <form action="">
 
-            <DropDownInputField :list="insurances" id="insurances" placeHolder="Insurance Plan" required />
+            <!-- <DropDownInputField :list="insurances" id="insurances" placeHolder="Insurance Plan" required /> -->
             <InputField placeHolder="Member ID" id="memberId" required />
             <InputField placeHolder="Medicare ID" />
             <InputField placeHolder="Medicaid ID" />

@@ -12,15 +12,15 @@ import { recaptcha } from '@/components/Recaptcha';
 const snackbar = useSnackbar();
 // import snackbar from '@/components/snackbar/SnackBar.vue';
 
-let insurancesArr:Ref<string[]> = ref([]);
+let insurancesArr: Ref<string[]> = ref([]);
 
 const getInsurances = async () => {
     setTimeout(async () => {
-        if(!insurancesArr.value.length){
-        let data = await Http.get('images/insurance');
-        insurancesArr.value = data.map((insurance: any) => insurance.title);
-    }
-    formValidation.insurance.rules[1] ={dropdown: insurancesArr.value};
+        if (!insurancesArr.value.length) {
+            let data = await Http.get('images/insurance');
+            insurancesArr.value = data.map((insurance: any) => insurance.title);
+        }
+        formValidation.insurance.rules[1] = { dropdown: insurancesArr.value };
     }, 1000)
 
 
@@ -37,6 +37,7 @@ const form = reactive({
     gender: '',
     memberId: '',
     phone: '',
+    email: '',
     medicareId: '',
     medicaidId: '',
     insuranceCardFront: null,
@@ -89,6 +90,9 @@ const formValidation = {
         rules: ['required', 'min:14'],
 
     },
+    email: {
+        rules: ['required', 'email'],
+    },
 
     medicareId: {
         rules: [],
@@ -115,6 +119,7 @@ const formErrors = reactive({
     gender: false,
     memberId: false,
     phone: false,
+    email: false,
     medicareId: false,
     medicaidId: false,
     insuranceCardFront: false,
@@ -148,7 +153,7 @@ const validate = () => {
             formErrors[key as keyof typeof formErrors] = true
 
         })
-    } 
+    }
     // else {
     //     snackbar.add({
     //         background: '#8EF5E8',
@@ -160,13 +165,13 @@ const validate = () => {
     return v.isValid;
 
 }
-const submit= async ()=>{
+const submit = async () => {
     let isValid = validate();
 
-    if(isValid) {
+    if (isValid) {
         let ModdedForm = modifyForm();
         let recapatchaToken = await recaptcha('career');
-        if(recapatchaToken) ModdedForm.append('recaptcha', recapatchaToken);
+        if (recapatchaToken) ModdedForm.append('recaptcha', recapatchaToken);
         try {
             let response = await Http.post('insurance/create', ModdedForm);
             console.log(response);
@@ -191,24 +196,24 @@ const modifyForm = () => {
     formData.append('lastName', form.lastName);
     formData.append('dob', form.dob);
     formData.append('insurance_provider', form.insurance);
-    formData.append('gender',form.gender)
+    formData.append('gender', form.gender)
     formData.append('member_id', form.memberId);
     formData.append('phone', form.phone.replace(/\D/g, ''));
-    if(form.medicareId) formData.append('medicare_id', form.medicareId);
-    if(form.medicaidId) formData.append('medicaid_id', form.medicaidId);
-    if(form.insuranceCardFront) {
+    if (form.medicareId) formData.append('medicare_id', form.medicareId);
+    if (form.medicaidId) formData.append('medicaid_id', form.medicaidId);
+    if (form.insuranceCardFront) {
         let insuranceCardFront = form.insuranceCardFront as FormData;
-        for (let [key,value] of insuranceCardFront.entries()) {
-            if(value instanceof File) {
+        for (let [key, value] of insuranceCardFront.entries()) {
+            if (value instanceof File) {
                 formData.append('insurance_card_front', value);
                 break;
             }
         }
     };
-    if(form.insuranceCardBack) {
+    if (form.insuranceCardBack) {
         let insuranceCardBack = form.insuranceCardBack as FormData;
-        for (let [key,value] of insuranceCardBack.entries()) {
-            if(value instanceof File) {
+        for (let [key, value] of insuranceCardBack.entries()) {
+            if (value instanceof File) {
                 formData.append('insurance_card_back', value);
                 break;
             }
@@ -233,34 +238,41 @@ const modifyForm = () => {
                         {{ $translate('eligibility_check_phrase') }} </span>
                     <div class="input-fields-container">
                         <div class="left">
-                            <div class="split">
+                            <!-- <div class="split"> -->
                                 <InputField class="field" :error="formErrors.firstName" @input="form.firstName = $event"
                                     :placeHolder="$translate('first_name')" id="firstName" required lettersOnly />
                                 <InputField class="field" :error="formErrors.lastName" @input="form.lastName = $event"
                                     :placeHolder="$translate('last_name')" id="lastName" required lettersOnly />
-                            </div>
+                            <!-- </div> -->
                             <DropDownInputField :error="formErrors.insurance" @input="form.insurance = $event"
-                                :list="insurancesArr" id="insurances" :placeHolder="$translate('insurance_provider')" required />
+                                :list="insurancesArr" id="insurances" :placeHolder="$translate('insurance_provider')"
+                                required />
                             <InputField @input="form.memberId = $event" :error="formErrors.memberId"
                                 :placeHolder="$translate('member_id')" id="memberId" required />
                             <InputField @input="form.phone = $event" :error="formErrors.phone"
                                 :placeHolder="$translate('phone_number')" id="phone" required mask="(###) ###-####" />
-                            <div class="split">
-                                <InputField @input="form.medicareId = $event" class="field" :placeHolder="$translate('medicare_id')" />
-                                <InputField @input="form.medicaidId = $event" class="field" :placeHolder="$translate('medicaid_id')" />
-                            </div>
+                            <InputField @input="form.email = $event" :error="formErrors.email"
+                                :placeHolder="$translate('Email')" id="email" required  />
+
                         </div>
 
                         <div class="right">
-                            <InputField :placeHolder="$translate('date_of_birth')" @input="form.dob = $event" :error="formErrors.dob"
-                                id="dob" required mask="##-##-####" date />
-                            <DropDownInputField :list="[$translate('Male'),$translate('Female'),$translate('Other')]" @input="form.gender = $event"
-                                :error="formErrors.gender" id="gender" :placeHolder="$translate('gender')" required />
-                            <FileInputField :placeHolder="$translate('insurance_card_front')" :error="formErrors.insuranceCardFront"
-                                @input="form.insuranceCardFront = $event" />
-                            <FileInputField :placeHolder="$translate('insurance_card_back')" :error="formErrors.insuranceCardBack"
-                                @input="form.insuranceCardBack = $event" />
-                            <button @click="submit" class="btn responsive">{{$translate('submit')}}</button>
+                            <div class="split">
+                                <InputField @input="form.medicareId = $event" class="field"
+                                    :placeHolder="$translate('medicare_id')" />
+                                <InputField @input="form.medicaidId = $event" class="field"
+                                    :placeHolder="$translate('medicaid_id')" />
+                            </div>
+                            <InputField :placeHolder="$translate('date_of_birth')" @input="form.dob = $event"
+                                :error="formErrors.dob" id="dob" required mask="##-##-####" date />
+                            <DropDownInputField :list="[$translate('Male'), $translate('Female'), $translate('Other')]"
+                                @input="form.gender = $event" :error="formErrors.gender" id="gender"
+                                :placeHolder="$translate('gender')" required />
+                            <FileInputField :placeHolder="$translate('insurance_card_front')"
+                                :error="formErrors.insuranceCardFront" @input="form.insuranceCardFront = $event" />
+                            <FileInputField :placeHolder="$translate('insurance_card_back')"
+                                :error="formErrors.insuranceCardBack" @input="form.insuranceCardBack = $event" />
+                            <button @click="submit" class="btn responsive">{{ $translate('submit') }}</button>
 
                         </div>
 
@@ -327,7 +339,8 @@ $formGap: 1.2rem;
                 >span {
                     display: block;
                     margin-bottom: $formGap;
-                    &.rtl{
+
+                    &.rtl {
                         direction: rtl;
                     }
                 }

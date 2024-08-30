@@ -44,6 +44,7 @@ const form = reactive({
     dob: '',
     gender: '',
     phone: '',
+    email: '',
     payment: '',
     insurance: '',
     memberId: '',
@@ -164,6 +165,9 @@ const formValidation = {
         rules: ['required', 'min:14'],
 
     },
+    email:{
+        rules:['required','email']
+    },
     payment: {
         rules: ['required', { dropdown: ['Insurance', 'Self Pay'] }],
 
@@ -194,6 +198,7 @@ const formErrors = reactive({
     dob: false,
     gender: false,
     phone: false,
+    email: false,
     payment: false,
     insurance: false,
     memberId: false,
@@ -294,6 +299,7 @@ const modifyForm = () => {
         dob: form.dob,
         gender:form.gender,
         phone: form.phone.replace(/\D/g, ''),
+        email: form.email,
         payment: formPayment(),
         date: convertTotimeStamp(form.date,form.time),
 
@@ -383,15 +389,19 @@ const isSelfPay = () => {
                         placeHolder="Gender" @input="form.gender = $event" :error="formErrors.gender" />
                 </div>
                 <div class="split reverse">
-                    <div class="field coverage">
-                        <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
-                            :options="['Insurance', 'Self Pay']" id="payment" :error="formErrors.payment" />
-                    </div>
                     <div class="field">
                         <InputField placeHolder="Phone Number" mask="(###) ###-####" id="phone" required
                             @input="form.phone = $event" :error="formErrors.phone" />
                     </div>
+                    <div class="field">
+                        <InputField placeHolder="Email"  id="email" required
+                            @input="form.email = $event" :error="formErrors.email" />
+                    </div>
                 </div>
+                <div class="field coverage">
+                        <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
+                            :options="['Insurance', 'Self Pay']" id="payment" :error="formErrors.payment" />
+                    </div>
                 <DropDownInputField id="insurance" :list="insurances" placeHolder="Insurance company name"
                     @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
                 <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
