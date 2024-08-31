@@ -8,31 +8,32 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 // import { recaptcha } from '@/components/Recaptcha';
-import { useReCaptcha } from 'vue-recaptcha-v3'
+// import { useReCaptcha } from 'vue-recaptcha-v3'
 import type { Schedule } from '@/interfaces/content';
+import { recaptcha } from '@/components/Recaptcha';
+// const recaptcha = async (action: string) => {
+//     const useRecap = useReCaptcha();
+//     // if (useRecap === undefined) {
+//     //     console.error('recaptcha not loaded');
+//     //     return false;
+//     // }
+//     // Wait until recaptcha has been loaded.
+//     if (await useRecap?.recaptchaLoaded()) {
+//         console.log('recaptcha loaded');
 
-const recaptcha = async (action: string) => {
-    const useRecap = useReCaptcha();
-  if(useRecap === undefined) {
-    console.error('recaptcha not loaded');
-    return false;
-  }
-    // Wait until recaptcha has been loaded.
-    if (await useRecap?.recaptchaLoaded()) {
-      console.log('recaptcha loaded');
-  
-      // Execute reCAPTCHA with action "login".
-      try {
-        const token = await useRecap?.executeRecaptcha(action);
-        console.log('token', token);
-        return token;
-      } catch (error) {
-        console.error(error);
-        return false;
-      }
-    }
-  
-  };
+//         // Execute reCAPTCHA with action "login".
+//         try {
+//             const token = await useRecap?.executeRecaptcha(action);
+//             console.log('token', token);
+//             return token;
+//         } catch (error) {
+//             console.error(error);
+//             return false;
+//         }
+//     }
+
+// };
+
 
 
 const snackbar = useSnackbar();
@@ -54,7 +55,7 @@ const form = reactive({
 
 })
 
-let Httplocations:{name:string,id:number,schedule:Schedule}[] = [];
+let Httplocations: { name: string, id: number, schedule: Schedule }[] = [];
 const locations = ref([]);
 const location = '';
 let cords = ref({
@@ -74,15 +75,15 @@ const getSchedule = () => {
     if (!clinic) return;
     return clinic.schedule;
 }
-const schedule:Ref<Schedule | undefined> = ref(undefined);
+const schedule: Ref<Schedule | undefined> = ref(undefined);
 const updateLocation = (e: string) => {
     form.location = e;
     schedule.value = getSchedule();
 
 }
-const sortLocations = (data:any) => {
-    if(!cords.value.lat || !cords.value.long) return data;
-    data.forEach((location: { name: string, lat: string, long: string, distance?:number }) => {
+const sortLocations = (data: any) => {
+    if (!cords.value.lat || !cords.value.long) return data;
+    data.forEach((location: { name: string, lat: string, long: string, distance?: number }) => {
         location.distance = getDistance(cords.value.lat, cords.value.long, parseFloat(location.lat), parseFloat(location.long));
     });
     data.sort((a: { distance: number }, b: { distance: number }) => a.distance - b.distance);
@@ -95,8 +96,8 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // Distance in km
 }
@@ -107,16 +108,17 @@ const getInsurances = async () => {
     let data = await Http.get('images/insurance/names');
     HttpInsurances = data;
     insurances.value = data.map((insurance: { title: string }) => insurance.title);
+    formValidation.insurance.rules[1] = { dropdown: insurances.value };
 }
 onMounted(() => {
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-        cords.value.lat = position.coords.latitude
-        cords.value.long = position.coords.longitude
-    })
-}
-getLocations()
-getInsurances()
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            cords.value.lat = position.coords.latitude
+            cords.value.long = position.coords.longitude
+        })
+    }
+    getLocations()
+    getInsurances()
 })
 
 
@@ -149,7 +151,7 @@ const formValidation = {
         }
     },
     dob: {
-        rules: ['required','date:past',  'min:10'],
+        rules: ['required', 'date:past', 'min:10'],
         message: {
             required: 'Date Of Birth Is Required',
             date: 'Date Of Birth Must be Valid And In The Past',
@@ -165,8 +167,8 @@ const formValidation = {
         rules: ['required', 'min:14'],
 
     },
-    email:{
-        rules:['required','email']
+    email: {
+        rules: ['required', 'email']
     },
     payment: {
         rules: ['required', { dropdown: ['Insurance', 'Self Pay'] }],
@@ -250,26 +252,35 @@ const validate = () => {
 
 
 
-const submit= async ()=>{
+const submit = async () => {
     let isValid = validate();
-    if(isValid) {
+    if (isValid) {
         let moddedForm = modifyForm();
-        let recapatchaToken = await recaptcha('career');
-        if(recapatchaToken){
-        console.log(recapatchaToken);
-        Object.assign(moddedForm, {
-            recaptcha: recapatchaToken
-        });}
-        console.log(moddedForm);
-        try{
-            let response = await Http.post('reservation',moddedForm);
+        let recaptchaToken = await recaptcha('reservation');
+        // console.log(recaptchaToken)
+        if (recaptchaToken) {
+            // console.log(recaptchaToken);
+            Object.assign(moddedForm, {
+                recaptcha: recaptchaToken
+            });
+        } else {
+            snackbar.add({
+                background: '#F58E8E',
+                text: 'Something went wrong, Please try again later',
+
+            })
+            return;
+        }
+        // console.log(moddedForm);
+        try {
+            let response = await Http.post('reservation', moddedForm);
             console.log(response);
             snackbar.add({
                 background: '#8EF5E8',
                 text: 'Form Submitted Successfully',
 
             })
-        }catch(e){
+        } catch (e) {
             console.error(e);
             snackbar.add({
                 background: '#F58E8E',
@@ -284,12 +295,12 @@ const submit= async ()=>{
 const modifyForm = () => {
     let moddedform = {};
     let clinic_id = () => {
-            let clinic = Httplocations.find((location) => location.name === form.location);
-            if(!clinic) return;
-            return clinic.id;
-        }
+        let clinic = Httplocations.find((location) => location.name === form.location);
+        if (!clinic) return;
+        return clinic.id;
+    }
     let formPayment = () => {
-        if(form.payment === 'Insurance') return 'insurance';
+        if (form.payment === 'Insurance') return 'insurance';
         return 'self_pay';
     }
     Object.assign(moddedform, {
@@ -297,14 +308,14 @@ const modifyForm = () => {
         first_name: form.firstName,
         last_name: form.lastName,
         dob: form.dob,
-        gender:form.gender,
+        gender: form.gender,
         phone: form.phone.replace(/\D/g, ''),
         email: form.email,
         payment: formPayment(),
-        date: convertTotimeStamp(form.date,form.time),
+        date: convertTotimeStamp(form.date, form.time),
 
     });
-    if(form.payment === 'Insurance') {
+    if (form.payment === 'Insurance') {
         Object.assign(moddedform, {
             insurance_company: form.insurance,
             member_id: form.memberId
@@ -313,10 +324,10 @@ const modifyForm = () => {
     return moddedform;
 }
 
-const convertTotimeStamp = (date:string,time:string)=>{
-    const [month,day,year] = date.split('-').map((e)=>parseInt(e));
-    const [hour,minute] = time.split(':').map((e)=>parseInt(e));
-    const dateObj = new Date(year,month,day,hour,minute);
+const convertTotimeStamp = (date: string, time: string) => {
+    const [month, day, year] = date.split('-').map((e) => parseInt(e));
+    const [hour, minute] = time.split(':').map((e) => parseInt(e));
+    const dateObj = new Date(year, month, day, hour, minute);
     console.log(dateObj);
     let d = new Date(dateObj);
     let utc = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes());
@@ -325,15 +336,15 @@ const convertTotimeStamp = (date:string,time:string)=>{
 }
 
 
-const updateHours = (date:{start:string,end:string}) =>{
-    const getHours = (time:string) => {
-        const [hours, minutes,seconds] = time.split(':');
+const updateHours = (date: { start: string, end: string }) => {
+    const getHours = (time: string) => {
+        const [hours, minutes, seconds] = time.split(':');
         return parseInt(hours);
     }
     let hours = [];
 
     for (let i = getHours(date.start); i < getHours(date.end); i++) {
-                hours.push(`${i}:00`)    
+        hours.push(`${i}:00`)
     }
     Availablehours.value = hours
     formValidation.time.rules[1] = { dropdown: Availablehours.value }
@@ -357,6 +368,8 @@ const isSelfPay = () => {
 </script>
 <template>
     <div class="booking-container">
+        <!-- <div @click="recaptcha('smth')" class="btn responsive">Book Appointment</div> -->
+
         <h1 class="sectionHeader">Booking</h1>
 
         <div class="form-container">
@@ -382,7 +395,7 @@ const isSelfPay = () => {
                 <div class="split">
                     <div class="field">
                         <InputField placeHolder="Date of Birth" mask="##-##-####" id="dob" required
-                            @input="form.dob = $event" :error="formErrors.dob" date minYear="-100" maxYear="+10"/>
+                            @input="form.dob = $event" :error="formErrors.dob" date minYear="-100" maxYear="+10" />
                         <div class="ps">MM-DD-YYYY</div>
                     </div>
                     <DropDownInputField class='field' :list="['Male', 'Female', 'Other']" required id="gender"
@@ -394,14 +407,14 @@ const isSelfPay = () => {
                             @input="form.phone = $event" :error="formErrors.phone" />
                     </div>
                     <div class="field">
-                        <InputField placeHolder="Email"  id="email" required
-                            @input="form.email = $event" :error="formErrors.email" />
+                        <InputField placeHolder="Email" id="email" required @input="form.email = $event"
+                            :error="formErrors.email" />
                     </div>
                 </div>
                 <div class="field coverage">
-                        <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
-                            :options="['Insurance', 'Self Pay']" id="payment" :error="formErrors.payment" />
-                    </div>
+                    <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
+                        :options="['Insurance', 'Self Pay']" id="payment" :error="formErrors.payment" />
+                </div>
                 <DropDownInputField id="insurance" :list="insurances" placeHolder="Insurance company name"
                     @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
                 <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
@@ -410,7 +423,7 @@ const isSelfPay = () => {
                     id="pain" optional :error="formErrors.pain" />
             </div>
             <div class="right">
-                <Calender @input="updateDate($event)" @hours="updateHours($event)" :schedule="schedule"/>
+                <Calender @input="updateDate($event)" @hours="updateHours($event)" :schedule="schedule" />
                 <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
                     :error="formErrors.time" />
                 <div @click="submit()" class="btn responsive">Book Appointment</div>

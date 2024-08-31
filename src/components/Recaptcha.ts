@@ -1,25 +1,23 @@
-import { useReCaptcha } from 'vue-recaptcha-v3'
+import { useScriptTag } from '@vueuse/core';
+
 
 export const recaptcha = async (action: string) => {
-    const useRecap = useReCaptcha();
-  if(useRecap === undefined) {
-    console.error('recaptcha not loaded');
-    return false;
-  }
-    // Wait until recaptcha has been loaded.
-    if (await useRecap?.recaptchaLoaded()) {
-      console.log('recaptcha loaded');
-  
-      // Execute reCAPTCHA with action "login".
-      try {
-        const token = await useRecap?.executeRecaptcha(action);
-        console.log('token', token);
-        return token;
-      } catch (error) {
-        console.error(error);
-        return false;
-      }
-    }
-  
-  };
+  const recaptchaKey = import.meta.env.VITE_RECAPTCHA_KEY;
 
+  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
+  // console.log(recaptchaKey);
+  useScriptTag(scriptTag);
+
+  let token = '';
+  await new Promise<void>((resolve) => {
+    grecaptcha.ready(() => {
+      
+      grecaptcha.execute(recaptchaKey, { action }).then((t) => {
+        token = t;
+        resolve();
+      });
+    });
+  });
+
+  return token;
+}

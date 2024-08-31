@@ -36,7 +36,7 @@ app.use(VueGtag, {
 },router);
 
 app.use(VueReCaptcha, {
-    siteKey: '6Ld5qCsqAAAAACIGSGtxSkE8wtI2c6i9bGfI3xqp',
+    siteKey: '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc',
     loaderOptions: {
         // autoHideBadge:true
     }

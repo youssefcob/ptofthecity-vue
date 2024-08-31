@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/moment": "^2.13.0",
+    "@vueuse/core": "^11.0.3",
     "axios": "^1.7.2",
     "maska": "^3.0.0",
     "moment": "^2.30.1",
