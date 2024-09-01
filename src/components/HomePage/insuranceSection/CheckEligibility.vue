@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import {insurancesArr} from "./Insurances";
 
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
@@ -9,6 +8,10 @@ import { useSnackbar } from "vue3-snackbar";
 import { onMounted, reactive, ref, type Ref } from "vue";
 import Http from "@/mixins/Http";
 import { recaptcha } from '@/components/Recaptcha';
+import Loading from '@/components/sharedComponents/Loading.vue';
+
+const isLoading:Ref<boolean> = ref(false);
+
 const snackbar = useSnackbar();
 // import snackbar from '@/components/snackbar/SnackBar.vue';
 
@@ -169,6 +172,7 @@ const submit = async () => {
     let isValid = validate();
 
     if (isValid) {
+        isLoading.value = true;
         let ModdedForm = modifyForm();
         let recapatchaToken = await recaptcha('career');
         if (recapatchaToken) ModdedForm.append('recaptcha', recapatchaToken);
@@ -180,14 +184,20 @@ const submit = async () => {
                 text: 'Form Submitted Successfully',
 
             })
+        isLoading.value = false;
+
         } catch (e) {
             snackbar.add({
                 background: '#F58E8E',
                 text: 'Form Submission Failed',
 
             })
+        isLoading.value = false;
+
         }
     }
+    isLoading.value = false;
+
 }
 
 const modifyForm = () => {
@@ -227,6 +237,7 @@ const modifyForm = () => {
 
 <template>
     <div class="eligibility-container">
+        <Loading v-if="isLoading" />
         <h1 class="sectionHeader">{{ $translate('check_eligibility') }}</h1>
 
         <div class="form-image-container">
@@ -305,10 +316,7 @@ $formGap: 1.2rem;
         display: flex;
         justify-content: space-between;
 
-        @media screen and (max-width: 426px) {
-            // display: none;
-
-        }
+    
 
         >.image {
             @media screen and (max-width: 800px) {
@@ -394,6 +402,10 @@ $formGap: 1.2rem;
                 }
             }
         }
+        @media screen and (max-width: 426px) {
+            // display: none;
+
+        }
     }
 
 
@@ -401,33 +413,4 @@ $formGap: 1.2rem;
 
 }
 
-// @media screen and (max-width: 800px) {
-
-//     .eligibility-container {
-//         @media screen and (max-width: 426px) {
-//             .responsive-form-container {
-//                 display: block;
-//             }
-//         }
-
-//         .form-image-container {
-//             .image-container {
-//                 display: none;
-//             }
-
-//             .form-container {
-//                 @media screen and (max-width: 426px) {
-//                     display: none;
-//                 }
-
-//                 width:100%;
-//                 height:100%;
-
-//                 .form {
-//                     width: 100%;
-//                     height: 100%;
-//                 }
-//             }
-//         }
-//     }
-// }</style>
+</style>

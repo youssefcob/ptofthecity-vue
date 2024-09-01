@@ -4,8 +4,11 @@ import InputField from '@/components/sharedComponents/InputField.vue';
 import Http from '@/mixins/Http';
 import { recaptcha } from '@/components/Recaptcha';
 import validation from '@/mixins/Validation';
-import { reactive, ref } from 'vue';
+import { reactive, ref, type Ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
+import Loading from '@/components/sharedComponents/Loading.vue';
+
+const isLoading:Ref<boolean> = ref(false);
 const snackbar = useSnackbar();
 
 // const subjectsList = [
@@ -103,6 +106,7 @@ const handleErrors = (v: validation) => {
 
 const submitForm = async () => {
     try{
+        isLoading.value = true;
         let ModdedForm = form;
         ModdedForm.phone = ModdedForm.phone.replace(/\D/g, '');
         let recapatchaToken = await recaptcha('career');
@@ -115,6 +119,7 @@ const submitForm = async () => {
             text: 'Form Submitted Successfully',
      
         })
+        isLoading.value = false;
         // console.log(response)
     } catch (e) {
         snackbar.add({
@@ -122,7 +127,9 @@ const submitForm = async () => {
             text: e,
      
         })
+        isLoading.value = false;
     }
+    isLoading.value = false;
 }
 
 defineExpose({
@@ -132,6 +139,7 @@ defineExpose({
 
 <template>
     <div class="form">
+        <isLoading v-if="isLoading" />
     <InputField
       @input="form.subject = $event"
       required

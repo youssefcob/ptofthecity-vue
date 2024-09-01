@@ -7,33 +7,11 @@ import RadioInputField from '../sharedComponents/RadioInputField.vue';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
-// import { recaptcha } from '@/components/Recaptcha';
-// import { useReCaptcha } from 'vue-recaptcha-v3'
 import type { Schedule } from '@/interfaces/content';
 import { recaptcha } from '@/components/Recaptcha';
-// const recaptcha = async (action: string) => {
-//     const useRecap = useReCaptcha();
-//     // if (useRecap === undefined) {
-//     //     console.error('recaptcha not loaded');
-//     //     return false;
-//     // }
-//     // Wait until recaptcha has been loaded.
-//     if (await useRecap?.recaptchaLoaded()) {
-//         console.log('recaptcha loaded');
+import Loading from '../sharedComponents/Loading.vue';
 
-//         // Execute reCAPTCHA with action "login".
-//         try {
-//             const token = await useRecap?.executeRecaptcha(action);
-//             console.log('token', token);
-//             return token;
-//         } catch (error) {
-//             console.error(error);
-//             return false;
-//         }
-//     }
-
-// };
-
+const isLoading: Ref<boolean> = ref(false);
 
 
 const snackbar = useSnackbar();
@@ -236,15 +214,7 @@ const validate = () => {
 
         })
     }
-    //  else {
-    //     snackbar.add({
-    //         background: '#8EF5E8',
-    //         text: 'Form Submitted Successfully',
 
-    //     })
-
-    // }
-    // console.log(form);
     return v.isValid;
 
 
@@ -257,9 +227,7 @@ const submit = async () => {
     if (isValid) {
         let moddedForm = modifyForm();
         let recaptchaToken = await recaptcha('reservation');
-        // console.log(recaptchaToken)
         if (recaptchaToken) {
-            // console.log(recaptchaToken);
             Object.assign(moddedForm, {
                 recaptcha: recaptchaToken
             });
@@ -273,6 +241,8 @@ const submit = async () => {
         }
         // console.log(moddedForm);
         try {
+        isLoading.value = true;
+            
             let response = await Http.post('reservation', moddedForm);
             console.log(response);
             snackbar.add({
@@ -280,6 +250,7 @@ const submit = async () => {
                 text: 'Form Submitted Successfully',
 
             })
+        isLoading.value = false;
         } catch (e) {
             console.error(e);
             snackbar.add({
@@ -287,9 +258,11 @@ const submit = async () => {
                 text: 'Something went wrong, Please try again later',
 
             })
+        isLoading.value = false;
         }
-
     }
+    isLoading.value = false;
+
 }
 
 const modifyForm = () => {
