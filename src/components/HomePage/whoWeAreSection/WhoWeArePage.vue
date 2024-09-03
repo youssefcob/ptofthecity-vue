@@ -96,6 +96,9 @@ onMounted(() => {
 .container {
     @include pagePadding();
 
+    .text-s{
+        font-weight: bold;
+    }
 
     .stats {
         display: grid;
