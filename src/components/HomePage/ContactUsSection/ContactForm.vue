@@ -2,14 +2,38 @@
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import Http from '@/mixins/Http';
-import { recaptcha } from '@/components/Recaptcha';
+// import { recaptcha } from '@/components/Recaptcha';
 import validation from '@/mixins/Validation';
 import { reactive, ref, type Ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
 import Loading from '@/components/sharedComponents/Loading.vue';
+import { useScriptTag } from '@vueuse/core';
 
 const isLoading:Ref<boolean> = ref(false);
 const snackbar = useSnackbar();
+
+
+
+const recaptcha = async (action: string) => {
+  const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+
+  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+  // console.log(recaptchaKey);
+  useScriptTag(scriptTag);
+
+  let token = '';
+  await new Promise<void>((resolve) => {
+    grecaptcha.ready(() => {
+      
+      grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
+        token = t;
+        resolve();
+      });
+    });
+  });
+
+  return token;
+}
 
 // const subjectsList = [
 //     "subject",

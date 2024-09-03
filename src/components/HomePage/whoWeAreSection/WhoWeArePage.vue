@@ -104,6 +104,9 @@ onMounted(() => {
         gap: 3rem;
         // padding: 3rem 0;
         padding-bottom: 3rem;
+        .header-q{
+            font-weight: bold;
+        }
 
         @media screen and (max-width: 770px) {
             display: flex;
@@ -158,6 +161,8 @@ onMounted(() => {
         .header-t{
             margin-bottom:1.25rem;
         }
+
+
       
 
 

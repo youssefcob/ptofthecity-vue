@@ -8,11 +8,38 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 import type { Schedule } from '@/interfaces/content';
-import { recaptcha } from '@/components/Recaptcha';
+// import { recaptcha } from '@/components/Recaptcha';
 import Loading from '../sharedComponents/Loading.vue';
+import type { Service } from '../HomePage/servicesSection/Services';
+import { useScriptTag } from '@vueuse/core';
 
 const isLoading: Ref<boolean> = ref(false);
 
+const props = defineProps({
+    clinicName: String
+})
+
+
+const recaptcha = async (action: string) => {
+  const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+
+  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+  // console.log(recaptchaKey);
+  useScriptTag(scriptTag);
+
+  let token = '';
+  await new Promise<void>((resolve) => {
+    grecaptcha.ready(() => {
+      
+      grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
+        token = t;
+        resolve();
+      });
+    });
+  });
+
+  return token;
+}
 
 const snackbar = useSnackbar();
 
@@ -27,13 +54,13 @@ const form = reactive({
     payment: '',
     insurance: '',
     memberId: '',
+    service: '',
     pain: '',
     date: '',
     time: ''
 
 })
-
-let Httplocations: { name: string, id: number, schedule: Schedule }[] = [];
+let Httplocations: { name: string, id: number, schedule: Schedule, services: Service[] }[] = [];
 const locations = ref([]);
 const location = '';
 let cords = ref({
@@ -42,8 +69,10 @@ let cords = ref({
 })
 const getLocations = async () => {
     let data = await Http.get('clinic/names');
+    console.log(data);
     data = sortLocations(data)
     Httplocations = data;
+    services.value = data.services;
     locations.value = data.map((location: { name: string }) => location.name);
     formValidation.location.rules[1] = { dropdown: locations.value };
 
@@ -54,9 +83,19 @@ const getSchedule = () => {
     return clinic.schedule;
 }
 const schedule: Ref<Schedule | undefined> = ref(undefined);
+const services: Ref<Service[]> = ref([]);
+const servicesList: Ref<string[]> = ref([]);
 const updateLocation = (e: string) => {
     form.location = e;
     schedule.value = getSchedule();
+    let s = Httplocations.find((location) => location.name === e)?.services;
+
+    if (s) {
+        services.value = s;
+        servicesList.value = s.map((service) => service.title);
+        formValidation.service.rules[1] = { dropdown: servicesList.value };
+    }
+    console.log(servicesList.value);
 
 }
 const sortLocations = (data: any) => {
@@ -88,15 +127,27 @@ const getInsurances = async () => {
     insurances.value = data.map((insurance: { title: string }) => insurance.title);
     formValidation.insurance.rules[1] = { dropdown: insurances.value };
 }
-onMounted(() => {
+
+const getLocationFromProp = () => {
+    if(props.clinicName){
+        console.log(props.clinicName);
+        console.log(servicesList.value)
+        updateLocation(props.clinicName);
+        console.log(form)
+    }
+}
+
+onMounted(async () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             cords.value.lat = position.coords.latitude
             cords.value.long = position.coords.longitude
         })
     }
-    getLocations()
-    getInsurances()
+   await  getLocations()
+   await  getInsurances()
+     getLocationFromProp()
+
 })
 
 
@@ -136,6 +187,13 @@ const formValidation = {
             min: 'Date Of Birth Must Be In The Format MM-DD-YYYY'
         }
 
+    },
+    service: {
+        rules: ['required', { dropdown: servicesList.value }],
+        message: {
+            required: 'Please select a service',
+            dropdown: 'Please select a valid service'
+        }
     },
     gender: {
         rules: ['required', { dropdown: ['Male', 'Female', 'Other'] }],
@@ -178,6 +236,7 @@ const formErrors = reactive({
     dob: false,
     gender: false,
     phone: false,
+    service: false,
     email: false,
     payment: false,
     insurance: false,
@@ -241,8 +300,9 @@ const submit = async () => {
         }
         // console.log(moddedForm);
         try {
-        isLoading.value = true;
-            
+            isLoading.value = true;
+
+            console.log(moddedForm);
             let response = await Http.post('reservation', moddedForm);
             console.log(response);
             snackbar.add({
@@ -250,7 +310,7 @@ const submit = async () => {
                 text: 'Form Submitted Successfully',
 
             })
-        isLoading.value = false;
+            isLoading.value = false;
         } catch (e) {
             console.error(e);
             snackbar.add({
@@ -258,7 +318,7 @@ const submit = async () => {
                 text: 'Something went wrong, Please try again later',
 
             })
-        isLoading.value = false;
+            isLoading.value = false;
         }
     }
     isLoading.value = false;
@@ -276,6 +336,12 @@ const modifyForm = () => {
         if (form.payment === 'Insurance') return 'insurance';
         return 'self_pay';
     }
+
+    let serviceId = () => {
+        let service = services.value.find((service) => service.title === form.service);
+        if (!service) return;
+        return service.id;
+    }
     Object.assign(moddedform, {
         clinic_id: clinic_id(),
         first_name: form.firstName,
@@ -285,6 +351,7 @@ const modifyForm = () => {
         phone: form.phone.replace(/\D/g, ''),
         email: form.email,
         payment: formPayment(),
+        service_id: serviceId(),
         date: convertTotimeStamp(form.date, form.time),
 
     });
@@ -342,16 +409,24 @@ const isSelfPay = () => {
 <template>
     <div class="booking-container">
         <!-- <div @click="recaptcha('smth')" class="btn responsive">Book Appointment</div> -->
-
+        <Loading v-if="isLoading" />
         <h1 class="sectionHeader">Booking</h1>
 
         <div class="form-container">
             <div class="left">
                 <div>
 
-                    <DropDownInputField id="location" :list="locations" placeHolder="Find Your nearest clinic"
+                    <DropDownInputField id="location" :list="locations" :default="props.clinicName? props.clinicName:'' " placeHolder="Find Your nearest clinic"
                         @input="updateLocation($event)" required :error="formErrors.location" />
                     <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
+
+
+                </div>
+                <div>
+
+                    <DropDownInputField id="service" :list="servicesList" placeHolder="Service"
+                        @input="form.service = $event" required :error="formErrors.service" />
+                    <div class="ps" style="visibility: hidden;">Make sure to allow location access, Clinics are listed in order of proximity.</div>
 
 
                 </div>
@@ -371,8 +446,8 @@ const isSelfPay = () => {
                             @input="form.dob = $event" :error="formErrors.dob" date minYear="-100" maxYear="+10" />
                         <div class="ps">MM-DD-YYYY</div>
                     </div>
-                    <DropDownInputField class='field' :list="['Male', 'Female', 'Other']" required id="gender"
-                        placeHolder="Gender" @input="form.gender = $event" :error="formErrors.gender" />
+                    <DropDownInputField class='field' :list="['Male', 'Female', 'Other', 'Prefer not to say']" required
+                        id="gender" placeHolder="Gender" @input="form.gender = $event" :error="formErrors.gender" />
                 </div>
                 <div class="split reverse">
                     <div class="field">
@@ -386,7 +461,8 @@ const isSelfPay = () => {
                 </div>
                 <div class="field coverage">
                     <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
-                        :options="['Insurance', 'Self Pay']" id="payment" :error="formErrors.payment" />
+                        :options="['Insurance', 'Self Pay']" :checked="'Insurance'" id="payment"
+                        :error="formErrors.payment" />
                 </div>
                 <DropDownInputField id="insurance" :list="insurances" placeHolder="Insurance company name"
                     @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />

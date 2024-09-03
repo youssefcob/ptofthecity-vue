@@ -6,7 +6,6 @@ import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from '../ServicesPage/SingleService.vue';
 import Testimonials from './Testimonials/Testimonials.vue';
-import axios from 'axios';
 const center: Ref<{ lat: number, lng: number }> = ref({ lat: 0, lng: 0 })
 
 const props = defineProps({
@@ -16,11 +15,11 @@ const props = defineProps({
 });
 
 let clinic: Ref<Clinic | null> = ref(null);
-let reviewsAndTotalRating: Ref<HttpReview[]> = ref([]);
 const getClinic = async () => {
+    
     let data = await Http.get(`clinic/${props.id}`);
     clinic.value = data;
-    // console.log(clinic.value);
+    console.log(clinic.value);
     if (clinic.value) {
         center.value = { lat: parseInt(clinic.value?.lat), lng: parseInt(clinic.value?.long) }
     }
@@ -32,6 +31,7 @@ const getWorkingHours = () => {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     };
     const convertToAmPm = (time: string) => {
+        if (!time) return 'Off';
         const [hours, minutes] = time.split(':');
         const ampm = parseInt(hours) >= 12 ? 'PM' : 'AM';
         const hours12 = parseInt(hours) % 12 || 12;
@@ -47,8 +47,8 @@ const getWorkingHours = () => {
         days.forEach((day: any) => {
             let hours = schedule[day as keyof typeof schedule];
             let dayAcr = capitalizeFirstLetter(day.slice(0, 3));
-            if (typeof hours === 'string') {
-                workingHours += `<span style="font-weight: bold;">${dayAcr}</span>: ${hours} <br>`;
+            if (hours.isOff) {
+                workingHours += `<span style="font-weight: bold;">${dayAcr}</span>: Off <br>`;
             } else {
                 workingHours += `<span style="font-weight: bold;">${dayAcr}</span>: ${convertToAmPm(hours.start)} - ${convertToAmPm(hours.end)} <br>`;
             }
@@ -71,25 +71,31 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 
     <div class="container">
         <div class="clinic-container">
-            <h1 class="responsive-header">{{ clinic?.name }}</h1>
+            <h1 class="responsive-header">{{ clinic?.name }} <br></h1>
+            <p>
+                {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code
+                }}
+            </p>
             <div class="address-container">
 
                 <div class="info-wrapper">
                     <div class="info">
-                        <h3>Location: </h3>
-                        <p>
-                            {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code
-                            }}
-                        </p>
+                        <!-- <h3>Location: </h3> -->
+
                     </div>
                     <div class="info schedule">
                         <h3>Working Hours: </h3>
-                        <p v-html="getWorkingHours()"></p>
+                        <div class="hours">
+                            <p v-html="getWorkingHours()"></p>
+                        </div>
                     </div>
                     <div class="info">
                         <h3>Calls: </h3>
                         <p>{{ clinic?.phone }}</p>
                     </div>
+                    <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">{{ $translate('book_now') }}</router-link>
+
+
 
                 </div>
                 <div class="map-wrapper">
@@ -111,7 +117,8 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
         </div>
 
         <div class="reviews">
-            <Testimonials :rating="clinic?.rating" :reviews="clinic?.reviews" :user_ratings_total="clinic?.user_ratings_total"/>
+            <Testimonials :rating="clinic?.rating" :reviews="clinic?.reviews"
+                :user_ratings_total="clinic?.user_ratings_total" />
         </div>
     </div>
 
@@ -137,11 +144,16 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
     }
 
     .address-container {
-        display: flex;
         margin-top: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap:2.5rem;
 
         @media screen and (max-width: 768px) {
-            flex-direction: column;
+            display: flex;
+
+            flex-direction: column-reverse;
+
 
         }
 

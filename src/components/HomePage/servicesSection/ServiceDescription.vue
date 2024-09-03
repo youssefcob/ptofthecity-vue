@@ -70,12 +70,25 @@ const trans = (languagesObject:any) => {
 
     @media (max-width: 800px) {
         .description,
-        .list,
-        .learn-more {
+        .list {
             display: none;
         }
 
+        .learn-more {
+            width: 100%;
+            align-self: center;
+            margin-bottom: auto;
+        }
+
     }
+
+    @media (max-width: 500px) {
+        .learn-more {
+            display: none;
+        }
+    }
+
+    
 
 
 

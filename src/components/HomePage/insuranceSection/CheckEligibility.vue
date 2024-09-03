@@ -276,7 +276,7 @@ const modifyForm = () => {
                             </div>
                             <InputField :placeHolder="$translate('date_of_birth')" @input="form.dob = $event"
                                 :error="formErrors.dob" id="dob" required mask="##-##-####" date />
-                            <DropDownInputField :list="[$translate('Male'), $translate('Female'), $translate('Other')]"
+                            <DropDownInputField :list="[$translate('Male'), $translate('Female'), $translate('Other'), 'Prefer not to say']"
                                 @input="form.gender = $event" :error="formErrors.gender" id="gender"
                                 :placeHolder="$translate('gender')" required />
                             <FileInputField :placeHolder="$translate('insurance_card_front')"

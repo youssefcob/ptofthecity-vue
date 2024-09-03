@@ -2,9 +2,9 @@ import { useScriptTag } from '@vueuse/core';
 
 
 export const recaptcha = async (action: string) => {
-  const recaptchaKey = import.meta.env.VITE_RECAPTCHA_KEY;
+  const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
 
-  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
+  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
   // console.log(recaptchaKey);
   useScriptTag(scriptTag);
 
@@ -12,7 +12,7 @@ export const recaptcha = async (action: string) => {
   await new Promise<void>((resolve) => {
     grecaptcha.ready(() => {
       
-      grecaptcha.execute(recaptchaKey, { action }).then((t) => {
+      grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
         token = t;
         resolve();
       });

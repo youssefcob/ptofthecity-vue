@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, render, type Ref } from 'vue';
-import { type Service, services,getServices } from '@/components/HomePage/servicesSection/Services';
+import { type Service, services, getServices } from '@/components/HomePage/servicesSection/Services';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from './SingleService.vue';
 import { lang } from '@/mixins/Translate';
@@ -22,7 +22,7 @@ const navigatetoHome = () => {
 }
 onMounted(() => {
     // if (services.value.length == 0) {
-        renderServices();
+    renderServices();
     // }
 })
 // const getServices = async () => {
@@ -70,22 +70,23 @@ const trans = (languagesObject: any) => {
 <template>
     <div class="container">
         <div class="service-container">
+            <h1>{{ service?.title }}</h1>
 
-            <div class="info">
-                <h1>{{ service?.title }}</h1>
-                <p class="text-s" v-html="formatText(service?.description)"></p>
+            <div class="info-image">
+                <div class="info">
+                    <p class="text-s" v-html="formatText(service?.description)"></p>
 
-                <router-link to="/booking" class="btn responsive main">Book Now</router-link>
+                    <router-link to="/booking" class="btn responsive main">Book Now</router-link>
+                </div>
+
+                <div class="image" :style="{ backgroundImage: `url(${service?.path})` }"></div>
             </div>
-            <!-- <div class="image" ></div> -->
-
-            <div class="image" :style="{ backgroundImage: `url(${service?.path})` }"></div>
             <h1 class="responsive-header">{{ service?.title }}</h1>
 
         </div>
         <router-link to="/" class="btn transparent responsive main back">Back To Homepage</router-link>
     </div>
-    <h1 class="carousel-header">Services</h1>
+    <h1 class="carousel-header">Other Services</h1>
     <Carousel class="carousel">
         <SingleService class="singleService" v-for="service in filteredServices" :service="service"
             @navigate="navigateTo(service.id)" />
@@ -118,7 +119,19 @@ const trans = (languagesObject: any) => {
 
 
         display: flex;
+        flex-direction: column;
         gap: 4%;
+        >h1{
+            margin-bottom:3rem;
+        }
+        .info-image{
+            display:flex;
+            @media screen and (max-width: 800px) {
+                flex-direction: column-reverse;
+
+                
+            }
+        }
 
         @media screen and (max-width: 800px) {
             flex-direction: column-reverse;
@@ -172,7 +185,7 @@ const trans = (languagesObject: any) => {
             }
         }
 
-        >.image {
+        .image {
             width: 50%;
             height: clamp(300px, 40vw, 40rem);
 

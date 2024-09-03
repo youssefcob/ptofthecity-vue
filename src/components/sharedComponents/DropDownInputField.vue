@@ -8,7 +8,8 @@ const props = defineProps({
     placeHolder: String,
     watch: Boolean,
     disabled: Boolean,
-    error: Boolean
+    error: Boolean,
+    default: String,
 });
 let filteredList = ref(props.list);
 const makeid = (length: number) => {
@@ -68,6 +69,10 @@ onMounted(() => {
         }
     };
     document.addEventListener('click', handleClickOutside);
+
+    if(props.default){
+        input.value = props.default;
+    }
 
 
 });

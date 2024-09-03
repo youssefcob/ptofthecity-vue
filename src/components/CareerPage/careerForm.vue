@@ -307,7 +307,7 @@ const modifyForm = () => {
             <InputField class="field" placeHolder="Zip code" @input="form.zip_code = $event" />
         </div>
         <div class="btn responsive main btnfont" @click="submit()" style="margin-top: 0;">Submit</div>
-        <div class="btn responsive main transparent" style="margin-top: 0;">Back to Homepage</div>
+        <!-- <div class="btn responsive main transparent" style="margin-top: 0;">Back to Homepage</div> -->
     </div>
 </template>
 

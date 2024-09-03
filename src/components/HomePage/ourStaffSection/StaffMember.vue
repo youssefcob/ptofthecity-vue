@@ -24,7 +24,7 @@ const reRoute = () => {
     <div class="staffMember" @click="reRoute">
         <div class="image" :style="{ backgroundImage: `url(${props.staffMember?.image})` }">
             <div class="staffMemberDescription">
-                <h2>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</h2>
+                <h3>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</h3>
                 <!-- <div class="desc">
                     <p>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</p>
                 </div> -->
@@ -83,7 +83,7 @@ const reRoute = () => {
         }
 
         p,
-        h2 {
+        h3 {
             color: white;
         }
 

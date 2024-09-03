@@ -46,6 +46,7 @@ ul {
   align-items: center;
   a{
   @extend .nav-font;
+  font-weight: bold;
 
   }
 
