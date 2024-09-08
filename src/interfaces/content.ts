@@ -10,7 +10,7 @@ export type Media = {
 type day = {
     start: string,
     end: string,
-    isOff: boolean,
+    off: boolean,
 }
 export type Schedule = {
     monday: day ,
