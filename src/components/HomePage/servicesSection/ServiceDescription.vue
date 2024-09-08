@@ -36,7 +36,7 @@ const trans = (languagesObject:any) => {
     padding-bottom: 2.13rem;
     display: flex;
     flex-direction: column;
-    gap:3rem;
+    gap:1rem;
 
     >.title {
         color: $white;
