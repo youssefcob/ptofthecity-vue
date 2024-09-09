@@ -18,16 +18,16 @@ let curr_month: Ref<string> = ref('')
 let first_day: Ref<number> = ref(0);
 let days: Ref<number> = ref(0);
 let selectedDay: Ref<{
-    day: number,
-    month: number,
-    year: number
+    day: number | null,
+    month: number | null,
+    year: number | null
 }> = ref({
-    day: date.getDate(),
-    month: date.getMonth(),
-    year: date.getFullYear()
+    day: null,
+    month: null,
+    year: null
 });
 
-const emit = defineEmits(['input','hours'])
+const emit = defineEmits(['input', 'hours'])
 
 let monthsGrid = ref<HTMLElement | null>(null)
 
@@ -79,10 +79,8 @@ const changeMonth = (newMonth: string) => {
     toggleMonthGrid()
     // console.log(isValidMonth(index));
 }
-const getMonthStartDay = (year:number, month:number) => {
-    // Create a Date object for the first day of the month
+const getMonthStartDay = (year: number, month: number) => {
     const firstDay = new Date(year, month, 1);
-    // Get the day of the week (0 for Sunday, 1 for Monday, etc.)
     monthStartDay.value = firstDay.getDay();
 };
 const changeyear = (val: number) => {
@@ -151,10 +149,10 @@ const isNotWeekend = (day: number) => {
     return true
 }
 const validateDay = (day: number) => {
-    if(!props.schedule) return 'invalid'
-    if (isValidDay(day) 
-    && isNotWeekend(day)
-) return 'valid'
+    if (!props.schedule) return 'invalid'
+    if (isValidDay(day)
+        && isNotWeekend(day)
+    ) return 'valid'
     return 'invalid'
 }
 
@@ -162,8 +160,9 @@ const isSelectedDay = (day: number) => {
 
     if (selectedDay.value.month != month.value) return '';
     if (selectedDay.value.year != year.value) return '';
-    if ((day === selectedDay.value.day)
-    ) return 'selected';
+    if ((day === selectedDay.value.day)) { 
+        return 'selected'; 
+    }
 
     return ''
 }
@@ -181,7 +180,7 @@ const updateSelectedDay = (day: number) => {
     // console.log(dayName);
     emit('input', selectedDay.value)
 
-    if (props.schedule && props.schedule[dayName as keyof typeof props.schedule]){
+    if (props.schedule && props.schedule[dayName as keyof typeof props.schedule]) {
         emit('hours', props.schedule[dayName as keyof typeof props.schedule])
 
     }
@@ -190,6 +189,7 @@ const updateSelectedDay = (day: number) => {
 }
 onMounted(() => {
     getDate();
+
 
 })
 
