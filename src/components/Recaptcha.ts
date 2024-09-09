@@ -2,7 +2,6 @@ import { useScriptTag } from '@vueuse/core';
 
 
 export const recaptcha = async (action: string) => {
-  const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
 
   let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
   // console.log(recaptchaKey);

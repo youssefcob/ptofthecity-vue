@@ -7,8 +7,9 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 import { event } from 'vue-gtag'
-import { recaptcha } from '@/components/Recaptcha';
+// import { recaptcha } from '@/components/Recaptcha';
 import Loading from '@/components/sharedComponents/Loading.vue';
+import { useScriptTag } from '@vueuse/core';
 
 const btnClicked = () => {
     event('recaptchaClick', {
@@ -19,7 +20,34 @@ const btnClicked = () => {
 
 }
 
-const isLoading:Ref<boolean> = ref(false);
+
+
+const recaptcha = async (action: string) => {
+try{
+    let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+    // console.log(recaptchaKey);
+    useScriptTag(scriptTag);
+
+    let token = '';
+    await new Promise<void>((resolve) => {
+        grecaptcha.ready(() => {
+
+            grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
+                token = t;
+                resolve();
+            });
+        });
+    });
+
+    return token;
+}catch(e){
+    console.error(e);
+    return '';
+}
+}
+
+
+const isLoading: Ref<boolean> = ref(false);
 
 const snackbar = useSnackbar();
 let jobs: Ref<string[]> = ref([]);
@@ -225,7 +253,7 @@ const submit = async () => {
     let isValid = validate();
     // console.log(isValid);
     if (isValid) {
-    isLoading.value = true;
+        isLoading.value = true;
 
         let ModdedForm = modifyForm();
         let recapatchaToken = await recaptcha('career');
@@ -233,7 +261,7 @@ const submit = async () => {
         try {
             let response = await Http.post('career', ModdedForm);
             console.log(response);
-        isLoading.value = false;
+            isLoading.value = false;
 
             snackbar.add({
                 background: '#8EF5E8',
@@ -242,14 +270,14 @@ const submit = async () => {
             })
         } catch (e) {
             console.error(e);
-        isLoading.value = false;
+            isLoading.value = false;
 
             snackbar.add({
                 background: '#F58E8E',
                 text: e,
 
             })
-            
+
         }
         isLoading.value = false;
     }
@@ -283,7 +311,7 @@ const modifyForm = () => {
 </script>
 <template>
     <div class="form-wrapper">
-      <Loading v-if="isLoading"/>
+        <Loading v-if="isLoading" />
         <div>
             <div class="ps">Fields marked with an <span style="color:red">*</span> are required</div>
             <DropDownInputField placeHolder="Job you're applying for" required :list="jobs" @input="form.job = $event"
@@ -312,7 +340,6 @@ const modifyForm = () => {
 </template>
 
 <style scoped lang="scss">
-
 $formgap: 1.25rem;
 
 .form-wrapper {
