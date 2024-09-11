@@ -21,8 +21,9 @@ const getClinic = async () => {
     clinic.value = data;
     console.log(clinic.value);
     if (clinic.value) {
-        center.value = { lat: parseInt(clinic.value?.lat), lng: parseInt(clinic.value?.long) }
+        center.value = { lat: parseFloat(clinic.value?.lat), lng: parseFloat(clinic.value?.long) }
     }
+    console.log(center.value);
 
 }
 
@@ -47,7 +48,7 @@ const getWorkingHours = () => {
         days.forEach((day: any) => {
             let hours = schedule[day as keyof typeof schedule];
             let dayAcr = capitalizeFirstLetter(day.slice(0, 3));
-            if (hours.isOff) {
+            if (hours.off) {
                 workingHours += `<span style="font-weight: bold;">${dayAcr}</span>: Off <br>`;
             } else {
                 workingHours += `<span style="font-weight: bold;">${dayAcr}</span>: ${convertToAmPm(hours.start)} - ${convertToAmPm(hours.end)} <br>`;
@@ -100,7 +101,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                 </div>
                 <div class="map-wrapper">
                     <GoogleMap api-key="AIzaSyDolB5zXSKaL7Y3e08W9WLSwQYWaXVfYIQ" style="width: 100%; height: 30rem"
-                        :center="center" :zoom="4">
+                        :center="center" :zoom="15">
                         <Marker :options="{ position: center }" />
                     </GoogleMap>
                 </div>

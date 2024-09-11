@@ -6,11 +6,14 @@ import  VueGtag  from 'vue-gtag';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { VueReCaptcha } from 'vue-recaptcha-v3';
+import { useScriptTag } from '@vueuse/core';
 
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
+
+useScriptTag('https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc');
 
 declare module '@vue/runtime-core' {
     interface ComponentCustomProperties {

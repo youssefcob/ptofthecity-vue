@@ -8,10 +8,10 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 import type { Schedule } from '@/interfaces/content';
-// import { recaptcha } from '@/components/Recaptcha';
+import { recaptcha } from '@/components/Recaptcha';
 import Loading from '../sharedComponents/Loading.vue';
 import type { Service } from '../HomePage/servicesSection/Services';
-import { useScriptTag } from '@vueuse/core';
+import moment from 'moment-timezone';
 
 const isLoading: Ref<boolean> = ref(false);
 
@@ -20,26 +20,6 @@ const props = defineProps({
 })
 
 
-const recaptcha = async (action: string) => {
-  const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
-
-  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
-  // console.log(recaptchaKey);
-  useScriptTag(scriptTag);
-
-  let token = '';
-  await new Promise<void>((resolve) => {
-    grecaptcha.ready(() => {
-      
-      grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
-        token = t;
-        resolve();
-      });
-    });
-  });
-
-  return token;
-}
 
 const snackbar = useSnackbar();
 
@@ -342,6 +322,7 @@ const modifyForm = () => {
         if (!service) return;
         return service.id;
     }
+    let date_in_unix = convertTotimeStamp(form.date, form.time);
     Object.assign(moddedform, {
         clinic_id: clinic_id(),
         first_name: form.firstName,
@@ -352,9 +333,10 @@ const modifyForm = () => {
         email: form.email,
         payment: formPayment(),
         service_id: serviceId(),
-        date: convertTotimeStamp(form.date, form.time),
+        date: date_in_unix,
 
     });
+    // console.log(date_in_unix);
     if (form.payment === 'Insurance') {
         Object.assign(moddedform, {
             insurance_company: form.insurance,
@@ -367,11 +349,8 @@ const modifyForm = () => {
 const convertTotimeStamp = (date: string, time: string) => {
     const [month, day, year] = date.split('-').map((e) => parseInt(e));
     const [hour, minute] = time.split(':').map((e) => parseInt(e));
-    const dateObj = new Date(year, month, day, hour, minute);
-    console.log(dateObj);
-    let d = new Date(dateObj);
-    let utc = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes());
-    return utc;
+    const nyDate = moment.tz({ year, month, day, hour, minute }, 'America/New_York');
+    return nyDate.valueOf();
 
 }
 

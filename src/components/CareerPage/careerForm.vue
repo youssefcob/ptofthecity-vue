@@ -7,9 +7,8 @@ import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
 import { event } from 'vue-gtag'
-// import { recaptcha } from '@/components/Recaptcha';
+import { recaptcha } from '@/components/Recaptcha';
 import Loading from '@/components/sharedComponents/Loading.vue';
-import { useScriptTag } from '@vueuse/core';
 
 const btnClicked = () => {
     event('recaptchaClick', {
@@ -22,29 +21,6 @@ const btnClicked = () => {
 
 
 
-const recaptcha = async (action: string) => {
-try{
-    let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
-    // console.log(recaptchaKey);
-    useScriptTag(scriptTag);
-
-    let token = '';
-    await new Promise<void>((resolve) => {
-        grecaptcha.ready(() => {
-
-            grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
-                token = t;
-                resolve();
-            });
-        });
-    });
-
-    return token;
-}catch(e){
-    console.error(e);
-    return '';
-}
-}
 
 
 const isLoading: Ref<boolean> = ref(false);

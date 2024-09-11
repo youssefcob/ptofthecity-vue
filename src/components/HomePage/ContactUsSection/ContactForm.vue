@@ -7,33 +7,31 @@ import validation from '@/mixins/Validation';
 import { reactive, ref, type Ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
 import Loading from '@/components/sharedComponents/Loading.vue';
-import { useScriptTag } from '@vueuse/core';
-
+import {recaptcha} from '@/components/Recaptcha';
 const isLoading:Ref<boolean> = ref(false);
 const snackbar = useSnackbar();
 
 
+// src\components\Recaptcha.ts
+// const recaptcha = async (action: string) => {
+//   const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
 
-const recaptcha = async (action: string) => {
-  const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+// //   let scriptTag = ;
+//   // console.log(recaptchaKey);
 
-  let scriptTag = 'https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
-  // console.log(recaptchaKey);
-  useScriptTag(scriptTag);
-
-  let token = '';
-  await new Promise<void>((resolve) => {
-    grecaptcha.ready(() => {
+//   let token = '';
+//   await new Promise<void>((resolve) => {
+//     grecaptcha.ready(() => {
       
-      grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
-        token = t;
-        resolve();
-      });
-    });
-  });
+//       grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
+//         token = t;
+//         resolve();
+//       });
+//     });
+//   });
 
-  return token;
-}
+//   return token;
+// }
 
 // const subjectsList = [
 //     "subject",
@@ -163,7 +161,7 @@ defineExpose({
 
 <template>
     <div class="form">
-        <isLoading v-if="isLoading" />
+        <Loading v-if="isLoading" />
     <InputField
       @input="form.subject = $event"
       required
