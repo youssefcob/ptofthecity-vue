@@ -9,6 +9,7 @@ import Http from '@/mixins/Http';
 import { event } from 'vue-gtag'
 import { recaptcha } from '@/components/Recaptcha';
 import Loading from '@/components/sharedComponents/Loading.vue';
+import type { Job } from '@/interfaces/content';
 
 const btnClicked = () => {
     event('recaptchaClick', {
@@ -26,13 +27,14 @@ const btnClicked = () => {
 const isLoading: Ref<boolean> = ref(false);
 
 const snackbar = useSnackbar();
+let httpJobs: Ref<Job[]> = ref([]);
 let jobs: Ref<string[]> = ref([]);
 // let jobsList: any[] = [];
 const getJobs = async () => {
     let data = await Http.get('career/jobs');
     // jobsList = data;
-
-    jobs.value = data.map((job: any) => job.title);
+    httpJobs.value = data;
+    jobs.value = data.filter((job: any) => job.isAvailable === 1).map((job: any) => job.title);
     formValidation.job.rules[1] = { dropdown: jobs.value };
 
     // console.log(data);

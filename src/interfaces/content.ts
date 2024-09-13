@@ -70,3 +70,12 @@ export type HttpReview = {
 }
 
 
+export type Job = {
+    id: number;
+    title: string;
+    description: string;
+    isAvailable: number;
+    created_at: string;
+    updated_at: string;
+}
+
