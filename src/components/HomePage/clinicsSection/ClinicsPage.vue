@@ -2,23 +2,16 @@
 import Http from '@/mixins/Http';
 import ClinicAccordion from './ClinicAccordion.vue';
 // import { clinicLocations } from './Clinics';
-import { onMounted, reactive, ref, type Ref } from 'vue';
+import { onMounted } from 'vue';
 
+import { clinics, clinicNames, getClinics } from './Clinics';
 const isFirstItem=(index:number)=>{
     return (index===0);
 }
 
-let clinics= reactive({});
-let clinicNames: Ref<string[]> = ref([]);
-const getClinics = async () => {
-    let data = await Http.get('clinic/groupByLocation');
-    clinics = data;
-    // console.log(clinics);
-    clinicNames.value =  Object.keys(clinics);
-    // console.log(clinicNames.value);
-}
-onMounted(() => {
-    getClinics();
+
+onMounted(async () => {
+    await getClinics();
 
 })
 </script>

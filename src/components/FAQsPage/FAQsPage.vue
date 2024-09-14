@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import QuestionAccordion from '@/components/sharedComponents/FAQs/QuestionAccordion.vue';
-import ContactForm from '../HomePage/ContactUsSection/ContactForm.vue';
 import ContactUsPage from '../HomePage/ContactUsSection/ContactUsPage.vue';
 import { onMounted, ref, type Ref } from 'vue';
 import Http from '@/mixins/Http';

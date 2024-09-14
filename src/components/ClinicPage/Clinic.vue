@@ -6,24 +6,46 @@ import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from '../ServicesPage/SingleService.vue';
 import Testimonials from './Testimonials/Testimonials.vue';
+import { clinics,clinicNames } from '../HomePage/clinicsSection/Clinics';
 const center: Ref<{ lat: number, lng: number }> = ref({ lat: 0, lng: 0 })
 
+const google_api_key = import.meta.env.VITE_GOOGLE_API_KEY as string;
 const props = defineProps({
     id: {
-        type: String
+        type: String,
+        required: true
     },
 });
 
 let clinic: Ref<Clinic | null> = ref(null);
-const getClinic = async () => {
-    
+
+const getClinicFromState = () => {
+    // console.log(clinics);
+    for (const city of clinicNames.value) {
+        // console.log(city);
+        const foundClinic = clinics[city as keyof typeof clinics].find((clinic: Clinic) => clinic.id === parseInt(props.id));
+
+        // console.log(foundClinic);
+        if (foundClinic) {
+            clinic.value = foundClinic;
+            if (clinic.value) {
+                center.value = { lat: parseFloat(clinic.value?.lat), lng: parseFloat(clinic.value?.long) }
+            }
+            break;
+        }
+    }
+};
+const getClinicReviews = async () => {
+
+
     let data = await Http.get(`clinic/${props.id}`);
+    console.log(data)
     clinic.value = data;
-    console.log(clinic.value);
+    // console.log(clinic.value);
     if (clinic.value) {
         center.value = { lat: parseFloat(clinic.value?.lat), lng: parseFloat(clinic.value?.long) }
     }
-    console.log(center.value);
+    // console.log(center.value);
 
 }
 
@@ -59,7 +81,8 @@ const getWorkingHours = () => {
 }
 
 onMounted(() => {
-    getClinic();
+    getClinicFromState();
+    getClinicReviews();
 })
 const infowindow = ref(true); // Will be open when mounted
 
@@ -94,14 +117,14 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                         <h3>Calls: </h3>
                         <p>{{ clinic?.phone }}</p>
                     </div>
-                    <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">{{ $translate('book_now') }}</router-link>
+                    <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">{{ $translate('book_now')
+                        }}</router-link>
 
 
 
                 </div>
                 <div class="map-wrapper">
-                    <GoogleMap api-key="AIzaSyDolB5zXSKaL7Y3e08W9WLSwQYWaXVfYIQ" style="width: 100%; height: 30rem"
-                        :center="center" :zoom="15">
+                    <GoogleMap :api-key="google_api_key" style="width: 100%; height: 30rem" :center="center" :zoom="15">
                         <Marker :options="{ position: center }" />
                     </GoogleMap>
                 </div>
@@ -148,7 +171,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
         margin-top: 2rem;
         display: grid;
         grid-template-columns: 1fr 3fr;
-        gap:2.5rem;
+        gap: 2.5rem;
 
         @media screen and (max-width: 768px) {
             display: flex;
@@ -195,14 +218,15 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 
 .carousel {
     margin-top: 2rem;
+    height:300px;
+    width:100%;
 
     @media screen and (max-width: 500px) {
         margin-top: 5rem;
 
     }
 
-    height:300px;
-    width:100%;
+
 
     @media screen and (max-width: 500px) {
         @include pagePadding;

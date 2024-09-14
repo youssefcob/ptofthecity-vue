@@ -1,42 +1,27 @@
-interface ClinicLocations {
-    name: string,
-    numberOfClinics: number,
-    clinics: Object
+import type { Clinic } from "@/interfaces/content";
+import Http from "@/mixins/Http";
+import { reactive, ref, type Ref } from "vue";
+
+type HttpClinics = {
+    [key: string]: Clinic[];
+};
+
+
+
+let clinics:HttpClinics = reactive({});
+let clinicNames: Ref<string[]> = ref([]);
+const getClinics = async () => {
+    let data = await Http.get('clinic/groupByLocation');
+    clinics = data;
+    // console.log(clinics);
+    clinicNames.value =  Object.keys(clinics);
+
 }
 
-const clinicLocations = [
-    {
-        name: 'Manhattan',
-        numberOfClinics: 5,
-        clinics: {
-
-        }
-    },
-    {
-        name: 'Brooklyn',
-        numberOfClinics: 10,
-        clinics: {
-
-        }
-    },
-    {
-        name: 'Bronx',
-        numberOfClinics: 5,
-        clinics: {
-
-        }
-    },
-    {
-        name: 'Queens',
-        numberOfClinics: 2,
-        clinics: {
-
-        }
-    }
-
-] as ClinicLocations[];
+let clinic: Ref<Clinic | null> = ref(null);
 
 
-export type { ClinicLocations };
-export { clinicLocations };
+export { clinics, clinicNames, getClinics};
 
+// export type { StaffMember };
+// export { staffMembers };
