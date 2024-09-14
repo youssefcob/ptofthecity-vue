@@ -14,7 +14,7 @@ interface ListLang {
 export interface Service {
     id: string;
     path: string;
-    title: Lang;
+    title: string;
     description: Lang;
     listHeader: Lang;
     list: ListLang;

@@ -1,8 +1,29 @@
 <script setup lang="ts">
+import Http from '@/mixins/Http';
+import { onMounted, ref } from 'vue';
+
 const formatText = (text: string | undefined): string => {
     if (!text) return '';
     return text.replace(/\n/g, '<br>');
 }
+
+const content = ref({
+    clinics: 25,
+    successful_cases: 6660,
+    employees: 68,
+    our_story:'Our story of success started with Dr. Mahmoud`s simple dream of being the best physical therapy clinic in town. It grew over the years into a dream that came true with the establishment of the PT of the city in 2020. We reached 14 locations in a few years, all over New York, with the dedication of our partners and team and the trust of our patients. And to more success, we go.',
+    our_technique:'We offer you a treatment plan specialized for each case to achieve the most effective results. You will be given detailed information about the nature of the case and injury, the treatment plan, tools, and devices you will use, as well as the expected outcome from the treatment. Our main concern is your comfort and wellness. You will be treated with the most recent evidence guidelines and the most advanced tools, techniques, and devices that will help you reach the treatment goal in the most convenient way and in the shortest duration of time.'
+
+});
+
+const getContent = async () => {
+    let data = await Http.get('content/whoWeAre');
+    content.value = data.body;
+}
+
+onMounted(() => {
+    getContent();
+})
 </script>
 
 <template>
@@ -16,7 +37,7 @@ const formatText = (text: string | undefined): string => {
 
                 <div class="box">
                     <div>
-                        <h1>22</h1>
+                        <h1>{{content.clinics}}</h1>
                     </div>
                     <div>
                         <h3 class="header-q">{{$translate('clinics')}}</h3>
@@ -24,7 +45,7 @@ const formatText = (text: string | undefined): string => {
                 </div>
                 <div class="box">
                     <div>
-                        <h1>6660</h1>
+                        <h1>{{content.successful_cases}}</h1>
                     </div>
                     <div>
                         <h3 class="header-q">{{$translate('successful_cases')}}</h3>
@@ -32,7 +53,7 @@ const formatText = (text: string | undefined): string => {
                 </div>
                 <div class="box">
                     <div>
-                        <h1>68</h1>
+                        <h1>{{content.employees}}</h1>
                     </div>
                     <div>
                         <h3 class="header-q">{{$translate('employees')}}</h3>
@@ -45,14 +66,17 @@ const formatText = (text: string | undefined): string => {
                 <div class="wrapper">
                     <div class="info">
                         <div class="infowrapper">
-                            <p class="text-s" v-html="formatText($translate('our_story_text'))">
+                            <!-- <p class="text-s" v-html="formatText($translate('our_story_text'))"> -->
+                            <p class="text-s" v-html="formatText(content.our_story)">
+
                             </p>
                         </div>
                         <div>
                             <h3 class="header-t" >{{$translate('our_technique')}}</h3>
                             <div class="infowrapper">
                                 <p class="text-s">
-                                    {{ $translate('our_technique_text') }}
+                                    <!-- {{ $translate('our_technique_text') }} -->
+                                    {{ content.our_technique }}
                                 </p>
                             </div>
                         </div>
@@ -72,6 +96,9 @@ const formatText = (text: string | undefined): string => {
 .container {
     @include pagePadding();
 
+    .text-s{
+        font-weight: bold;
+    }
 
     .stats {
         display: grid;
@@ -80,6 +107,9 @@ const formatText = (text: string | undefined): string => {
         gap: 3rem;
         // padding: 3rem 0;
         padding-bottom: 3rem;
+        .header-q{
+            font-weight: bold;
+        }
 
         @media screen and (max-width: 770px) {
             display: flex;
@@ -134,6 +164,8 @@ const formatText = (text: string | undefined): string => {
         .header-t{
             margin-bottom:1.25rem;
         }
+
+
       
 
 

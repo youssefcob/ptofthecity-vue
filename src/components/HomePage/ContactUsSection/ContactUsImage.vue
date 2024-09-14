@@ -1,5 +1,5 @@
 <script setup lang="ts">
-let number = '718-648-0888';
+let number = '(718) 648-0888';
 let email = 'info@ptofthecity.com';
 
 const copy = (text: string) => {

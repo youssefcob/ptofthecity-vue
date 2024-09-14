@@ -1,13 +1,32 @@
 <script setup lang="ts">
 
 
+import { onMounted, ref } from 'vue';
 import ValuesGrid from './ValuesGrid.vue';
 
 
+import Http from '@/mixins/Http';
 
-// const changeDesc = (desc: string) => {
-//     valueDesc.value = desc;
-// }
+
+const content = ref({
+    clinics: 25,
+    successful_cases: 6660,
+    employees: 68,
+    our_story:'Our story of success started with Dr. Mahmoud`s simple dream of being the best physical therapy clinic in town. It grew over the years into a dream that came true with the establishment of the PT of the city in 2020. We reached 14 locations in a few years, all over New York, with the dedication of our partners and team and the trust of our patients. And to more success, we go.',
+    our_technique:'We offer you a treatment plan specialized for each case to achieve the most effective results. You will be given detailed information about the nature of the case and injury, the treatment plan, tools, and devices you will use, as well as the expected outcome from the treatment. Our main concern is your comfort and wellness. You will be treated with the most recent evidence guidelines and the most advanced tools, techniques, and devices that will help you reach the treatment goal in the most convenient way and in the shortest duration of time.',
+    vision: 'Our vision is to be the best physical therapy clinic in the world, providing the best services and the most effective treatment plans to our patients. We aim to reach the highest level of patient satisfaction and to be the first choice for patients in need of physical therapy services. We are committed to providing the best care and the most advanced treatment plans to our patients, and to be the best place for our employees to work and grow.',
+    mission:'Our mission is to provide the best physical therapy services to our patients, to help them recover from their injuries and to improve their quality of life. We are committed to providing the most effective treatment plans and the most advanced tools and techniques to our patients, to help them reach their treatment goals in the most convenient way and in the shortest duration of time. We are dedicated to providing the best care and the most advanced treatment plans to our patients, and to be the best place for our employees to work and grow.'
+
+});
+
+const getContent = async () => {
+    let data = await Http.get('content/whoWeAre');
+    content.value = data.body;
+}
+
+onMounted(() => {
+    getContent();
+})
 </script>
 
 <template>
@@ -18,15 +37,7 @@ import ValuesGrid from './ValuesGrid.vue';
                 <div class="">
                     <h3 class="header-t">Our story</h3>
                     <div class="infowrapper">
-                        <p class="text-s">Our story of success started with Dr. Mahmoud`s simple dream of being the
-                            best
-                            physical
-                            therapy clinic in town. It grew over the years into a dream that came true with the
-                            establishment of the PT of the city in 2020. We reached 14 locations in a few years, all
-                            over New York, with the dedication of our partners and team and the trust of our
-                            patients.
-
-                            And to more success, we go.
+                        <p class="text-s">{{content.our_story}}
                         </p>
                     </div>
                 </div>
@@ -34,22 +45,7 @@ import ValuesGrid from './ValuesGrid.vue';
                     <h3 class="header-t">Our Technique</h3>
                     <div class="infowrapper">
                         <p class="text-s">
-                            We offer you a treatment plan specialized for each case to achieve the most
-                            effective
-                            results.
-                            You will be given detailed information about the nature of the case and injury,
-                            the
-                            treatment plan, tools, and devices you will use, as well as the expected outcome
-                            from
-                            the
-                            treatment.
-                            Our main concern is your comfort and wellness. You will be treated with the
-                            most
-                            recent evidence guidelines and the most advanced tools, techniques, and devices that
-                            will
-                            help you reach the treatment goal in the most convenient way and in the shortest
-                            duration of
-                            time.
+                            {{content.our_technique}}
                         </p>
                     </div>
                 </div>
@@ -61,11 +57,8 @@ import ValuesGrid from './ValuesGrid.vue';
             <div class="values-info-wrapper">
                 <div class="second-wrapper">
                     <div class="infowrapper">
-                        <p class="text-s">Better health and well-being for everyone, now and for future generations.
-                            To
-                            establish PT of The City as one of the leading physical therapy providers in the USA by
-                            being the premier choice with utmost integrity, trust, and respect for our valued
-                            patients.
+                        <p class="text-s">
+                            {{content.vision}}
                         </p>
                     </div>
                     <div>
@@ -73,9 +66,7 @@ import ValuesGrid from './ValuesGrid.vue';
                         <div class="infowrapper">
 
                             <p class="text-s">
-                                “To prepare the best plan of care based on the patient’s unique needs and provide
-                                exceptional physical therapy treatment with deep understanding and sincere
-                                diligence.”
+                                {{content.mission}}
                             </p>
                         </div>
 

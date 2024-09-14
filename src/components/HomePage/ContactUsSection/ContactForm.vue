@@ -2,10 +2,36 @@
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import Http from '@/mixins/Http';
+// import { recaptcha } from '@/components/Recaptcha';
 import validation from '@/mixins/Validation';
-import { reactive, ref } from 'vue';
+import { reactive, ref, type Ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
+import Loading from '@/components/sharedComponents/Loading.vue';
+import {recaptcha} from '@/components/Recaptcha';
+const isLoading:Ref<boolean> = ref(false);
 const snackbar = useSnackbar();
+
+
+// src\components\Recaptcha.ts
+// const recaptcha = async (action: string) => {
+//   const recaptchaKey = '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc';
+
+// //   let scriptTag = ;
+//   // console.log(recaptchaKey);
+
+//   let token = '';
+//   await new Promise<void>((resolve) => {
+//     grecaptcha.ready(() => {
+      
+//       grecaptcha.execute('6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc', { action }).then((t) => {
+//         token = t;
+//         resolve();
+//       });
+//     });
+//   });
+
+//   return token;
+// }
 
 // const subjectsList = [
 //     "subject",
@@ -102,15 +128,20 @@ const handleErrors = (v: validation) => {
 
 const submitForm = async () => {
     try{
+        isLoading.value = true;
         let ModdedForm = form;
         ModdedForm.phone = ModdedForm.phone.replace(/\D/g, '');
-        console.log(ModdedForm.phone); 
+        let recapatchaToken = await recaptcha('career');
+        if(recapatchaToken) Object.assign(ModdedForm, {
+            recaptcha: recapatchaToken
+        });
         let response = await Http.post('message', ModdedForm);
         snackbar.add({
             background: '#8EF5E8',
             text: 'Form Submitted Successfully',
      
         })
+        isLoading.value = false;
         // console.log(response)
     } catch (e) {
         snackbar.add({
@@ -118,7 +149,9 @@ const submitForm = async () => {
             text: e,
      
         })
+        isLoading.value = false;
     }
+    isLoading.value = false;
 }
 
 defineExpose({
@@ -128,6 +161,7 @@ defineExpose({
 
 <template>
     <div class="form">
+        <Loading v-if="isLoading" />
     <InputField
       @input="form.subject = $event"
       required
