@@ -199,6 +199,7 @@ const submit = async () => {
     isLoading.value = false;
 
 }
+// "build": "run-p type-check \"build-only {@}\" --",
 
 const modifyForm = () => {
     let formData = new FormData();
@@ -209,6 +210,7 @@ const modifyForm = () => {
     formData.append('gender', form.gender)
     formData.append('member_id', form.memberId);
     formData.append('phone', form.phone.replace(/\D/g, ''));
+    formData.append('email', form.email);
     if (form.medicareId) formData.append('medicare_id', form.medicareId);
     if (form.medicaidId) formData.append('medicaid_id', form.medicaidId);
     if (form.insuranceCardFront) {
