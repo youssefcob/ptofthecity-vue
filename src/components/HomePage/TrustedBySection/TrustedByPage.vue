@@ -14,7 +14,6 @@ let trustedBy:Ref<TrustedBy[]> = ref([]);
 const getTrustedBy = async () => {
     const res = await Http.get('trustedBy');
     trustedBy.value = res;
-    console.log(res);
 }
 onMounted(() => {
     getTrustedBy();

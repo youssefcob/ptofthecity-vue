@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const Http = {
-    url: "http://localhost:8000/api/",
+    url: import.meta.env.VITE_API_URL,
     methods: {
         async get(url: string) {
             url = Http.url + url;
@@ -19,7 +19,7 @@ const Http = {
             try {
                 const response = await axios.post(url, data);
                 return response.data;
-            } catch (error:any) {
+            } catch (error: any) {
                 throw (error.response.data.message);
             }
         },
@@ -44,7 +44,7 @@ const Http = {
             }
         },
     }
-    
+
 }
 
 export default Http.methods as any;

@@ -13,7 +13,8 @@ import router from './router'
 
 const app = createApp(App)
 
-useScriptTag('https://www.google.com/recaptcha/api.js?render=6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc');
+const recaptcha_key = import.meta.env.VITE_RECAPTCHA_KEY;
+useScriptTag(`https://www.google.com/recaptcha/api.js?render=${recaptcha_key}`);
 
 declare module '@vue/runtime-core' {
     interface ComponentCustomProperties {
@@ -39,7 +40,7 @@ app.use(VueGtag, {
 },router);
 
 app.use(VueReCaptcha, {
-    siteKey: '6LfMbTMqAAAAAL8lPv_EaNXBdRdguWGFZ6TUFcpc',
+    siteKey: recaptcha_key,
     loaderOptions: {
         // autoHideBadge:true
     }
