@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, } from 'vue';
-import type { Ref } from 'vue';
 
 import {type Clinic, type Media} from '@/interfaces/content';
 
-import type { ClinicLocations } from './Clinics';
 const accordionItemsContainer = ref<any>(null);
 const accordion = ref<any>(null);
 
@@ -84,15 +82,16 @@ h2 {
     height: 7.5rem;
     flex-shrink: 0;
     border-radius: 0.5625rem;
-
-    @media screen and (max-width: 500px) {
-        border-radius: 10px;
-    }
-
     background: $white;
     transition: all .3s ease-in-out;
     box-shadow: 0px 4px 4px 0px rgba(35, 102, 129, 0.30);
     cursor: pointer;
+    
+    @media screen and (max-width: 500px) {
+        border-radius: 10px;
+    }
+
+
 }
 
 @media screen and (min-width: 500px) {

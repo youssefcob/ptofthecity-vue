@@ -317,8 +317,8 @@ $formGap: 1.2rem;
         // height: 35.4375rem;
         display: flex;
         justify-content: space-between;
-
-    
+        width: 30%;
+        @include image(shadow);
 
         >.image {
             @media screen and (max-width: 800px) {
@@ -326,9 +326,7 @@ $formGap: 1.2rem;
 
             }
 
-            width: 30%;
-            // height: 100%;
-            @include image(shadow);
+    
         }
 
         .form-container {

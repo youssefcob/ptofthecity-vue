@@ -100,9 +100,7 @@ const HandleFileUpload = (e: Event) => {
 
 .file-input {
     &.big-screen {
-        @media screen and (max-width: 800px) {
-            display: none;
-        }
+
 
         height: 3.75rem;
 
@@ -116,7 +114,9 @@ const HandleFileUpload = (e: Event) => {
         align-items: center;
         cursor: pointer;
 
-
+        @media screen and (max-width: 800px) {
+            display: none;
+        }
 
         .file-btn {
             height: 100%;
@@ -150,9 +150,7 @@ const HandleFileUpload = (e: Event) => {
     }
 
     &.responsive {
-        @media screen and (min-width: 801px) {
-            display: none;
-        }
+  
 
         border: 1px solid $blue;
         border-radius: 1.125rem;
@@ -166,6 +164,9 @@ const HandleFileUpload = (e: Event) => {
         height:6rem;
         position: relative;
 
+        @media screen and (min-width: 801px) {
+            display: none;
+        }
 
         >.file-btn {
             height: 100%;

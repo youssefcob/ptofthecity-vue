@@ -53,6 +53,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 1rem;
+    width: 100%;
+
     @media screen and (max-width: 500px) {
 
         margin-left: $resMargin;
@@ -65,11 +71,7 @@ onMounted(() => {
         }
     }
 
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, auto);
-    gap: 1rem;
-    width: 100%;
+ 
 
 
     @media screen and (max-width: 500px) {
@@ -92,7 +94,11 @@ onMounted(() => {
         background-color: $navy;
         height: 16rem;
         border-radius: $border-radius;
-
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
         >.mask {
             position: relative;
             height: 100%;
@@ -130,11 +136,7 @@ onMounted(() => {
         }
 
         // border-radius: $border-radius;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
+
 
         @media screen and (min-width: 500px) {
 

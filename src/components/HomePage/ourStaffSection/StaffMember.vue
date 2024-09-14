@@ -78,6 +78,8 @@ const reRoute = () => {
     .staffMemberDescription {
         padding: 5%;
         text-align: center;
+        @include backDrop;
+
         @media screen and (max-width:500px) {
             display: none;
         }
@@ -94,7 +96,6 @@ const reRoute = () => {
 
         }
 
-        @include backDrop;
     }
 }
 </style>

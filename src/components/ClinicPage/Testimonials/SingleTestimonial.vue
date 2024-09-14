@@ -35,7 +35,11 @@ console.log(props.review)
     // width: 32.5%;
     @include carouselItem2(3.01);
     scroll-snap-align: start;
-
+    height: 100%;
+    flex-shrink: 0;
+    border-radius: $border-radius;
+    background: #FFF;
+    padding:1rem;
     @media screen and (max-width: 800px) {
         @include carouselItem2(2);
 
@@ -47,11 +51,7 @@ console.log(props.review)
 
     }
 
-    height: 100%;
-    flex-shrink: 0;
-    border-radius: $border-radius;
-    background: #FFF;
-    padding:1rem;
+   
     @media screen and (max-width: 500px) {
                 padding:2rem;
     }
@@ -96,11 +96,12 @@ console.log(props.review)
 
     >.content {
         height: 65%;
+        overflow-y: scroll;
+        @include scrollBar;
         @media screen and (max-width: 500px) {
                 height:90%;
     }
-        overflow-y: scroll;
-        @include scrollBar;
+       
 
         p {
             // font-size: 1rem;
