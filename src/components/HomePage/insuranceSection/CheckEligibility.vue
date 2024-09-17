@@ -234,6 +234,8 @@ const modifyForm = () => {
 
     return formData;
 }
+
+const base = ref(import.meta.env.VITE_BASE_URL as string);
 </script>
 
 
@@ -243,7 +245,7 @@ const modifyForm = () => {
         <h1 class="sectionHeader">{{ $translate('check_eligibility') }}</h1>
 
         <div class="form-image-container">
-            <div class="image" :style="{ backgroundImage: `url('images/eligibilityFormImage.jpg')` }">
+            <div class="image" >
             </div>
             <div class="form-container">
                 <div class="form">
@@ -317,16 +319,16 @@ $formGap: 1.2rem;
         // height: 35.4375rem;
         display: flex;
         justify-content: space-between;
-        width: 30%;
-        @include image(shadow);
+       
 
         >.image {
+            background-image:url('/images/eligibilityFormImage.jpg') ;
+            width: 30%;
+            @include image(shadow);
             @media screen and (max-width: 800px) {
                 display: none;
 
             }
-
-    
         }
 
         .form-container {
