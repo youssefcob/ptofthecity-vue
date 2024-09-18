@@ -12,11 +12,11 @@ const initiateScroll = () => {
 onMounted(() => {
     setInterval(initiateScroll, 5000);
 })
-let base = import.meta.env.BASE_URL;
+// let base = import.meta.env.BASE_URL;
 let images = [
-    base+'/images/careers.png',
-    base+'/images/contactUs.jpg',
-    base+'/images/eligibilityFormImage.jpg',
+    '/images/careers.png',
+    '/images/contactUs.jpg',
+    '/images/eligibilityFormImage.jpg',
 ]
 
 

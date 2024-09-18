@@ -6,7 +6,7 @@ import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from '../ServicesPage/SingleService.vue';
 import Testimonials from './Testimonials/Testimonials.vue';
-import { clinics,clinicNames } from '../HomePage/clinicsSection/Clinics';
+import { clinics, clinicNames } from '../HomePage/clinicsSection/Clinics';
 const center: Ref<{ lat: number, lng: number }> = ref({ lat: 0, lng: 0 })
 
 const google_api_key = import.meta.env.VITE_GOOGLE_API_KEY as string;
@@ -95,10 +95,39 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 
     <div class="container">
         <div class="clinic-container">
-            <h1 class="responsive-header">{{ clinic?.name }} <br></h1>
+            <h1 class="responsive-header">
+                <a :href="`https://www.google.com/maps?q=${center.lat},${center.lng}`" target="_blank"> <svg width="3rem" height="3rem" viewBox="-4 0 36 36"
+                    version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                        <title>Get Location</title>
+                        <defs> </defs>
+                        <g id="Vivid.JS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Vivid-Icons" transform="translate(-125.000000, -643.000000)">
+                                <g id="Icons" transform="translate(37.000000, 169.000000)">
+                                    <g id="map-marker" transform="translate(78.000000, 468.000000)">
+                                        <g transform="translate(10.000000, 6.000000)">
+                                            <path
+                                                d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"
+                                                id="Shape" fill="#236681"> </path>
+                                            <circle id="Oval" fill="#eeeced" fill-rule="nonzero" cx="14" cy="14" r="7">
+                                            </circle>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+                {{ clinic?.name }}
+            </a>
+                 
+                <br></h1>
             <p>
-                {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code
-                }}
+                {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code }}
             </p>
             <div class="address-container">
 
@@ -153,11 +182,20 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 </template>
 
 <style scoped lang="scss">
+a{
+    color: $navy;
+    text-decoration: none;
+}
 .container {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 5.56rem;
+
+    @media screen and (max-width: 500px) {
+        padding-top: 10rem;
+
+    }
 
     .clinic-container {
         @include pagePadding;
@@ -218,8 +256,8 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 
 .carousel {
     margin-top: 2rem;
-    height:300px;
-    width:100%;
+    height: 300px;
+    width: 100%;
 
     @media screen and (max-width: 500px) {
         margin-top: 5rem;

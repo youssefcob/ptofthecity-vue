@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import Http from '@/mixins/Http';
 import { insurances,getInsurances } from './Insurances';
-// let insurances:any = ref([]);
 
-// const getInsurances = async () => {
-//     insurances.value = await Http.get('images/insurance');
-//     // console.log(insurances.value);
-// }
 onMounted(() => {
     getInsurances();
 })
@@ -30,8 +24,8 @@ let showMore = () => {
         <div class="insurances some-hidden">
             
             <div class="single-insurance" v-for="insurance in insurances" :key="insurance.title">
-                <img :src="insurance.path" alt="">
-                <div><span>{{ insurance.title }}</span></div>
+                <div class="img" :style="`background-image:url(${insurance.path})`" alt=""></div>
+                <div class="title"><span>{{ insurance.title }}</span></div>
             </div>
         </div>
         <div class="show-btn" @click="showMore()">
@@ -85,9 +79,13 @@ let showMore = () => {
             gap:.75rem;
             // margin-right:1.25rem;
 
-            >img {
+            >.img {
                 width: 90%;
                 height: 90%;
+                // @include image()
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
             }
             >span{
                 display:block;
@@ -120,6 +118,8 @@ let showMore = () => {
             -webkit-overflow-scrolling: touch;
             /* Smooth scrolling on touch devices */
             scrollbar-width: thin;
+            height: fit-content;
+            align-items: first baseline;
 
             /* For Firefox */
             &::-webkit-scrollbar {
@@ -135,7 +135,13 @@ let showMore = () => {
             .single-insurance {
             flex: 0 0 auto;
             width:85px;
-            height: 85px;
+            // height: 85px;
+            >.img{
+                height:85px;
+            }
+            >.title{
+                text-align: center;
+            }
         }
 
 

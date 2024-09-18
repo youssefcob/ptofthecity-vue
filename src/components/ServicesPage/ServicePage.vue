@@ -21,32 +21,12 @@ const navigatetoHome = () => {
     window.location.href = '/';
 }
 onMounted(() => {
-    // if (services.value.length == 0) {
     renderServices();
-    // }
 })
-// const getServices = async () => {
-//     console.log(props.id);
-//     services.value = await Http.get(`services`);
-//     if (services.value) {
-//         let servicePH = services.value.find(service => service.id == props.id);
 
-//         filteredServices.value = services.value.filter(service => service.id != props.id);
-//         if (servicePH) {
-//             service.value = servicePH;
-//         }
-//     }
-
-
-// }
 const navigateTo = (id: string) => {
     renderServices(id);
-    // let servicePH = services.value?.find(service => service.id == id);
-    // if (servicePH) {
-    //     service.value = servicePH;
-    // }
-    // filteredServices.value = services.value?.filter(service => service.id != id) || services.value || [];
-    // console.log(id);
+
 }
 onMounted(() => {
     getServices();
@@ -63,7 +43,6 @@ const trans = (languagesObject: any) => {
     if (!languagesObject) return;
     return languagesObject[lang()];
 }
-// console.log(service?.path);
 
 </script>
 
@@ -95,6 +74,9 @@ const trans = (languagesObject: any) => {
 
 <style scoped lang="scss">
 .container {
+    width: 100%;
+    @include pagePadding;
+
     .back {
         @media screen and (min-width: 500px) {
             display: none;
@@ -104,10 +86,6 @@ const trans = (languagesObject: any) => {
         width:100%;
     }
 
-    width: 100%;
-    // background-color: blueviolet;
-    @include pagePadding;
-
     .responsive-header {
         color: $navy;
         display: none;
@@ -116,11 +94,10 @@ const trans = (languagesObject: any) => {
 
     >.service-container {
         padding-top: calc(8vh + 7.5vh);
-
-
         display: flex;
         flex-direction: column;
         gap: 4%;
+
         >h1{
             margin-bottom:3rem;
         }
@@ -152,14 +129,14 @@ const trans = (languagesObject: any) => {
 
         .info {
             width: 70%;
-
+            display:flex;
+            flex-direction: column;
+            gap:1.25rem;
             @media screen and (max-width: 800px) {
                 width: 100%;
             }
 
-            display:flex;
-            flex-direction: column;
-            gap:1.25rem;
+      
 
             >h1 {
                 color: $navy
@@ -188,16 +165,17 @@ const trans = (languagesObject: any) => {
         .image {
             width: 50%;
             height: clamp(300px, 40vw, 40rem);
+            border-radius: 1.125rem;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
 
             @media screen and (max-width: 800px) {
                 width: 100%;
                 height: 300px;
             }
 
-            border-radius: 1.125rem;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
+    
         }
     }
 
@@ -220,14 +198,14 @@ const trans = (languagesObject: any) => {
 
 .carousel {
     margin-top: 2rem;
-
+    height:300px;
+    width:100%;
     @media screen and (max-width: 500px) {
         margin-top: 5rem;
 
     }
 
-    height:300px;
-    width:100%;
+
 
     @media screen and (max-width: 500px) {
         @include pagePadding;
