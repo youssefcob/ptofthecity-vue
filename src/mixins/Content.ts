@@ -1,12 +1,17 @@
 import { reactive } from "vue";
 import Http from "./Http";
 
-let content = reactive([]);
+type Content = {
+    title: string,
+    body: string
+}
 
-export const getContent = async () => {
-    if(content.length > 0) return content;
+let content:Content[] = reactive([]);
+
+export const getContent = async (title:string) => {
+    if(content.length > 0) return content.filter((item: any) => item.title === title)[0].body || [];
     let data = await Http.get('content')
     content = data;
-    console.log(content);
-    return data;
+    console.log(content)
+    return data.filter((item: any) => item.title === title)[0].body || [];
 }

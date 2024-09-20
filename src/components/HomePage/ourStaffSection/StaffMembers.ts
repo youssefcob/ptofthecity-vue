@@ -18,6 +18,7 @@ let staff: Ref<Staff[]> = ref([])
 const getStaff = async () => {
     if (staff.value.length > 0) return;
     let data = await Http.get('content/staff');
+    // console.log(data);
     staff.value = data;
 }
 

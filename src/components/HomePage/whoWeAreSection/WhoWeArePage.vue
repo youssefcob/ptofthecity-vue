@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Http from '@/mixins/Http';
 import { onMounted, ref } from 'vue';
+import { getContent } from '@/mixins/Content';
 
 const formatText = (text: string | undefined): string => {
     if (!text) return '';
@@ -16,13 +17,11 @@ const content = ref({
 
 });
 
-const getContent = async () => {
-    let data = await Http.get('content/whoWeAre');
-    content.value = data.body;
+const getWhoWeAre = async () => {
+    content.value = await getContent("Who We Are");
 }
-
 onMounted(() => {
-    getContent();
+    getWhoWeAre();  
 })
 </script>
 

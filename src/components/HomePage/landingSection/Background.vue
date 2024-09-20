@@ -12,11 +12,7 @@ let images:Ref<string[]> = ref([
     '/images/eligibilityFormImage.jpg',
 ])
 const getCarousel = async () => {
-    const res = await getContent();
-    let carousel = res.filter((item: any) => item.title === 'Carousel');
-
-    images.value = carousel[0].body || [];
-    console.log(images.value);
+    images.value = await getContent('Carousel');
 }
 const initiateScroll = () => {
     background.value?.scroll(1);

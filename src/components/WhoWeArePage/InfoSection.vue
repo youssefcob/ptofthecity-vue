@@ -3,9 +3,7 @@
 
 import { onMounted, ref } from 'vue';
 import ValuesGrid from './ValuesGrid.vue';
-
-
-import Http from '@/mixins/Http';
+import { getContent } from '@/mixins/Content';
 
 
 const content = ref({
@@ -19,13 +17,13 @@ const content = ref({
 
 });
 
-const getContent = async () => {
-    let data = await Http.get('content/whoWeAre');
-    content.value = data.body;
-}
 
+
+const getWhoWeAre = async () => {
+    content.value = await getContent("Who We Are");
+}
 onMounted(() => {
-    getContent();
+    getWhoWeAre();  
 })
 </script>
 
