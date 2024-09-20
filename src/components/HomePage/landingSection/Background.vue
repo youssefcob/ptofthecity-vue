@@ -3,21 +3,31 @@ import Carousel from '@/components/sharedComponents/Carousel.vue';
 import { onMounted, ref, type Ref } from 'vue';
 import BackGroundImage from './BackGroundImage.vue';
 
-const background: Ref<typeof BackGroundImage | null> = ref(null);
+import { getContent } from '@/mixins/Content';
 
+const background: Ref<typeof BackGroundImage | null> = ref(null);
+let images:Ref<string[]> = ref([
+    '/images/careers.png',
+    '/images/contactUs.jpg',
+    '/images/eligibilityFormImage.jpg',
+])
+const getCarousel = async () => {
+    const res = await getContent();
+    let carousel = res.filter((item: any) => item.title === 'Carousel');
+
+    images.value = carousel[0].body || [];
+    console.log(images.value);
+}
 const initiateScroll = () => {
     background.value?.scroll(1);
 }
 
-onMounted(() => {
+onMounted(async () => {
+    await getCarousel();
     setInterval(initiateScroll, 5000);
 })
 // let base = import.meta.env.BASE_URL;
-let images = [
-    '/images/careers.png',
-    '/images/contactUs.jpg',
-    '/images/eligibilityFormImage.jpg',
-]
+
 
 
 </script>
@@ -25,9 +35,9 @@ let images = [
 <template>
     <div class="image-container">
         <!-- <div class="image" :style="{ backgroundImage: `url(${getBackgroundImageUrl(image)})` }"></div> -->
-         <Carousel ref='background' class="image" NoButtons NoIndicator>
+        <Carousel ref='background' class="image" NoButtons NoIndicator>
             <BackGroundImage v-for="image in images" :image="image" />
-         </Carousel>
+        </Carousel>
         <div class="overlay overlay-light"></div>
         <slot class="content"></slot>
 
@@ -41,26 +51,37 @@ let images = [
     .image {
         position: relative;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         transition: opacity 0.2s ease-in-out;
+        overflow: hidden;
 
-        &:before{
-            content:"";
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        &:before {
+            content: "";
 
-        };
-    };
-    .overlay{
+        }
+
+        ;
+    }
+
+    ;
+
+    .overlay {
         position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            transition: all 0.2s ease-in-out;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition: all 0.2s ease-in-out;
 
-    };
+    }
+
+    ;
 }
 
 .image.fade-out {
@@ -69,17 +90,15 @@ let images = [
 
 }
 
-.overlay-light{
+.overlay-light {
     background: linear-gradient(180deg, rgba(44, 50, 51, 0.20) 0%, rgba(44, 50, 51, 0.80) 100%);
     transition: all 0.2s ease-in-out;
 
 }
 
-.overlay-dark{
+.overlay-dark {
     background: linear-gradient(180deg, rgba(44, 50, 51, 0.60) 0%, rgba(44, 50, 51, 1) 100%);
     transition: all 0.2s ease-in-out;
 
 }
-
-
 </style>

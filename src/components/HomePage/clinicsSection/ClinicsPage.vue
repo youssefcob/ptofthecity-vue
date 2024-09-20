@@ -28,7 +28,7 @@ onMounted(async () => {
                 <ClinicAccordion :clinic="clinics[clinic as keyof typeof clinics]" :location="clinic" :active="isFirstItem(index)"/>
             </template>
         </div>
-        <div class="btn transparent responsive main">{{$translate('find_your_nearest_location')}}</div>
+        <!-- <div class="btn transparent responsive main">{{$translate('find_your_nearest_location')}}</div> -->
     </div>
 </template>
 
