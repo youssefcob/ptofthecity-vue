@@ -36,10 +36,10 @@ const isInverted = ()=>{
     return props.active ? 'invert' : '';
 }
 
-const getBackGroundImage = (media:Media[])=>{
-    if(media.length>0){
+const getBackGroundImage = (media:string)=>{
+    if(media){
         return {
-            backgroundImage: `url(${media[0].path})`
+            backgroundImage: `url(${media})`
         }
     }
   
@@ -61,7 +61,7 @@ const getBackGroundImage = (media:Media[])=>{
     </div>
     <div :class="`accordionItemsContainer ${isActive()}`" ref="accordionItemsContainer">
 
-        <router-link  class="item"  v-for="(clinic,index) in props.clinic"  :to="`clinic/${clinic.id.toString()}`" :key="index" :style="getBackGroundImage(clinic.media)">
+        <router-link  class="item"  v-for="(clinic,index) in props.clinic"  :to="`clinic/${clinic.id.toString()}`" :key="index" :style="getBackGroundImage(clinic.image)">
             <h2 class="smallHeader" style="color:white;">{{ clinic.name }}</h2>
         </router-link>
 
@@ -119,6 +119,21 @@ h2 {
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
+            &:before{
+                content: '';
+                display: block;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.4);
+                border-radius: 1.125rem;
+                position: absolute;
+            }
+            h2{
+                color: $white;
+                z-index: 1;
+            }
+   
 
         }
     }
