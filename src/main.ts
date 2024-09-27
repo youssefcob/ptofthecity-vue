@@ -13,8 +13,8 @@ import router from './router'
 
 const app = createApp(App)
 
-// const recaptcha_key = import.meta.env.VITE_RECAPTCHA_KEY;
-const recaptcha_key = "6LetOkcqAAAAAJgBkAuqklddwYBcBWdnG3m-kn6_";
+const recaptcha_key = import.meta.env.VITE_RECAPTCHA_KEY;
+// const recaptcha_key = "6LetOkcqAAAAAJgBkAuqklddwYBcBWdnG3m-kn6_";
 useScriptTag(`https://www.google.com/recaptcha/api.js?render=${recaptcha_key}`);
 
 declare module '@vue/runtime-core' {

@@ -39,6 +39,7 @@ const getClinicReviews = async () => {
 
 
     let data = await Http.get(`clinic/${props.id}`);
+    console.log(props.id);
     console.log(data)
     clinic.value = data;
     // console.log(clinic.value);
