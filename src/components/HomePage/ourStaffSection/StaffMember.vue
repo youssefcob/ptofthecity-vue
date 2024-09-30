@@ -24,14 +24,17 @@ const reRoute = () => {
     <div class="staffMember" @click="reRoute">
         <div class="image" :style="{ backgroundImage: `url(${props.staffMember?.image})` }">
             <div class="staffMemberDescription">
-                <h3>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</h3>
-                <!-- <div class="desc">
-                    <p>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</p>
-                </div> -->
+                <h3>{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name
+                    }}</h3>
+                <div class="desc">
+                    <h3>{{ props.staffMember?.occupation }}</h3>
+                </div>
             </div>
+
         </div>
 
-        <h4 class="responsive-name">{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{ props.staffMember?.last_name }}</h4>
+        <h4 class="responsive-name">{{ $props.staffMember?.title }} {{ props.staffMember?.first_name }} {{
+            props.staffMember?.last_name }}</h4>
 
     </div>
 </template>
@@ -42,27 +45,33 @@ const reRoute = () => {
     flex: 0 0 calc(33% - 0.33rem);
     scroll-snap-align: start;
     overflow: hidden;
-    .responsive-name{
-        display:none;
-        @media screen and (max-width:500px){
-            display:block;
+
+    .responsive-name {
+        display: none;
+
+        @media screen and (max-width:500px) {
+            display: block;
             text-align: center;
             margin-top: 1rem;
             font-family: $montserrat;
-            font-weight:400;
+            font-weight: 400;
             font-size: 1.5rem;
         }
     }
 
     .image {
         height: 100%;
-        @include image;
+        // @include image;
+        background-position: center;
+        background-size: 100%;
         overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        @media screen and (max-width:500px){
-            height:82%;
+        transition: all 0.5s ease-in-out;
+
+        @media screen and (max-width:500px) {
+            height: 82%;
         }
     }
 
@@ -72,6 +81,12 @@ const reRoute = () => {
             max-height: 10rem;
             transition: all 0.8s ease-in-out;
 
+        }
+
+        .image {
+            transition: all 0.5s ease-in-out;
+
+            background-size:120%;
         }
     }
 

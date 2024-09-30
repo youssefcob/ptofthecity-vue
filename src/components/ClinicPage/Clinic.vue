@@ -167,7 +167,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
         </div>
         <div class="services">
             <h2 class="sectionHeader-m">
-                Clinic Services
+                {{clinic?.name}} Clinic Services
             </h2>
             <Carousel class="carousel" v-if="clinic && clinic.services">
                 <SingleService class="singleService" v-for="service in clinic?.services" :service="service" />

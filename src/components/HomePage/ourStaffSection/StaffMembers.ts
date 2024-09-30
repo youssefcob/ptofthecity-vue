@@ -11,6 +11,7 @@ export type Staff = {
     bio: string;
     schedule: string;
     image: string;
+    occupation: string;
 };
 
 let staff: Ref<Staff[]> = ref([])

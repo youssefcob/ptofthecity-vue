@@ -30,6 +30,9 @@ onMounted(() => {
         <section class="landing-page-container">
             <LandingPage />
         </section>
+        <section class="clinicsSection" id="Clinics">
+            <ClinicsPage />
+        </section>
         <section class="servicesSection" id="Services">
                 <ServicesPage />
         </section>
@@ -41,9 +44,7 @@ onMounted(() => {
             <WhoWeArePage />
         </section>
 
-        <section class="clinicsSection" id="Clinics">
-            <ClinicsPage />
-        </section>
+
 
         <section class="ourStaffSection" id="OurStaff">
             <OurStaffPage />
