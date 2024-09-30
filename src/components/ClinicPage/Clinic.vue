@@ -97,9 +97,18 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
     <div class="container">
         <div class="clinic-container">
             <h1 class="responsive-header">
-                <a :href="`https://www.google.com/maps?q=${center.lat},${center.lng}`" target="_blank"> <svg width="3rem" height="3rem" viewBox="-4 0 36 36"
-                    version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                    fill="#000000">
+                <a :href="`https://www.google.com/maps?q=${center.lat},${center.lng}`" target="_blank">
+                    {{ clinic?.name }}
+                </a>
+
+                <br>
+            </h1>
+            <p>
+                {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code }}
+            </p>
+            <a :href="`https://www.google.com/maps?q=${center.lat},${center.lng}`"
+                target="_blank"> <div class="btn transparent responsive locationBtn"> <svg width="1.5rem" height="1.5rem" viewBox="-4 0 36 36" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                     <g id="SVGRepo_iconCarrier">
@@ -123,13 +132,8 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                         </g>
                     </g>
                 </svg>
-                {{ clinic?.name }}
+                Get Location</div>
             </a>
-                 
-                <br></h1>
-            <p>
-                {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code }}
-            </p>
             <div class="address-container">
 
                 <div class="info-wrapper">
@@ -183,10 +187,23 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 </template>
 
 <style scoped lang="scss">
-a{
+a {
     color: $navy;
     text-decoration: none;
 }
+
+.btn.locationBtn {
+   display:flex;
+   align-items: center;
+   justify-content: center;
+   padding:1rem;
+   @media screen and (min-width: 500px){
+    width:30%;    
+   }
+  
+   
+}
+
 .container {
     width: 100%;
     display: flex;
