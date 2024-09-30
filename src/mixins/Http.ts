@@ -2,10 +2,10 @@ import axios from "axios";
 
 
 const Http = {
-    // url: (window.location.hostname === 'localhost')?
-    //   import.meta.env.VITE_API_URL 
-    // : import.meta.env.VITE_API_PRODUCTION_URL,
-    url: import.meta.env.VITE_API_PRODUCTION_URL,
+    url: (window.location.hostname === 'localhost')?
+      import.meta.env.VITE_API_URL 
+    : import.meta.env.VITE_API_PRODUCTION_URL,
+    // url: import.meta.env.VITE_API_PRODUCTION_URL,
     methods: {
         async get(url: string) {
             url = Http.url + url;
