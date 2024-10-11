@@ -150,6 +150,7 @@ defineExpose({
             overflow-x: auto;
             justify-content: flex-start;
 
+            @include scrollBar;
 
             gap: 1rem;
 

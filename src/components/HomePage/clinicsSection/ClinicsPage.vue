@@ -9,6 +9,13 @@ const isFirstItem=(index:number)=>{
     return (index===0);
 }
 
+const getClinicsCount = () => {
+    let count = 0;
+    for (const city in clinics) {
+        count += clinics[city as keyof typeof clinics].length;
+    }
+    return count;
+} 
 
 onMounted(async () => {
     await getClinics();
@@ -20,7 +27,7 @@ onMounted(async () => {
     <div class="container">
         <div class="sectionHeader">
             <h1>{{ $translate('clinics') }}</h1>
-            <p>{{$translate('clinics_phrase')}}</p>
+            <p>{{ getClinicsCount()}} Clinics all over NewYork</p>
         </div>
 
         <div class="accordionsContainer" v-if="clinics">

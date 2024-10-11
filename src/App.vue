@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { Vue3Snackbar } from "vue3-snackbar";
-// import  SnackBar  from "@/components/snackbar/SnackBar.vue";
+import { useHead } from "@vueuse/head";
 
-// const onMobile = ref(false);
-
+useHead({
+    title: "Pt Of The City",
+    meta: [
+        {
+            name: "description",
+            content: "Vue3 Snackbar"
+        }
+    ]
+});
 const checkMobile = () => {
     let onMobile = false;
     if (window.innerWidth < 600) {

@@ -64,6 +64,7 @@ const reRoute = () => {
         // @include image;
         background-position: center;
         background-size: 100%;
+        background-repeat: no-repeat;
         overflow: hidden;
         display: flex;
         flex-direction: column;

@@ -86,7 +86,7 @@ const phrase: PhraseDictionary = {
   },
 
   eligibility_check_phrase: {
-    EN: 'Check your benefits and eligibility and our team will get back to you within 30 mintues',
+    EN: 'Check your benefits and eligibility and our team will get back to you within 24 hours',
     ES: 'Verifique sus beneficios y elegibilidad y nuestro equipo se comunicará con usted dentro de 30 minutos',
     AR: 'تحقق من استحقاقك وأهليتك وسيتصل فريقنا بك خلال 30 دقيقة'
   },

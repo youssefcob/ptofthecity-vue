@@ -7,10 +7,12 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { VueReCaptcha } from 'vue-recaptcha-v3';
 import { useScriptTag } from '@vueuse/core';
+import { createHead } from '@vueuse/head';
 
 import App from './App.vue'
 import router from './router'
 
+const head = createHead()
 const app = createApp(App)
 
 const recaptcha_key = import.meta.env.VITE_RECAPTCHA_KEY;
@@ -31,9 +33,9 @@ app.config.globalProperties.$lang = lang;
 app.config.globalProperties.$dir = dir;
 app.config.globalProperties.$transNumber = transNumbers;
 
+app.use(head)
 app.use(createPinia())
 app.use(router)
-
 app.use(VueGtag, {
     appName: 'PtOfTheCity',
     // pageTrackerScreenviewEnabled: true,

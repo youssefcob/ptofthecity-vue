@@ -250,7 +250,8 @@ const base = ref(import.meta.env.VITE_BASE_URL as string);
             <div class="form-container">
                 <div class="form">
                     <span :class="$dir()">
-                        {{ $translate('eligibility_check_phrase') }} </span>
+                        {{ $translate('eligibility_check_phrase') }}
+                     </span>
                     <div class="input-fields-container">
                         <div class="left">
                             <!-- <div class="split"> -->
