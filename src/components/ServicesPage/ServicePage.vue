@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, render, type Ref } from 'vue';
+import { onMounted, ref, render,watch, type Ref } from 'vue';
 import { type Service, services, getServices } from '@/components/HomePage/servicesSection/Services';
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from './SingleService.vue';
@@ -12,6 +12,9 @@ const props = defineProps({
 let service: Ref<Service | undefined> = ref(undefined);
 let filteredServices: Ref<Service[]> = ref(services.value || []);
 
+watch(() => props.id, (newId, oldId) => {
+    if(newId)navigateTo(newId);
+});
 const renderServices = async (id = props.id) => {
     await getServices();
     service.value = services.value?.find(service => id ? service.id == id : navigatetoHome());
