@@ -22,5 +22,6 @@ const props = defineProps({
     background-size: cover;
     background-position: center;
     @include carouselItem2(1);
+    border-radius: 0px;
 }
 </style>

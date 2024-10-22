@@ -1,5 +1,5 @@
 <template>
-<svg xmlns="http://www.w3.org/2000/svg" width="90" height="30" viewBox="0 0 90 30" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 90 30" fill="none">
     <g clip-path="url(#clip0_30_280)">
       <path d="M80.4977 5.65062C80.1077 6.97915 80.3137 8.26181 80.9742 8.51796C81.6347 8.77411 82.4736 7.89479 82.8636 6.56626C83.2536 5.23772 83.0476 3.95507 82.3871 3.69892C81.7266 3.44277 80.8896 4.32209 80.4977 5.65062Z" fill="#39B54A"/>
       <path d="M90 5.34091C90 5.34091 85.4503 3.52302 80.9301 12.2225C80.9301 12.2225 78.3379 5.92394 75.9279 6.22405C75.9279 6.22405 79.4234 11.8479 79.7913 14.3979C79.7913 14.3979 77.0501 23.9557 76.5368 26.8077L76.3528 27.7081C76.3528 27.7081 81.1729 11.5477 90.0019 5.34282" fill="#39B54A"/>
@@ -24,14 +24,13 @@
 
 <style scoped lang="scss">
 svg{
-    @media screen and (min-width: 2000px){
-        width:180px;
-        height:60px;        
-    }
-    @media screen and (max-width: 426px){
-        width:70px;
-        height:35px;        
-    }
+  width:100%;
+  height:100%; 
+    // @media screen and (min-width: 2000px){
+    //     width:180px;
+    //     height:60px;        
+    // }
+ 
 
 }
 </style>

@@ -19,7 +19,7 @@ const initiateScroll = () => {
 }
 
 onMounted(async () => {
-    await getCarousel();
+    // await getCarousel();
     setInterval(initiateScroll, 5000);
 })
 // let base = import.meta.env.BASE_URL;
