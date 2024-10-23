@@ -1,9 +1,14 @@
 <script setup lang="ts">
-
+const props = defineProps({
+    navOnLanding: {
+        type: Boolean,
+        required: true
+    }
+})
 </script>
 
 <template>
-    <div class="search-bar">
+    <div :class="`search-bar ${props.navOnLanding ? 'main' : 'secondary'}`">
         <div class="search-icon-mobile">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 15 18" fill="none"
                 style="margin-top:0.5rem;">
@@ -24,11 +29,29 @@
     display: flex;
     align-items: center;
     height: 100%;
-    background-color: rgba(238, 236, 237, 0.80);
-    backdrop-filter: blur(200px);
+    // background-color: rgba(238, 236, 237, 0.80);
+    // backdrop-filter: blur(200px);
 
     border-radius: $border-radius;
     padding-left: 0.62rem;
+
+    &.main {
+        transition: all .5s ease-in-out;
+
+        background-color: rgba(238, 236, 237, 0.80);
+        backdrop-filter: blur(200px);
+    }
+
+    &.secondary {
+        transition: all .5s ease-in-out;
+
+        background: rgba(42, 192, 212, 0.20);
+        backdrop-filter: blur(200px);
+
+        &::placeholder {
+            color: #236681;
+        }
+    }
 
     input {
         border: none;
@@ -41,6 +64,7 @@
         &:focus {
             outline: none;
         }
+
         &::placeholder {
             color: $black;
         }

@@ -5,18 +5,24 @@ import { services, getServices } from '@/components/HomePage/servicesSection/Ser
 import { clinics, getClinics, clinicNames } from '@/components/HomePage/clinicsSection/Clinics';
 import { onMounted, ref } from 'vue';
 
+const props = defineProps({
+    navOnLanding: {
+        type: Boolean,
+        required: true
+    }
+})
 onMounted(async () => {
     await getServices();
     await getClinics();
-    console.log('clinics', clinics);
-    console.log('clinicNames', clinicNames);
+    // console.log('clinics', clinics);
+    // console.log('clinicNames', clinicNames);
 
 })
 
 </script>
 
 <template>
-    <ul>
+    <ul :class="props.navOnLanding ? 'main' : 'secondary'">
         <li class="dropdown">
             <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Services">
                 {{ $translate('services') }}
@@ -36,8 +42,9 @@ onMounted(async () => {
                 <div class="clinic" v-for="(clinic, index) in clinicNames" :key="clinic">
                     <strong>{{ clinic }}</strong>
 
-                    <router-link  class="dropdown-item"  v-for=" title in clinics[clinic as keyof typeof clinics]" :to="`/clinic/${title.id.toString()}`" >{{ title.name  }}</router-link>
-            </div>
+                    <router-link class="dropdown-item" v-for=" title in clinics[clinic as keyof typeof clinics]"
+                        :to="`/clinic/${title.id.toString()}`">{{ title.name }}</router-link>
+                </div>
             </div>
         </li>
 
@@ -89,10 +96,29 @@ ul {
     gap: 0.2rem;
     align-items: center;
     padding: 0.6rem 1.5rem;
-    background-color: rgba(238, 236, 237, 0.80);
-    backdrop-filter: blur(200px);
+
     border-radius: $border-radius;
     height: 100%;
+
+    transition: all .5s ease-in-out;
+
+    &.main {
+        transition: all .5s ease-in-out;
+
+        background-color: rgba(238, 236, 237, 0.80);
+        backdrop-filter: blur(200px);
+    }
+
+    &.secondary {
+        transition: all .5s ease-in-out;
+
+        background: rgba(42, 192, 212, 0.20);
+        backdrop-filter: blur(200px);
+
+        .list-item {
+            color: #236681;
+        }
+    }
 
     .dropdown {
         position: relative;
@@ -128,13 +154,14 @@ ul {
 
             }
 
-            &.clinics{
-                .clinic{
-                    display:flex;
-                    flex-direction:column;
+            &.clinics {
+                .clinic {
+                    display: flex;
+                    flex-direction: column;
                 }
-                strong{
-                    display:block;
+
+                strong {
+                    display: block;
                 }
             }
         }

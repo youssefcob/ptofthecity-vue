@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, type Ref } from 'vue';
+import { onMounted, onUnmounted, ref, watch, type Ref } from 'vue';
 
-import Lang from './NavbarComps/LanguageDropDown.vue';
 import NavList from './NavbarComps/NavListHorizontal.vue';
 import NavLogo from './NavbarComps/NavLogo.vue';
-import ProfileSignup from './NavbarComps/ProfileSignup.vue';
-import SearchBar from './NavbarComps/SearchBar.vue';
 import ResponsiveDropdown from './ResponsiveDropDown/ResponsiveDropdown.vue';
 import DropDownButton from './ResponsiveDropDown/DropDownButton.vue';
 import SearchBarNew from './NavbarComps/SearchBarNew.vue';
 import Mobile from './NavbarComps/Mobile.vue';
+
+import { useWindowScroll } from '@vueuse/core';
 
 let menuState = ref(false); // menuState is now a reactive reference
 const handleDropdownUpdate = () => {
@@ -52,23 +51,41 @@ onMounted(() => {
     });
 });
 
+const { x, y } = useWindowScroll()
+
+const navOnLanding = ref(true);
+
+watch(y, (newValue) => {
+    if (newValue > 880 && window.location.pathname === '/') {
+        navOnLanding.value = false;
+        console.log(newValue, window.location.pathname)
+    } else if(window.location.pathname !== '/'){
+        navOnLanding.value = false;
+
+    } else {
+        navOnLanding.value = true;
+        console.log(newValue, window.location.pathname)
+
+
+    }
+});
 </script>
 
 
 <template>
-    <nav class="navbar horizontal">
+    <nav :class="`navbar horizontal ${navOnLanding ? 'main' : 'secondary'}`">
         <div class="logo">
             <router-link to="/">
                 <NavLogo />
             </router-link>
         </div>
         <div class="navlist">
-            <NavList />
+            <NavList :navOnLanding="navOnLanding"/>
         </div>
 
         <div class="util-wrapper">
             <!-- smth -->
-            <SearchBarNew />
+            <SearchBarNew :navOnLanding="navOnLanding" />
             <Mobile />
             <!-- <Lang /> -->
         </div>
@@ -90,19 +107,40 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .navbar {
-    height: calc(10vh + 2.5rem);
-    padding: 2rem 3.12rem;
+    height: calc(10vh + 1rem);
+    padding: 1rem 3.12rem;
     display: flex;
     justify-content: space-between;
     width: 100%;
     position: fixed;
     z-index: 2;
-    background: rgba(43, 192, 212, 0.25);
-    backdrop-filter: blur(200px);
+    transition: all .5s ease-in-out;
+
+
+
+    .logo {
+        align-self: center;
+    }
+
+    &.main {
+    transition: all .5s ease-in-out;
+
+        background-color: transparent;
+
+    }
+
+    &.secondary {
+    transition: all .5s ease-in-out;
+
+        background-color: rgba(238, 236, 237, 0.20);
+        backdrop-filter: blur(200px);
+    }
 
     &.horizontal {
-        background: rgba(43, 192, 212, 0.25);
-        backdrop-filter: blur(200px);
+
+        .logo {
+            height: 80%;
+        }
     }
 
     &.mobile {
