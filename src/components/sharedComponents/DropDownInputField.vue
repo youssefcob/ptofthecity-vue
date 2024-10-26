@@ -233,6 +233,23 @@ onUnmounted(() => {
 
     .asterisk {
         left: 1.25rem;
+     
+
+        top: 30%;
+        color: rgba(0, 0, 0, 0.793);
+        font-family: $montserrat;
+        pointer-events: none;
+        font-size:1.125rem;
+
+
+        @media screen and (max-width: 800px) {
+            font-size: 13px;
+        }
+
+        >span {
+            color: red;
+        }
+
         &.rtl {
             flex-direction: row-reverse;
             right:1.25rem;
@@ -246,21 +263,6 @@ onUnmounted(() => {
             right:18px;
 
         }
-        }
-
-        top: 35%;
-        color: rgba(0, 0, 0, 0.793);
-        font-family: $montserrat;
-        pointer-events: none;
-        font-size:1.125rem;
-
-
-        @media screen and (max-width: 800px) {
-            font-size: 13px;
-        }
-
-        >span {
-            color: red;
         }
     }
 

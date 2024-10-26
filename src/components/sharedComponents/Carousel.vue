@@ -110,6 +110,7 @@ defineExpose({
 
 
 <style scoped lang="scss">
+$btnPadding :1.7rem;
 .carousel-wrapper {
     display: flex;
     flex-direction: column;
@@ -139,7 +140,7 @@ defineExpose({
         height: 100%;
         display: flex;
         justify-content: space-between;
-        gap: 1rem;
+        gap: calc($pageMargin - ($btnPadding * 2) - 1rem);
 
 
         >.carousel-items {
@@ -163,7 +164,8 @@ defineExpose({
         }
 
         >.btn {
-            width: 4.2rem;
+            // width: 4.2rem;
+            padding:1.7rem;
             background-color: $navy;
             color: $white;
             display: flex;

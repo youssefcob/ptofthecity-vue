@@ -96,7 +96,6 @@ onMounted(() => {
     @include pagePadding();
 
     .text-s{
-        font-weight: bold;
     }
 
     .stats {

@@ -122,7 +122,7 @@ const CalcTop = () => {
         @media screen and (max-width: 800px) {
             left: 18px;
         }
-        top: 35%;
+        top: 30%;
         color: rgba(0, 0, 0, 0.793);
         font-family: $montserrat;
         font-size: 1.125rem;

@@ -33,7 +33,7 @@ const props = defineProps({
 <style scoped lang="scss">
 .container {
     .carousel {
-        height:clamp(35rem, 40vw, 70rem);
+        height:clamp(35rem, 30vw, 70rem);
         @media screen and (max-width: 500px) {
             @include padding(left);
       

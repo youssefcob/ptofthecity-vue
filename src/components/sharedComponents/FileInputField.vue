@@ -126,7 +126,7 @@ const HandleFileUpload = (e: Event) => {
             font-family: $montserrat;
             font-size: 1.125rem;
             font-style: normal;
-            font-weight: 500;
+            font-weight: 400;
             pointer-events: none;
             margin-left:1rem;
             &.rtl{

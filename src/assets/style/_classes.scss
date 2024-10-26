@@ -1,8 +1,9 @@
 @import "variables";
+@import 'mixins';
 
 h1 {
   font-family: $helvetica;
-  font-weight: 600;
+  font-weight: 700;
   font-size: $h1;
   letter-spacing: 0px;
   color: $navy;
@@ -35,7 +36,7 @@ h4 {
 
 span {
   font-family: $helvetica;
-  font-weight: lighter;
+  font-weight: 400;
   letter-spacing: 0px;
   color: #2C3233;
 
@@ -86,6 +87,7 @@ a {
 .ps {
   font-family: $montserrat;
   font-size: 0.875rem;
+  // font-weight: 400;
   color: lighten($black, 20%);
   margin: 0.6rem;
 }
@@ -160,10 +162,10 @@ input[type="text"] {
 .sectionHeader-m {
   @extend .sectionHeader;
 
-    margin-left: 6.25rem;
+    margin-left: $pageMargin;
 
     @media screen and (max-width: 500px) {
-      margin-left: 2.5rem;
+      margin-left: $resMargin;
     }
   
   &.rtl{
