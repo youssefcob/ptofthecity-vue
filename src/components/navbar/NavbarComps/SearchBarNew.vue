@@ -1,13 +1,21 @@
 <script setup lang="ts">
+
+import { services, getServices } from '@/components/HomePage/servicesSection/Services';
+import { clinics, getClinics, clinicNames } from '@/components/HomePage/clinicsSection/Clinics';
+
+
 const props = defineProps({
     navOnLanding: {
         type: Boolean,
         required: true
     }
 })
+
+
 </script>
 
 <template>
+    <div class="search-container">
     <div :class="`search-bar ${props.navOnLanding ? 'main' : 'secondary'}`">
         <div class="search-icon-mobile">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 15 18" fill="none"
@@ -21,17 +29,23 @@ const props = defineProps({
             </svg>
         </div>
         <input lang="ar" :dir="$dir()" class='search-input' type="text" :placeholder="$translate('search')">
+
     </div>
+    <!-- <div class="result">
+        .services
+    </div> -->
+
+</div>
 
 </template>
 <style scoped lang='scss'>
-.search-bar {
+.search-container{
+    height:100%;
+    position: relative;
+    .search-bar {
     display: flex;
     align-items: center;
     height: 100%;
-    // background-color: rgba(238, 236, 237, 0.80);
-    // backdrop-filter: blur(200px);
-
     border-radius: $border-radius;
     padding-left: 0.62rem;
 
@@ -70,5 +84,15 @@ const props = defineProps({
         }
     }
 
+ 
 }
+.result{
+        width:1000px;
+        right:0;
+        height:400px;
+        background-color: red;
+        position: absolute;
+    }
+}
+
 </style>

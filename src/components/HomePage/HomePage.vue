@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import LandingPage from './landingSection/LandingPage.vue';
+import LandingPage from './landingSectionNew/LandingPage.vue';
+import LandinggPage from './landingSection/LandingPage.vue';
+
 import ServicesPage from './servicesSection/ServicesPage.vue';
 import InsurancePage from './insuranceSection/InsurancePage.vue';
 import WhoWeArePage from './whoWeAreSection/WhoWeArePage.vue';
@@ -27,6 +29,9 @@ onMounted(() => {
 
 <template>
     <div class="home">
+        <!-- <section class="landing-page-container">
+            <LandinggPage />
+        </section> -->
         <section class="landing-page-container">
             <LandingPage />
         </section>
