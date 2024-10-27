@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LandingPage from './landingSectionNew/LandingPage.vue';
 import LandinggPage from './landingSection/LandingPage.vue';
-
+import ClinicsPageNew from './clinicsSectionNew/ClinicsPage.vue';
 import ServicesPage from './servicesSection/ServicesPage.vue';
 import InsurancePage from './insuranceSection/InsurancePage.vue';
 import WhoWeArePage from './whoWeAreSection/WhoWeArePage.vue';
@@ -37,6 +37,10 @@ onMounted(() => {
         </section>
         <section class="clinicsSection" id="Clinics">
             <ClinicsPage />
+        </section>
+
+        <section class="clinicsSection" >
+            <ClinicsPageNew />
         </section>
         <section class="servicesSection" id="Services">
                 <ServicesPage />
