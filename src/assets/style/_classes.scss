@@ -12,7 +12,7 @@ h1 {
 
 h2 {
   font-family: $helvetica-light;
-  font-weight: lighter;
+  font-weight:200;
   font-size: $h2;
   letter-spacing: 0px;
   color: #2C3233;
@@ -72,7 +72,7 @@ a {
 
 .btnfont {
   font-family: $montserrat;
-  font-weight: bolder;
+  font-weight: 600;
   font-size: $button;
   letter-spacing: 0px;
 }
@@ -97,7 +97,7 @@ a {
   background-color: $blue;
   color: $black;
   border: none;
-  padding: 1.25rem 0rem;
+  padding: 1rem 0rem;
   border-radius: 0.925rem;
   text-align: center;
   cursor: pointer;
