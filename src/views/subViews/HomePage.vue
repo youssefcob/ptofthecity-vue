@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import LandingPage from './landingSectionNew/LandingPage.vue';
-import LandinggPage from './landingSection/LandingPage.vue';
-import ClinicsPageNew from './clinicsSectionNew/ClinicsPage.vue';
-import ServicesPage from './servicesSection/ServicesPage.vue';
-import InsurancePage from './insuranceSection/InsurancePage.vue';
-import WhoWeArePage from './whoWeAreSection/WhoWeArePage.vue';
-import ClinicsPage from './clinicsSection/ClinicsPage.vue';
-import OurStaffPage from './ourStaffSection/OurStaffPage.vue';
-import CareersPage from './careersSection/CareersPage.vue';
-import TrustedByPage from './TrustedBySection/TrustedByPage.vue';
-import TestimonialsPage from '../ClinicPage/Testimonials/Testimonials.vue';
-import FAQsPage from './FAQsSection/FAQsPage.vue';
-import ContactUsPage from './ContactUsSection/ContactUsPage.vue';
+import LandingPage from '@/components/HomePage/landingSection/LandingPage.vue';
+import LandinggPage from '@/components/HomePage/landingSection/LandingPage.vue';
+import ClinicsPageNew from '@/components/HomePage/clinicsSectionNew/ClinicsPage.vue';
+import ServicesPage from '@/components/HomePage/servicesSection/ServicesPage.vue';
+import InsurancePage from '@/components/HomePage/insuranceSection/InsurancePage.vue';
+import WhoWeArePage from '@/components/HomePage/whoWeAreSection/WhoWeArePage.vue';
+import ClinicsPage from '@/components/HomePage/clinicsSection/ClinicsPage.vue';
+import OurStaffPage from '@/components/HomePage/ourStaffSection/OurStaffPage.vue';
+import CareersPage from '@/components/HomePage/careersSection/CareersPage.vue';
+import TrustedByPage from '@/components/HomePage/TrustedBySection/TrustedByPage.vue';
+// import TestimonialsPage from '.@/components/HomePage/ClinicPage/Testimonials/Testimonials.vue';
+import FAQsPage from '@/components/HomePage/FAQsSection/FAQsPage.vue';
+import ContactUsPage from '@/components/HomePage/ContactUsSection/ContactUsPage.vue';
 import { dir } from '@/mixins/Translate';
 import { onMounted } from 'vue';
 
@@ -35,11 +35,11 @@ onMounted(() => {
         <section class="landing-page-container">
             <LandingPage />
         </section>
-        <section class="clinicsSection" id="Clinics">
+        <!-- <section class="clinicsSection" >
             <ClinicsPage />
-        </section>
+        </section> -->
 
-        <section class="clinicsSection" >
+        <section class="clinicsSection" id="Clinics">
             <ClinicsPageNew />
         </section>
         <section class="servicesSection" id="Services">

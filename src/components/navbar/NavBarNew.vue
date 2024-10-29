@@ -16,8 +16,8 @@ const handleDropdownUpdate = () => {
     menuState.value = !menuState.value; // Update the reactive reference value
     // console.log(menuState.value);
 }
-const nav = ref<HTMLElement | null>(null);
-const mobileNav = ref<HTMLElement | null>(null);
+// const nav = ref<HTMLElement | null>(null);
+// const mobileNav = ref<HTMLElement | null>(null);
 // onMounted(() => {
 //     var x = window.matchMedia("(max-width: 950px)")
 

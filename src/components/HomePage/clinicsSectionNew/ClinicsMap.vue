@@ -35,17 +35,7 @@ onMounted(() => {
 
     <GoogleMap :api-key="google_api_key" style="width: 100%; height: 100%" :center="center" :zoom="9">
         <template v-for="clinic in clinicPositions">
-            <Marker :options="{ position: clinic.position }" />
-            <!-- <InfoWindow :options="{ position: clinic.position }"> Content passed
-                through slot
-            </InfoWindow> -->
-            <!-- <CustomMarker :options="{ position: clinic.position, anchorPoint: 'BOTTOM_CENTER' }"> -->
-                <!-- <div style="text-align: center">
-                    <div style="font-size: 1.125rem">Vuejs Amsterdam</div>
-                    <img src="https://vuejs.org/images/logo.png" width="50" height="50" style="margin-top: 8px" />
-                </div> -->
-                <!-- lol -->
-            <!-- </CustomMarker> -->
+            <Marker :options="{ position: clinic.position, title:clinic.name }" />
         </template>
     </GoogleMap>
 
