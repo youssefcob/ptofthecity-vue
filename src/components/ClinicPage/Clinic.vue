@@ -43,8 +43,8 @@ const getClinicReviews = async () => {
 
 
     let data = await Http.get(`clinic/${props.id}`);
-    console.log(props.id);
-    console.log(data)
+    // console.log(props.id);
+    // console.log(data)
     clinic.value = data;
     // console.log(clinic.value);
     if (clinic.value) {
@@ -160,8 +160,9 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                         <h3>Calls: </h3>
                         <p>{{ clinic?.phone }}</p>
                     </div>
-                    <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">{{ $translate('book_now')
-                        }}</router-link>
+                    <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">
+                        {{ $translate('book_now') }}
+                    </router-link>
 
 
 

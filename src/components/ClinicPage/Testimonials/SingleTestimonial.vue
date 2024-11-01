@@ -9,7 +9,7 @@ const props = defineProps({
     }
 });
 
-console.log(props.review)
+// console.log(props.review)
 
 </script>
 
