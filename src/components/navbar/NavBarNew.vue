@@ -56,7 +56,13 @@ const { x, y } = useWindowScroll()
 const navOnLanding = ref(true);
 
 watch(y, (newValue) => {
-    if (newValue > 880 && window.location.pathname === '/') {
+
+    const viewportHeight = window.innerHeight;
+    // console.log(viewportHeight)
+    const scrollPercentage = (newValue / viewportHeight) * 100;
+    // console.log(scrollPercentage)
+
+    if (scrollPercentage > 88 && window.location.pathname === '/') {
         navOnLanding.value = false;
         // console.log(newValue, window.location.pathname)
     } else if(window.location.pathname !== '/'){
