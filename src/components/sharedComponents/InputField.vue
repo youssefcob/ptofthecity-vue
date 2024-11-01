@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { vMaska } from "maska/vue"
+import Background from '../HomePage/landingSection/Background.vue';
 
 const props = defineProps({
     required: Boolean,
@@ -14,7 +15,8 @@ const props = defineProps({
     date: Boolean,
     minYear:String,
     maxYear:String,
-    lettersOnly:Boolean
+    lettersOnly:Boolean,
+    background:String
 });
 let input = ref(``);
 const emit = defineEmits([`input`]);
@@ -85,7 +87,7 @@ const CalcTop = () => {
 
 <template>
     <div class="required" :dir="$dir()">
-        <input :disabled="$props.disabled" class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()};${($props.error)?'border-color:red':''}`" 
+        <input :disabled="$props.disabled" class="input-field" v-if="!$props.height" :style="`width:100%; ${CalcHeight()};${($props.error)?'border-color:red':''};${props.background? `background-color:${props.background}`:'white'}`" 
         v-maska="mask"
             type="text" v-model="input" @input="handleInput($event)">
         <textarea :disabled="$props.disabled" class="input-field" v-if="$props.height" :style="`width:100%;resize:none; ${CalcHeight()};${($props.error)?'border-color:red':''}`"

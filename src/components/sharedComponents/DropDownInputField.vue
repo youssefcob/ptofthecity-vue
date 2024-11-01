@@ -10,6 +10,7 @@ const props = defineProps({
     disabled: Boolean,
     error: Boolean,
     default: String,
+    background:String
 });
 let filteredList = ref(props.list);
 const makeid = (length: number) => {
@@ -88,7 +89,7 @@ onUnmounted(() => {
 
         <div class="required">
             <input :dir="$dir()" :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()"
-                v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''}`" type="text">
+                v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''};${background? `background-color:${background}`:'white'}`" type="text">
 
 
             <label :class="`asterisk ${$dir()}`" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">&nbsp;*</span></label>
