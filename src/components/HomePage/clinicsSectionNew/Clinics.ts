@@ -16,7 +16,7 @@ type ClinicPosition = {
     address: string;
 };
 
-let clinicPositions: ClinicPosition[] = reactive([]);
+let clinicPositions: Ref<Clinic[]> = ref([]);
 let clinics:HttpClinics = reactive({});
 let clinicNames: Ref<string[]> = ref([]);
 
@@ -24,8 +24,9 @@ let clinicNames: Ref<string[]> = ref([]);
 const getClinics = async () => {
     let data = await Http.get('clinic/groupByLocation');
     clinics = data;
-    // console.log(clinics);
+    console.log(clinics);
     clinicNames.value =  Object.keys(clinics);
+    // console.log(clinicNames.value)
 
     deconstructClinics();
    
@@ -50,14 +51,15 @@ const deconstructClinics = () => {
             address: clinic.street_address,
         }
     })
-    console.log(temp)
-    clinicPositions = positions;
+    // console.log(temp)
+    clinicPositions.value = temp;
+    
 }
 
 let clinic: Ref<Clinic | null> = ref(null);
 
 
-export { clinics, clinicNames,clinicPositions ,getClinics};
+export { clinics, clinicNames,clinicPositions ,getClinics, deconstructClinics};
 
-export type { HttpClinics };
+export type { ClinicPosition };
 // export { staffMembers };

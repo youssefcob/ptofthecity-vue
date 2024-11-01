@@ -2,11 +2,12 @@
 
 import { onMounted, ref, type Ref } from 'vue';
 import { GoogleMap, Marker, InfoWindow, CustomMarker } from 'vue3-google-map'
-import { type HttpClinics, clinicNames, clinics, clinicPositions } from './Clinics';
+import { type ClinicPosition } from './Clinics';
+import type { Clinic } from '@/interfaces/content';
 
 const props = defineProps({
-    clinics: {
-        type: Object as () => HttpClinics,
+    clinicsPositions: {
+        type: Object as () => Clinic[],
         required: true
     }
 })
@@ -34,8 +35,8 @@ onMounted(() => {
     <!-- <template v-for="clinic in deconstructedClinics">{{ clinic.long }}</template> -->
 
     <GoogleMap :api-key="google_api_key" style="width: 100%; height: 100%" :center="center" :zoom="9">
-        <template v-for="clinic in clinicPositions">
-            <Marker :options="{ position: clinic.position, title:clinic.name }" />
+        <template v-for="clinic in props.clinicsPositions">
+            <Marker :options="{ position: {lat:Number(clinic.lat),lng:Number(clinic.long)}, title:clinic.name }" />
         </template>
     </GoogleMap>
 
