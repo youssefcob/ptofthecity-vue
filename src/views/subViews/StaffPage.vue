@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue';
-import Carousel from '../sharedComponents/Carousel.vue';
-import SingleStaffMember from './SingleStaffMember.vue';
+import Carousel from '@/components/sharedComponents/Carousel.vue';
+import SingleStaffMember from '@/components/StaffPage/SingleStaffMember.vue';
 
 import { getStaff, staff, type Staff } from '@//components/HomePage/ourStaffSection/StaffMembers';
 
@@ -93,10 +93,12 @@ const navigateTo = (id: string) => {
         padding-top: calc(8vh + 7.5vh);
 
 
-        display: flex;
-        gap: 4%;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 4rem;
 
         @media screen and (max-width: 800px) {
+            display:flex;
             flex-direction: column;
             padding-top: calc(8vh + 3vh);
 
@@ -150,7 +152,7 @@ const navigateTo = (id: string) => {
 
         >.image {
             width: 100%;
-            height: clamp(300px, 40vw, 40rem);
+            height: 50vh;
 
             @media screen and (max-width: 800px) {
                 width: 100%;
