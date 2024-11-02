@@ -1,4 +1,4 @@
-import Career from "./Career.vue"
+// import Career from "./Career.vue"
 
 const careers = {
     pt:{

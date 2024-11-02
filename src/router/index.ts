@@ -2,7 +2,7 @@ import HomeView from '@/views/HomeView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/subViews/HomePage.vue'
 import ServicePage from '@/components/ServicesPage/ServicePage.vue'
-import StaffPage from '@/components/StaffPage/StaffPage.vue'
+import StaffPage from '@/views/subViews/StaffPage.vue'
 import Clinic from '@/components/ClinicPage/Clinic.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

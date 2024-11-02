@@ -7,12 +7,13 @@ h1 {
   font-size: $h1;
   letter-spacing: 0px;
   color: $navy;
-
+  line-height: 100%;
+  
 }
 
 h2 {
   font-family: $helvetica-light;
-  font-weight:200;
+  font-weight: 200;
   font-size: $h2;
   letter-spacing: 0px;
   color: #2C3233;
@@ -46,6 +47,7 @@ p {
   @extend h4;
   line-height: 2.25rem;
 
+  font-weight:400;
   @media screen and (max-width: 500px) {
     line-height: 4rem;
 
@@ -60,6 +62,7 @@ li {
 
 a {
   text-decoration: none;
+  font-family:$montserrat;
 }
 
 .body {
@@ -100,9 +103,11 @@ a {
   padding: 1rem 0rem;
   border-radius: 0.925rem;
   text-align: center;
+  display: block;
+
   cursor: pointer;
   @extend .btnfont;
-  
+
 
   &.responsive {
     @media screen and (max-width: 500px) {
@@ -143,7 +148,8 @@ a {
   @extend h1;
   align-self: baseline;
   margin-bottom: 1.25rem;
-  &.rtl{
+
+  &.rtl {
     text-align: right;
   }
 
@@ -162,13 +168,13 @@ input[type="text"] {
 .sectionHeader-m {
   @extend .sectionHeader;
 
-    margin-left: $pageMargin;
+  margin-left: $pageMargin;
 
-    @media screen and (max-width: 500px) {
-      margin-left: $resMargin;
-    }
-  
-  &.rtl{
+  @media screen and (max-width: 500px) {
+    margin-left: $resMargin;
+  }
+
+  &.rtl {
     margin-left: 0;
     padding-right: 6.25rem;
 
@@ -176,7 +182,7 @@ input[type="text"] {
 
     @media screen and (max-width: 500px) {
       padding-right: 2.5rem;
-  
+
     }
   }
 
@@ -230,7 +236,8 @@ input[type="text"] {
   font-family: $helvetica;
   font-size: 1.5rem;
   font-weight: 700;
-  &.rtl{
+
+  &.rtl {
     text-align: right
   }
 }
@@ -238,7 +245,8 @@ input[type="text"] {
 .header-q {
   @extend .header-t;
   font-weight: 500;
-  &.rtl{
+
+  &.rtl {
     text-align: right
   }
 }
@@ -246,7 +254,8 @@ input[type="text"] {
 .secondary-landing-header {
   @extend h2;
   color: $white;
-  &.rtl{
+
+  &.rtl {
     text-align: right
   }
 
@@ -272,15 +281,14 @@ input[type="text"] {
 
 
 .star {
-  width: 300px;  
+  width: 300px;
   aspect-ratio: 1;
   background: #F8CA00;
   clip-path: polygon(50% 0,
-    calc(50%*(1 + sin(.4turn))) calc(50%*(1 - cos(.4turn))),
-    calc(50%*(1 - sin(.2turn))) calc(50%*(1 - cos(.2turn))),
-    calc(50%*(1 + sin(.2turn))) calc(50%*(1 - cos(.2turn))),
-    calc(50%*(1 - sin(.4turn))) calc(50%*(1 - cos(.4turn))) 
-   ); 
+      calc(50%*(1 + sin(.4turn))) calc(50%*(1 - cos(.4turn))),
+      calc(50%*(1 - sin(.2turn))) calc(50%*(1 - cos(.2turn))),
+      calc(50%*(1 + sin(.2turn))) calc(50%*(1 - cos(.2turn))),
+      calc(50%*(1 - sin(.4turn))) calc(50%*(1 - cos(.4turn))));
   /* or more simple
   clip-path: polygon(50% 0,79% 90%,2% 35%,98% 35%,21% 90%); 
    */

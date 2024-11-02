@@ -14,9 +14,7 @@ const props = defineProps({
 onMounted(async () => {
     await getServices();
     await getClinics();
-    // console.log('clinics', clinics);
-    // console.log('clinicNames', clinicNames);
-
+    
 })
 
 </script>
