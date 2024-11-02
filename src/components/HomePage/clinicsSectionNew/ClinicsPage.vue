@@ -5,7 +5,7 @@ import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
 import { onMounted } from 'vue';
 
 import { clinics, clinicNames, getClinics, clinicPositions } from './Clinics';
-import ClinicsMap from './ClinicsMap.vue';
+import ClinicsMap from '../../sharedComponents/Map.vue';
 
 const getClinicsCount = () => {
     let count = 0;
@@ -44,7 +44,7 @@ onMounted(async () => {
             </div>
         </div>
         <div class="map-wrapper">
-            <ClinicsMap :clinicsPositions="clinicPositions"/>
+            <ClinicsMap :positions="clinicPositions"/>
 
 
         </div>

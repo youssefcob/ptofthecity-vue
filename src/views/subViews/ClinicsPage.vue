@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import ClinicsMap from '@/components/HomePage/clinicsSectionNew/ClinicsMap.vue';
+import ClinicsMap from '@/components/sharedComponents/Map.vue';
 import DropDownInputField from '@/components/sharedComponents/DropDownInputField.vue';
 import InputField from '@/components/sharedComponents/InputField.vue';
 import { clinics, clinicNames, getClinics, clinicPositions } from '@/components/HomePage/clinicsSectionNew/Clinics';
@@ -60,7 +60,7 @@ onMounted(async () => {
 
             </div>
             <div class="map-wrapper">
-                <ClinicsMap :clinicsPositions="filteredClinicPositions" />
+                <ClinicsMap :positions="filteredClinicPositions" />
             </div>
         </div>
         <div class="results-wrapper">

@@ -7,6 +7,7 @@ import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from '../ServicesPage/SingleService.vue';
 import Testimonials from './Testimonials/Testimonials.vue';
 import { clinics, clinicNames } from '../HomePage/clinicsSection/Clinics';
+import ClinicsMap from '../sharedComponents/Map.vue';
 const center: Ref<{ lat: number, lng: number }> = ref({ lat: 0, lng: 0 })
 
 const google_api_key = import.meta.env.VITE_GOOGLE_API_KEY as string;
@@ -102,78 +103,48 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
 <template>
 
     <div class="container">
+
         <div class="clinic-container">
-            <h1 class="responsive-header">
-                <a :href="`https://www.google.com/maps?q=${center.lat},${center.lng}`" target="_blank">
-                    {{ clinic?.name }}
-                </a>
+            <div class="desc-wrapper">
+                <h1>{{ clinic?.name }}</h1>
+                <p>{{ clinic?.summary }}
 
-                <br>
-            </h1>
-            <p>
-                {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code }}
-            </p>
-            <a :href="`https://www.google.com/maps?q=${center.lat},${center.lng}`" target="_blank">
-                <div class="btn transparent responsive locationBtn"> <svg width="1.5rem" height="1.5rem"
-                        viewBox="-4 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                            <title>Get Location</title>
-                            <defs> </defs>
-                            <g id="Vivid.JS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g id="Vivid-Icons" transform="translate(-125.000000, -643.000000)">
-                                    <g id="Icons" transform="translate(37.000000, 169.000000)">
-                                        <g id="map-marker" transform="translate(78.000000, 468.000000)">
-                                            <g transform="translate(10.000000, 6.000000)">
-                                                <path
-                                                    d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"
-                                                    id="Shape" fill="#236681"> </path>
-                                                <circle id="Oval" fill="#eeeced" fill-rule="nonzero" cx="14" cy="14"
-                                                    r="7">
-                                                </circle>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-                    Get Location</div>
-            </a>
-            <div class="address-container">
-
-                <div class="info-wrapper">
-                    <div class="info">
-                        <!-- <h3>Location: </h3> -->
-
-                    </div>
-                    <div class="info schedule">
-                        <h3>Working Hours: </h3>
-                        <div class="hours">
-                            <p v-html="getWorkingHours()"></p>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <h3>Calls: </h3>
-                        <p>{{ clinic?.phone }}</p>
-                    </div>
+                </p>
+                <div class="btns-wrapper">
                     <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">
                         {{ $translate('book_now') }}
                     </router-link>
-
-
-
-                </div>
-                <div class="map-wrapper">
-                    <GoogleMap :api-key="google_api_key" style="width: 100%; height: 30rem" :center="center" :zoom="15">
-                        <Marker :options="{ position: center }" />
-                    </GoogleMap>
                 </div>
             </div>
+            <div class="map-info-wrapper">
+                <div class="map">
+                    <template v-if="clinic">
+                        <ClinicsMap :positions="[clinic]" :zoom="12"
+                            :center="{ lat: Number(clinic.lat), lng: Number(clinic.long) }" />
+                    </template>
+                    <template v-else>
+                        <ClinicsMap :positions="null" />
 
+                    </template>
+                </div>
+                <div class="info">
+                    <div class="address-phone-wrapper">
+                        <a class="ps address">
+                            {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code
+                            }}
+                        </a>
+                        <p class="ps calls">
+                            <strong> Calls: </strong>{{ clinic?.phone }}
+                        </p>
+                    </div>
+                    <div class="schedule">
+                        <p class="ps"><strong>Working Hours:</strong> </p>
+                        <div class="hours">
+                            <p class="ps" v-html="getWorkingHours()"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="services">
             <h2 class="sectionHeader-m">
@@ -231,7 +202,58 @@ a {
 
         padding-top: calc(8vh + 7.5vh);
         width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
 
+        .desc-wrapper {
+            display: flex;
+            flex-direction: column;
+            // width:50%;
+
+            p {
+                margin-top: 1rem;
+                // background-color: red;
+            }
+
+            .btns-wrapper {
+                padding-top: 5rem;
+                margin-top: auto;
+
+                width: 60%;
+            }
+        }
+
+        .map-info-wrapper {
+            min-height: 40vh;
+
+            >.map {
+                height: 30vh;
+                min-height: 40vh;
+
+            }
+
+            .info {
+                display:flex;
+                gap:1rem;
+                flex-wrap: wrap;
+                .ps {
+                    margin: 0;
+                    color: $black;
+                    font-weight: 500;
+
+                    &.address {
+                        text-decoration: underline;
+                    }
+                }
+
+
+                .schedule {
+                    .hours {
+                    }
+                }
+            }
+        }
     }
 
     .address-container {
