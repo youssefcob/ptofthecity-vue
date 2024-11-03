@@ -23,7 +23,7 @@ const campaign = reactive([
             '/images/eligibilityFormImage.jpg',
         ],
         title: 'PTOf the City',
-        description: [ 'not description', 'smth', 'slogan'],
+        slogans: [ 'not description', 'smth', 'slogan'],
         animation: {
             background: 'fade',
             description: 'transitioningSlogans',
@@ -39,7 +39,7 @@ const campaign = reactive([
             '/images/contactUs.jpg',
         ],
         title: 'PTOf the City',
-        description: ['description', 'not description', 'smth', 'slogan'],
+        slogans: ['description', 'not description', 'smth', 'slogan'],
         animation: {
             background: 'fade',
             description: 'transitioningSlogans',
@@ -72,7 +72,7 @@ onMounted(async () => {
             <div v-for="(item, index) in campaign" class="carousel-item" :key="index">
                 <Fade :interval="item.animation.interval" :images="item.images" >
 
-                    <Description class="description" :title="item.title" :description="item.description"
+                    <Description class="description" :title="item.title" :description="item.slogans"
                         :animation="item.animation.description" :interval="item.animation.interval"
                         :buttonLink="item.buttonLink" :buttonText="item.buttonText" />
                 </Fade>

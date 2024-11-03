@@ -58,7 +58,7 @@ onMounted(async () => {
             </RouterLink>
         </li>
         <li>
-            <RouterLink class="list-item" active-class="navbar-link" to="/Blog">
+            <RouterLink class="list-item" active-class="navbar-link" to="/#Blog">
                 {{ $translate('blog') }}
             </RouterLink>
         </li>
