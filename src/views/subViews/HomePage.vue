@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import LandingPage from '@/components/HomePage/landingSection/LandingPage.vue';
-import LandinggPage from '@/components/HomePage/landingSection/LandingPage.vue';
 import ClinicsPageNew from '@/components/HomePage/clinicsSectionNew/ClinicsPage.vue';
 import ServicesPage from '@/components/HomePage/servicesSection/ServicesPage.vue';
 import InsurancePage from '@/components/HomePage/insuranceSection/InsurancePage.vue';
 import WhoWeArePage from '@/components/HomePage/whoWeAreSection/WhoWeArePage.vue';
-import ClinicsPage from '@/components/HomePage/clinicsSection/ClinicsPage.vue';
 import OurStaffPage from '@/components/HomePage/ourStaffSection/OurStaffPage.vue';
 import CareersPage from '@/components/HomePage/careersSection/CareersPage.vue';
 import TrustedByPage from '@/components/HomePage/TrustedBySection/TrustedByPage.vue';
-// import TestimonialsPage from '.@/components/HomePage/ClinicPage/Testimonials/Testimonials.vue';
+import BlogSection from '@/components/HomePage/blogSection/BlogSection.vue';
+
 import FAQsPage from '@/components/HomePage/FAQsSection/FAQsPage.vue';
 import ContactUsPage from '@/components/HomePage/ContactUsSection/ContactUsPage.vue';
 import { dir } from '@/mixins/Translate';
@@ -57,6 +56,10 @@ onMounted(() => {
 
         <section class="ourStaffSection" id="OurStaff">
             <OurStaffPage />
+        </section>
+
+        <section class="blogSection" id="blog">
+            <BlogSection />
         </section>
 
         <section class="careersSection" id="Careers">
