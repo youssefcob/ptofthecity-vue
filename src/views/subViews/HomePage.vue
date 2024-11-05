@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LandingPage from '@/components/HomePage/landingSection/LandingPage.vue';
+import LandingPageNew from '@/components/HomePage/landingSectionNew/LandingPage.vue';
 import ClinicsPageNew from '@/components/HomePage/clinicsSectionNew/ClinicsPage.vue';
 import ServicesPage from '@/components/HomePage/servicesSection/ServicesPage.vue';
 import InsurancePage from '@/components/HomePage/insuranceSection/InsurancePage.vue';
@@ -28,12 +29,12 @@ onMounted(() => {
 
 <template>
     <div class="home">
-        <!-- <section class="landing-page-container">
-            <LandinggPage />
-        </section> -->
         <section class="landing-page-container">
-            <LandingPage />
+            <LandingPageNew />
         </section>
+        <!-- <section class="landing-page-container">
+            <LandingPage />
+        </section> -->
         <!-- <section class="clinicsSection" >
             <ClinicsPage />
         </section> -->
@@ -58,7 +59,7 @@ onMounted(() => {
             <OurStaffPage />
         </section>
 
-        <section class="blogSection" id="blog">
+        <section class="blogSection" id="Blog">
             <BlogSection />
         </section>
 
