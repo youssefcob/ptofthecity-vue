@@ -1,41 +1,56 @@
+<script setup lang="ts">
+import BodyHealth from '@/components/sharedComponents/Body/Body.vue';
+import { reactive, ref } from 'vue';
+import { blogInfo } from './blogSection';
+import Instructions from './Instructions.vue';
+let blog = reactive({
+    neck:false,
+    shoulder:false,
+    back:false,
+    abdomen:false,
+    lowerBack:false,
+    hands:false,
+    elbows:false,
+    knees:false,
+    feet:false
+})
+
+let show = ref(false);
+const showInfo = (event: any) => {
+    blog[event.id as keyof typeof blog] = event.show;
+    console.log(blog);
+    show.value = event.show;
+}
+</script>
+
 <template>
 
+<h1 :style="`position:absolute`" v-if="show">neck</h1>
     <div class="blog-container">
-        <div class="header">
-            <h1>Where is your pain?</h1>
-            <h2>Hover on the figure to learn more about your pain</h2>
-            <div class="btn">Our Blog</div>
+       <Instructions v-if="!show"/>
+       
+        <div class="figure">
+            <BodyHealth @hover="showInfo($event)" />
         </div>
-        <div class="figure"></div>
     </div>
 </template>
 
 <style scoped lang="scss">
+.blog-container {
+    @include pagePadding;
 
-    .blog-container {
-        height:40vh;
-        display:flex;
-        flex-wrap: wrap;
-        @include pagePadding;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 
-        .header {
 
-            width:50%;
-            // flex: 1;
-            display:flex;
-            flex-direction: column;
-            gap:1rem;
-            justify-content: center;
-            h2{
-                color:$navy;
-                line-height: 120%;
-            }
-            .btn{
-                width:60%;
-                margin-top:2rem;
-            }
-        }
 
+    .figure {
+        // width:50%;
+        // flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
+}
 </style>
