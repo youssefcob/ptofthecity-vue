@@ -13,7 +13,7 @@ h1 {
 
 h2 {
   font-family: $helvetica-light;
-  font-weight: 200;
+  font-weight: 300;
   font-size: $h2;
   letter-spacing: 0px;
   color: #2C3233;
@@ -33,6 +33,13 @@ h4 {
   font-size: $h4;
   letter-spacing: 0px;
   color: #2C3233;
+}
+
+li {
+  margin-left: 20px;
+  line-height: 130%;
+  font-weight: 500;
+
 }
 
 span {

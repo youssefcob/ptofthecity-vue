@@ -24,7 +24,7 @@ const toggleVisibility = (id: string, show: boolean) => {
         <img class="body hidden" id="shoulder-img" src="/images/body/shoulder.png" alt="">
         <img class="body hidden" id="back-img" src="/images/body/back.png" alt="">
         <img class="body hidden" id="abdomen-img" src="/images/body/abdomen.png" alt="">
-        <img class="body hidden" id="lowerBack-img" src="/images/body/lower-back.png" alt="">
+        <img class="body hidden" id="lowerBack-img" src="/images/body/lowerBack.png" alt="">
         <img class="body hidden" id="hands-img" src="/images/body/hands.png" alt="">
         <img class="body hidden" id="elbows-img" src="/images/body/elbows.png" alt="">
         <img class="body hidden" id="knees-img" src="/images/body/knees.png" alt="">
@@ -71,8 +71,8 @@ const toggleVisibility = (id: string, show: boolean) => {
 </template>
 
 <style scoped lang="scss">
-$height: 45rem;
-$width: 40rem;
+$height: 42rem;
+$width: 35rem;
 
 .figure-container {
     width: $width;
@@ -103,6 +103,7 @@ $width: 40rem;
             // &:hover {
             //     background-color: rgba(0, 0, 0, 0);
             // }
+            cursor: pointer;
         }
 
         #neck {

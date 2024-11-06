@@ -61,6 +61,13 @@ const router = createRouter({
           name: 'clinics',
           component: () => import('@/views/subViews/ClinicsPage.vue'),
           props: true
+        },
+        {
+          path: 'blog',
+          name: 'blog',
+          component: () => import('@/views/subViews/BlogPage.vue'),
+     
+
         }
       ]
     },
@@ -72,7 +79,7 @@ const router = createRouter({
       return {
         el: to.hash,
         behavior: 'smooth',
-        top: 77
+        top: 100
       }
     };
     if (savedPosition) {

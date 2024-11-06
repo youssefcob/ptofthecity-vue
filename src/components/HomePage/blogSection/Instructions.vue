@@ -20,7 +20,6 @@
 
         </div>
         <h2>Hover on the figure to learn more about your pain</h2>
-        <div class="btn">Our Blog</div>
     </div>
 
 </template>

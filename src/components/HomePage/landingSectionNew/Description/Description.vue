@@ -21,7 +21,7 @@ const props = defineProps({
     },
     buttonLink: {
         type: String,
-        default: '/default-link'
+        default: '/booking'
     },
     buttonText: {
         type: String,
