@@ -129,7 +129,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                 </div>
                 <div class="info">
                     <div class="address-phone-wrapper">
-                        <a class="ps address">
+                        <a target="_blank"  :href="`https://maps.google.com/?q=${clinic?.lat},${clinic?.long}`" class="ps address">
                             {{ clinic?.street_address }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.zip_code
                             }}
                         </a>
@@ -230,13 +230,15 @@ a {
             >.map {
                 height: 30vh;
                 min-height: 40vh;
+                margin-bottom: 2rem;
 
             }
 
             .info {
-                display:flex;
-                gap:1rem;
+                display: flex;
+                gap: 1rem;
                 flex-wrap: wrap;
+
                 .ps {
                     margin: 0;
                     color: $black;
@@ -249,8 +251,7 @@ a {
 
 
                 .schedule {
-                    .hours {
-                    }
+                    .hours {}
                 }
             }
         }
