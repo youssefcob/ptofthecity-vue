@@ -22,17 +22,6 @@ onMounted(async () => {
 <template>
     <ul :class="props.navOnLanding ? 'main' : 'secondary'">
         <li class="dropdown">
-            <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Services">
-                {{ $translate('services') }}
-            </RouterLink>
-            <div class="dropdown-content">
-                <router-link class="dropdown-item" v-for="service in services" :key="service.id"
-                    :to="{ name: `service`, params: { id: service?.id } }">
-                    {{ service.title }}
-                </router-link>
-            </div>
-        </li>
-        <li class="dropdown">
             <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Clinics">
                 {{ $translate('Clinics') }}
             </RouterLink>
@@ -45,6 +34,18 @@ onMounted(async () => {
                 </div>
             </div>
         </li>
+        <li class="dropdown">
+            <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Services">
+                {{ $translate('services') }}
+            </RouterLink>
+            <div class="dropdown-content">
+                <router-link class="dropdown-item" v-for="service in services" :key="service.id"
+                    :to="{ name: `service`, params: { id: service?.id } }">
+                    {{ service.title }}
+                </router-link>
+            </div>
+        </li>
+       
 
 
         <li>
@@ -78,8 +79,9 @@ onMounted(async () => {
             </RouterLink>
         </li>
         <li>
-            <RouterLink class="list-item" active-class="navbar-link" to="/#ContactUs">
-                {{ $translate('contactUs') }}
+            <RouterLink class="list-item" active-class="navbar-link" to="/booking">
+                <!-- {{ $translate('contactUs') }} -->
+                  Book Now
             </RouterLink>
         </li>
 

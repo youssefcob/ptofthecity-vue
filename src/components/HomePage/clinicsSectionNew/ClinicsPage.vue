@@ -36,7 +36,7 @@ onMounted(async () => {
                 </template>
             </div>
             <div class="btns-wrapper">
-                <router-link :to="`/clinics/all`">
+                <router-link :to="`/clinics`">
                     <div class="btn">See all clinics</div>
                 </router-link>
                 <div class="btn transparent">find your nearest location</div>
@@ -50,7 +50,7 @@ onMounted(async () => {
         </div>
 
         <div class="btns-wrapper mobile">
-            <router-link :to="`/clinics/all`">
+            <router-link :to="`/clinics`">
                 <div class="btn">See all clinics</div>
             </router-link>
             <div class="btn transparent">find your nearest location</div>
