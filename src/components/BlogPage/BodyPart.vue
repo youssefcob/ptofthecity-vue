@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="wrapper">
+    <div class="wrapper" :id="props.img">
         <div class="symptoms-image-wrapper"
             :class="`${props.mirrored ? 'no-padding-right ' : 'no-padding-left reversed'}`">
             <img :class="`${props.mirrored ? 'mirrored' : ''}`"

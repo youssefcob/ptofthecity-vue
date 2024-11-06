@@ -33,39 +33,39 @@ const toggleVisibility = (id: string, show: boolean) => {
 
         <div class="grid">
 
-            <div class="neck" @mouseenter="toggleVisibility('neck', true)" @mouseleave="toggleVisibility('neck', false)"
-                id="neck"></div>
+            <router-link to="blog/#neck" class="neck" @mouseenter="toggleVisibility('neck', true)" @mouseleave="toggleVisibility('neck', false)"
+                id="neck"></router-link>
 
-            <div class="shoulder" @mouseenter="toggleVisibility('shoulder', true)"
-                @mouseleave="toggleVisibility('shoulder', false)" id="shoulder"></div>
+            <router-link to="blog/#shoulder" class="shoulder" @mouseenter="toggleVisibility('shoulder', true)"
+                @mouseleave="toggleVisibility('shoulder', false)" id="shoulder"></router-link>
 
-            <div class="lower-back" @mouseenter="toggleVisibility('lowerBack', true)"
-                @mouseleave="toggleVisibility('lowerBack', false)" id="lower-back"></div>
-            <div class="back" @mouseenter="toggleVisibility('back', true)" @mouseleave="toggleVisibility('back', false)"
-                id="back"></div>
+            <router-link to="blog/#lowerBack" class="lower-back" @mouseenter="toggleVisibility('lowerBack', true)"
+                @mouseleave="toggleVisibility('lowerBack', false)" id="lower-back"></router-link>
+            <router-link to="blog/#back" class="back" @mouseenter="toggleVisibility('back', true)" @mouseleave="toggleVisibility('back', false)"
+                id="back"></router-link>
 
-            <div class="abdomen" @mouseenter="toggleVisibility('abdomen', true)"
-                @mouseleave="toggleVisibility('abdomen', false)" id="abdomen"></div>
+            <router-link to="blog/#abdomen" class="abdomen" @mouseenter="toggleVisibility('abdomen', true)"
+                @mouseleave="toggleVisibility('abdomen', false)" id="abdomen"></router-link>
 
-            <div class="hand" @mouseenter="toggleVisibility('hands', true)" @mouseleave="toggleVisibility('hands', false)"
-                id="left-hand"></div>
-            <div class="hand" @mouseenter="toggleVisibility('hands', true)" @mouseleave="toggleVisibility('hands', false)"
-                id="right-hand"></div>
+            <router-link to="blog/#hands" class="hand" @mouseenter="toggleVisibility('hands', true)" @mouseleave="toggleVisibility('hands', false)"
+                id="left-hand"></router-link>
+            <router-link to="blog/#hands" class="hand" @mouseenter="toggleVisibility('hands', true)" @mouseleave="toggleVisibility('hands', false)"
+                id="right-hand"></router-link>
 
-            <div class="elbow" @mouseenter="toggleVisibility('elbows', true)"
-                @mouseleave="toggleVisibility('elbows', false)" id="right-elbow"></div>
-            <div class="elbow" @mouseenter="toggleVisibility('elbows', true)"
-                @mouseleave="toggleVisibility('elbows', false)" id="left-elbow"></div>
+            <router-link to="blog/#elbows" class="elbow" @mouseenter="toggleVisibility('elbows', true)"
+                @mouseleave="toggleVisibility('elbows', false)" id="right-elbow"></router-link>
+            <router-link to="blog/#elbows" class="elbow" @mouseenter="toggleVisibility('elbows', true)"
+                @mouseleave="toggleVisibility('elbows', false)" id="left-elbow"></router-link>
 
-            <div class="knee" @mouseenter="toggleVisibility('knees', true)" @mouseleave="toggleVisibility('knees', false)"
-                id="right-knee"></div>
-            <div class="knee" @mouseenter="toggleVisibility('knees', true)" @mouseleave="toggleVisibility('knees', false)"
-                id="left-knee"></div>
+            <router-link to="blog/#knees" class="knees" @mouseenter="toggleVisibility('knees', true)" @mouseleave="toggleVisibility('knees', false)"
+                id="right-knee"></router-link>
+            <router-link to="blog/#knees" class="knees" @mouseenter="toggleVisibility('knees', true)" @mouseleave="toggleVisibility('knees', false)"
+                id="left-knee"></router-link>
 
-            <div class="feet" @mouseenter="toggleVisibility('feet', true)" @mouseleave="toggleVisibility('feet', false)"
-                id="right-foot"></div>
-            <div class="feet" @mouseenter="toggleVisibility('feet', true)" @mouseleave="toggleVisibility('feet', false)"
-                id="left-foot"></div>
+            <router-link to="blog/#feet" class="feet" @mouseenter="toggleVisibility('feet', true)" @mouseleave="toggleVisibility('feet', false)"
+                id="right-foot"></router-link>
+            <router-link to="blog/#feet" class="feet" @mouseenter="toggleVisibility('feet', true)" @mouseleave="toggleVisibility('feet', false)"
+                id="left-foot"></router-link>
         </div>
     </div>
 </template>
