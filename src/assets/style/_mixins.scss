@@ -31,7 +31,7 @@ $body: 1rem;
 $button: 1rem;
 $caption: 0.875rem;
 
-$resMargin:2.5rem;
+$resMargin:1rem;
 $pageMargin:11rem;
 $pagePadding:0 $pageMargin;
 $pagePaddingRes: 0 $resMargin;
@@ -114,6 +114,8 @@ $input-field:height;
 
   @media screen and (max-width: 500px) {
     padding: $pagePaddingRes;
+    // padding-left:$pagePaddingRes;
+    // padding-right: $pagePaddingRes;
   }
 }
 
