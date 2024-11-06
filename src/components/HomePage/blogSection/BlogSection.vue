@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BodyHealth from '@/components/sharedComponents/Body/Body.vue';
 import { reactive, ref, type Ref } from 'vue';
-import { blogInfo, type BlogInfoDetail } from './blogSection';
+import { blogInfo, type BlogInfoDetail } from '../../../state/blogSection';
 import Instructions from './Instructions.vue';
 import BodyPartInfo from './BodyPartInfo.vue';
 let blog = reactive({

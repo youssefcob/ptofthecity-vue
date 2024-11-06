@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { onMounted, onUnmounted, ref, type Ref } from 'vue';
 
-import Lang from './NavbarComps/LanguageDropDown.vue';
+// import Lang from './NavbarComps/LanguageDropDown.vue';
 import NavList from './NavbarComps/NavListHorizontal.vue';
 import NavLogo from './NavbarComps/NavLogo.vue';
-import ProfileSignup from './NavbarComps/ProfileSignup.vue';
+// import ProfileSignup from './NavbarComps/ProfileSignup.vue';
 import SearchBar from './NavbarComps/SearchBar.vue';
 import ResponsiveDropdown from './ResponsiveDropDown/ResponsiveDropdown.vue';
 import DropDownButton from './ResponsiveDropDown/DropDownButton.vue';
@@ -50,10 +50,10 @@ onMounted(() => {
     });
 });
 
-</script>
+</script> -->
 
 <template>
-    <nav class="navbar horizontal"  ref="nav">
+    <!-- <nav class="navbar horizontal"  ref="nav">
         <div class="left-container">
             <router-link to="/">
                 <NavLogo />
@@ -63,23 +63,23 @@ onMounted(() => {
 
         <div class="right-container">
             <SearchBar />
-            <!-- <ProfileSignup /> -->
-            <!-- <Lang /> -->
+            <ProfileSignup />
+            <Lang />
         </div>
-    </nav>
+    </nav> -->
 
-    <nav class="navbar mobile"  ref="mobileNav">
+    <!-- <nav class="navbar mobile"  ref="mobileNav">
         <router-link to="/">
             <NavLogo />
         </router-link>
         <DropDownButton @dropdown="handleDropdownUpdate" />
         <ResponsiveDropdown responsive @dropdown="handleDropdownUpdate" v-if="menuState" />
 
-    </nav>
+    </nav> -->
 
 </template>
 
-<style scoped lang="scss">
+<!-- <style scoped lang="scss">
 .navbar {
     background-color: $grey;
     width: 100%;
@@ -138,4 +138,4 @@ onMounted(() => {
         }
     }
 }
-</style>
+</style> -->

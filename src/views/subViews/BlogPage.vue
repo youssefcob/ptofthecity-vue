@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BodyPart from '@/components/BlogPage/BodyPart.vue';
-import { blogInfo } from '@/components/HomePage/blogSection/blogSection';
+import { blogInfo } from '@/state/blogSection';
 import { ref } from 'vue';
 const parts = Object.keys(blogInfo);
 </script>

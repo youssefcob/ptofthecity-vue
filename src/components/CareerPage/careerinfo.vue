@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {type Career} from './careers';
+import type { Career } from '@/state/careers';
+
 const props = defineProps<{
     career: Career;
 }>();

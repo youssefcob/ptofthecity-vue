@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Modal from '../sharedComponents/modal.vue';
-import { careers, type Career } from './careers';
 import Careerinfo from './careerinfo.vue';
+import { careers, type Career } from '@/state/careers';
 const modal = ref<InstanceType<typeof Modal> | null>(null);
 
 const selectedCareer = ref<Career>(careers.pt);

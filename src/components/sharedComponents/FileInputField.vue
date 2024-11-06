@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { error } from 'console';
-import { ref, type Ref, onMounted, onUnmounted } from 'vue';
+import { ref, type Ref} from 'vue';
 
 const props = defineProps({
     placeHolder: String,

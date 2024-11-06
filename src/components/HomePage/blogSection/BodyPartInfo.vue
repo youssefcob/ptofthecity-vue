@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogInfoDetail } from './blogSection';
+import type { BlogInfoDetail } from '../../../state/blogSection';
 
 
 const props = defineProps({
