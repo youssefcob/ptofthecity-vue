@@ -33,7 +33,7 @@ const parts = Object.keys(blogInfo);
         <div class="body-parts-wrapper">
             <template v-for="(part,index) in blogInfo">
 
-                <BodyPart :content="part" :mirrored="(parts.indexOf(index) % 2)?false : true" :img="index"/>
+                <BodyPart :content="part" :mirrored="(parts.indexOf(index) % 2)?false : true" :img="index" />
             </template>
             <!-- <BodyPart class="body-part"/> -->
         </div>
