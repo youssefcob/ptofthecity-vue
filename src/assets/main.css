@@ -14,7 +14,7 @@ body:has(dialog[open]) {
     overflow: hidden;
 }
 html {
-    font-size:clamp(10px, 1vw, 17px);
+    font-size:clamp(10px, 0.8vw, 17px);
     /* font-size:clamp(10px,1vw,30px); */
     user-select: none;
 }
