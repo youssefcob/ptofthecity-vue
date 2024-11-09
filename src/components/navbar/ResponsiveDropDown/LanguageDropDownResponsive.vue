@@ -62,21 +62,20 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .lang-container {
-    padding:1.25rem;
-
-    >.logo{
-    margin-left:2.5rem;
-
-    }
+    padding:3rem 0 3rem 0 ; 
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     align-items: space-between;
     background-color: $blue;
-    margin-bottom: 6.7rem;
+    margin-bottom: calc(100lvh - 100svh + 2rem);
     border-radius: 1.5rem;
 
+    >.logo{
+    margin-left:2.5rem;
+
+    }
     >.language {
         >.language-dropdown-responsive {
             position: relative;

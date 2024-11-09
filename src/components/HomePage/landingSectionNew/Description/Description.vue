@@ -88,10 +88,11 @@ h2 {
 
     .main-image-content {
         width: 100%;
-        display: flex;
+        // display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        height: 60%;
+        // justify-content: space-between;
+        // background-color: red;
+        height: 80%;
         padding: 0 2rem;
 
         .number {
@@ -106,7 +107,7 @@ h2 {
 
             &.responsive {
                 display: block;
-                margin-top:15rem;
+                margin-top: calc(  100% );
 
             }
         }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
 
 // import { clinicLocations } from './Clinics';
 import { onMounted } from 'vue';

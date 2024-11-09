@@ -39,7 +39,9 @@ onUnmounted(() => {
 <template>
     <div class="image-container">
         <div class="background-image" :style="{ backgroundImage: `url(${props.images[currentIndex]})` }">
-            <slot></slot>
+            <div class="desc">
+                <slot></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -47,7 +49,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .image-container {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: relative;
     /* Ensure the container is positioned relatively */
 
@@ -56,7 +58,7 @@ onUnmounted(() => {
         background-size: cover;
         background-repeat: no-repeat;
         overflow: hidden;
-  
+
         width: 100%;
         height: 100vh;
         position: absolute;
@@ -64,6 +66,13 @@ onUnmounted(() => {
         top: 0;
         left: 0;
         transition: background-image 0.25s ease-in-out;
+        .desc{
+            position: relative;
+            height:100%;
+            width:100%;
+          
+        }
+
         ::-webkit-scrollbar {
             display: none;
         }

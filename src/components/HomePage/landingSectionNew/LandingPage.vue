@@ -86,26 +86,27 @@ onMounted(async () => {
 
 <style scoped lang='scss'>
 .carousel-item {
-    position: relative;
     @include carouselItem2(1);
+    height:100vh;
 
 }
 
 .description {
-    // position: absolute;
-    // top: 55%;
-    // left: 13%;
+    position: absolute;
+    top: 55%;
+    left: 13%;
     // margin-top:30%;
-    padding-top:25%;
-    padding-left:10%;
+    // padding-top:25%;
+    // padding-left:10%;
     // margin-left:20%;
-    z-index: 1;
+    // z-index: 1;
 }
 
 @media only screen and (max-width: 600px) {
+
     .description {
-        padding-top:60%;
-        padding-left:10%;
+        top:20%;
+        left:0;
     }
 }
 </style>

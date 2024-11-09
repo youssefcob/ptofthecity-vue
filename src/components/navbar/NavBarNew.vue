@@ -10,46 +10,15 @@ import Mobile from './NavbarComps/Mobile.vue';
 
 import { useWindowScroll } from '@vueuse/core';
 
-let menuState = ref(false); // menuState is now a reactive reference
+let menuState = ref(false); 
 const handleDropdownUpdate = () => {
-    // console.log('Dropdown value updated:', newValue);
-    menuState.value = !menuState.value; // Update the reactive reference value
-    // console.log(menuState.value);
+    menuState.value = !menuState.value;
+    if(menuState.value){
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = 'auto';
+    }
 }
-// const nav = ref<HTMLElement | null>(null);
-// const mobileNav = ref<HTMLElement | null>(null);
-// onMounted(() => {
-//     var x = window.matchMedia("(max-width: 950px)")
-
-//     let prevScrollpos = window.scrollY;
-//     const handleScroll = () => {
-//         const currentScrollPos = window.scrollY;
-//         if (!x.matches) {
-//             if (nav.value === null) return;
-//             if (prevScrollpos > currentScrollPos) {
-//                 nav.value.style.top = "0";
-//             } else {
-//                 nav.value.style.top = "-9.5vh";
-//             }
-//             prevScrollpos = currentScrollPos;
-//         } else {
-//             if (mobileNav.value === null) return;
-//             if (prevScrollpos > currentScrollPos) {
-//                 mobileNav.value.style.top = "0";
-//             } else {
-//                 mobileNav.value.style.top = "-9.5vh";
-//             }
-//             prevScrollpos = currentScrollPos;
-//         }
-
-//     };
-
-//     window.addEventListener('scroll', handleScroll);
-
-//     onUnmounted(() => {
-//         window.removeEventListener('scroll', handleScroll);
-//     });
-// });
 
 const { x, y } = useWindowScroll()
 
@@ -97,14 +66,14 @@ watch(y, (newValue) => {
         </div>
     </nav>
 
-    <nav class="navbar mobile">
+    <nav :class="`navbar mobile secondary`">
         <div class="logo">
             <router-link to="/">
                 <NavLogo />
             </router-link>
         </div>
         <DropDownButton @dropdown="handleDropdownUpdate" />
-        <ResponsiveDropdown responsive @dropdown="handleDropdownUpdate" v-if="menuState" />
+        <ResponsiveDropdown responsive @dropdown="handleDropdownUpdate" v-if="menuState" id="responsiveDropDownNavBar" />
 
     </nav>
 
@@ -177,7 +146,7 @@ watch(y, (newValue) => {
 
         @media screen and (max-width: 426px) {
             .logo {
-                height: 70%;
+                height: 45%;
             }
         }
     }

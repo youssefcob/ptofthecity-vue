@@ -25,9 +25,10 @@ const toggleDropDown = () => {
     cursor: pointer;
     svg{
         @media screen and (max-width: 426px){
-            width:12px;
-            height:9px;
+            width:calc(12px * 1.4);
+            height:calc(9px * 1.4);
         }
+        
     }
 }
 </style>
