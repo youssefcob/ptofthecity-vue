@@ -42,8 +42,8 @@ const updateInfo = (id: string, show: boolean) => {
     <div class="blog-container">
         <div class="info-wrapper">
             <Instructions v-if="!show" />
-             <BodyPartInfo :data="infoValue" v-if="show" /> 
-            <router-link to="/blog" class="btn">Our Blog</router-link>
+            <BodyPartInfo :data="infoValue" v-if="show" />
+            <router-link to="/blog" class="btn responsive">Our Blog</router-link>
 
         </div>
 
@@ -66,6 +66,10 @@ const updateInfo = (id: string, show: boolean) => {
         flex-direction: column;
         justify-content: center;
 
+        @media screen and (max-width: 600px) {
+            display:block;
+        }
+
         .btn {
             width: 50%;
             margin-top: 2rem;
@@ -77,6 +81,32 @@ const updateInfo = (id: string, show: boolean) => {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 5rem;
+
+        .info-wrapper {
+            order: 2;
+        }
+
+        .figure {
+            order: 1;
+        }
+
+        .info-wrapper {
+            align-items: center;
+            text-align: center;
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        .figure {
+            margin-top: 2rem;
+        }
     }
 
 }
