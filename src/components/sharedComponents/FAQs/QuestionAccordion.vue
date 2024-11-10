@@ -74,12 +74,7 @@ h2 {
 
     >span {
         @extend .text;
-        font-weight:light;
-        font-size: 1.5rem;
 
-        @media screen and (max-width: 500px) {
-            font-size: 2.2rem;
-        }
 
     }
 

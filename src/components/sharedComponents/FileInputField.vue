@@ -112,20 +112,23 @@ const HandleFileUpload = (e: Event) => {
             display: flex;
             align-items: center;
             justify-content: center;
-            @extend .btnfont;
+            
             pointer-events: none;
             text-align: center;
             color:$black;
             border-radius: $border-radius;
-
+            span{
+                @extend .btnfont;
+                font-weight:500;
+            }
 
         }
 
         .file-placeHolder {
             font-family: $montserrat;
-            font-size: 1.125rem;
+            // font-size: 1.125rem;
             font-style: normal;
-            font-weight: 400;
+            // font-weight: 400;
             pointer-events: none;
             margin-left:1rem;
             &.rtl{
