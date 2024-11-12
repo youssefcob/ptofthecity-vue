@@ -130,6 +130,9 @@ const props = defineProps({
                 span {
                     color: $white;
                 }
+                span{
+                    line-height: 120%;
+                }
 
             }
 
