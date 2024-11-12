@@ -112,7 +112,7 @@ $input-field:height;
   $pagePaddingRes: 0 $resMargin;  ;
   padding: $pagePadding;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     padding: $pagePaddingRes;
     // padding-left:$pagePaddingRes;
     // padding-right: $pagePaddingRes;

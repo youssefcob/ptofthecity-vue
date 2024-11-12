@@ -39,7 +39,10 @@ const updateInfo = (id: string, show: boolean) => {
 <template>
 
     <!-- <h1 :style="`position:absolute`" v-if="show">neck</h1> -->
+
     <div class="blog-container">
+    <h1 class="mobile">Where is your pain</h1>
+
         <div class="info-wrapper">
             <Instructions v-if="!show" />
             <BodyPartInfo :data="infoValue" v-if="show" />
@@ -54,6 +57,14 @@ const updateInfo = (id: string, show: boolean) => {
 </template>
 
 <style scoped lang="scss">
+.mobile{
+    display:none;
+    @media screen and (max-width: 700px) {
+        display:block;
+        
+        
+    }
+}
 .blog-container {
     @include pagePadding;
 
@@ -66,7 +77,7 @@ const updateInfo = (id: string, show: boolean) => {
         flex-direction: column;
         justify-content: center;
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 768px) {
             display:block;
         }
 

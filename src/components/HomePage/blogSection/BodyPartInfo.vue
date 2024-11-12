@@ -99,6 +99,7 @@ $gap: 1rem;
     .box {
         padding: $gap;
         border-radius: 18px;
+        text-align: left;
 
     }
 
@@ -152,7 +153,7 @@ $gap: 1rem;
             }
         }
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 767px) {
             display: none;
 
 
@@ -162,11 +163,12 @@ $gap: 1rem;
 
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
 
-    .info-container{
+    .info-container {
         text-align: left;
     }
+
     .flex-container {
         display: none;
     }
@@ -176,7 +178,8 @@ $gap: 1rem;
         flex-direction: column;
         width: 100%;
         gap: 1rem;
-text-align: left;
+        text-align: left;
+
         ul {
             width: 100%;
             text-align: left;

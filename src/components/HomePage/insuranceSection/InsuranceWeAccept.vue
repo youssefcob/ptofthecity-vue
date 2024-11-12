@@ -79,6 +79,9 @@ let showMore = () => {
             gap:.75rem;
             // margin-right:1.25rem;
 
+            >.title {
+                text-align: center;
+            }
             >.img {
                 width: 90%;
                 height: 90%;
