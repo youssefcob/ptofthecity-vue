@@ -7,17 +7,17 @@ const emit = defineEmits(['dropdown']);
 const toggleDropDown = () => {
   emit('dropdown');
 }
-const handleScrollToTarget = (id: any) => {
-  targetDivRef.value = document.getElementById(id);
-  if (targetDivRef.value) {
-    toggleDropDown();
+// const handleScrollToTarget = (id: any) => {
+//   targetDivRef.value = document.getElementById(id);
+//   if (targetDivRef.value) {
+//     toggleDropDown();
 
-    targetDivRef.value.scrollIntoView({ behavior: 'smooth' });
+//     targetDivRef.value.scrollIntoView({ behavior: 'smooth' });
 
-  } else {
-    console.warn(`Div with ID "${id}" not found.`);
-  }
-};
+//   } else {
+//     console.warn(`Div with ID "${id}" not found.`);
+//   }
+// };
 
 </script>
 
@@ -25,12 +25,12 @@ const handleScrollToTarget = (id: any) => {
   <div class="dropdown">
     <ul>
       <li>
-        <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Clinics">
+        <RouterLink class="list-item dropbtn" active-class="navbar-link" @click="toggleDropDown" to="/#Clinics">
           {{ $translate('Clinics') }}
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Services">
+        <RouterLink class="list-item dropbtn" active-class="navbar-link" @click="toggleDropDown" to="/#Services">
           {{ $translate('services') }}
         </RouterLink>
 
@@ -39,37 +39,37 @@ const handleScrollToTarget = (id: any) => {
 
 
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/#Insurance">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/#Insurance">
           Insurance choices
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/#WhoWeAre">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/#WhoWeAre">
           {{ $translate('whoWeAre') }}
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/#Blog">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/#Blog">
           {{ $translate('blog') }}
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/#Careers">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/#Careers">
           {{ $translate('careers') }}
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/#TrustedBy">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/#TrustedBy">
           {{ $translate('trustedBy') }}
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/#FAQs">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/#FAQs">
           {{ $translate('faqs') }}
         </RouterLink>
       </li>
       <li>
-        <RouterLink class="list-item" active-class="navbar-link" to="/booking">
+        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/booking">
           <!-- {{ $translate('contactUs') }} -->
           Book Now
         </RouterLink>

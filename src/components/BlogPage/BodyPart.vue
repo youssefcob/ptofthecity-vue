@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { blogInfo, type BlogInfoDetail } from '../../state/blogSection';
+import { type BlogInfoDetail } from '../../state/blogSection';
 
 const props = defineProps({
     mirrored: Boolean,

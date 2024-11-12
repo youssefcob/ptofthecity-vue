@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BodyPart from '@/components/BlogPage/BodyPart.vue';
+import BodyPartMobile from '@/components/BlogPage/BodyPartMobile.vue';
 import { blogInfo } from '@/state/blogSection';
 import { ref } from 'vue';
 const parts = Object.keys(blogInfo);
@@ -30,24 +31,32 @@ const parts = Object.keys(blogInfo);
                 </div>
             </div>
         </div>
-        <div class="body-parts-wrapper">
-            <template v-for="(part,index) in blogInfo">
+        <div class="body-parts-wrapper desktop">
+            <template v-for="(part, index) in blogInfo">
 
-                <BodyPart :content="part" :mirrored="(parts.indexOf(index) % 2)?false : true" :img="index" />
+                <BodyPart :content="part" :mirrored="(parts.indexOf(index) % 2) ? false : true" :img="index" />
             </template>
+
             <!-- <BodyPart class="body-part"/> -->
+        </div>
+
+        <div class="body-parts-wrapper mobile">
+            <template v-for="(part, index) in blogInfo">
+                <BodyPartMobile :content="part" :mirrored="(parts.indexOf(index) % 2) ? false : true" :img="index" />
+            </template>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
 .blog-container {
-    padding-top: calc( 5vh + 7.5vh);
+    padding-top: calc(5vh + 7.5vh);
 
     .body-health {
         @include pagePadding;
 
-        margin-bottom:10rem;
+        margin-bottom: 10rem;
+
         .flex {
             display: flex;
             gap: 2rem;
@@ -55,8 +64,9 @@ const parts = Object.keys(blogInfo);
             h2 {
                 color: $navy;
             }
-            .left{
-                margin:auto;
+
+            .left {
+                margin: auto;
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
@@ -67,20 +77,51 @@ const parts = Object.keys(blogInfo);
                 justify-content: flex-start;
                 align-items: flex-start;
                 height: 100%;
-                width:50%;
+                width: 50%;
 
                 img {
-                    width:30rem;
-                    height:100%;
+                    width: 30rem;
+                    height: 100%;
+
                 }
             }
         }
     }
 
     .body-parts-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 10rem;
+        &.desktop {
+            display: flex;
+            flex-direction: column;
+            gap: 10rem;
+        }
+
+        &.mobile {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .blog-container .body-health .flex {
+        gap: 0;
+
+        img {
+            display: none;
+        }
+    }
+
+
+    .blog-container .body-parts-wrapper {
+        &.desktop {
+            display: none;
+        }
+
+        &.mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 10rem;
+            @include pagePadding;
+        }
     }
 }
 </style>
