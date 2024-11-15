@@ -16,14 +16,14 @@ const props = defineProps({
     minYear: String,
     maxYear: String,
     lettersOnly: Boolean,
+    numbersOnly: Boolean,
     background: String
 });
 let input = ref(``);
 const emit = defineEmits([`input`]);
 
-const emitInput = (e: Event) => {
-    // emit(`input`, (e.target as HTMLInputElement).value);
-    emit(`input`, (input.value));
+const emitInput = () => {
+if(input.value) emit(`input`, (input.value));
 
 }
 const handleInput = (e: Event) => {
@@ -68,7 +68,15 @@ const handleInput = (e: Event) => {
             input.value = value.slice(0, -1);
         }
     }
-    emitInput(e);
+    else if (props.numbersOnly) {
+        let value = (e.target as HTMLInputElement).value;
+        let regex = /^[0-9]*$/;
+        if (!regex.test(value)) {
+            input.value = value.slice(0, -1);
+        }
+    }
+
+    emitInput();
 }
 const CalcHeight = () => {
     if (props.height) {
