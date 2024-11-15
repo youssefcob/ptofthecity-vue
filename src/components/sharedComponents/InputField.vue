@@ -24,6 +24,8 @@ const emit = defineEmits([`input`]);
 
 const emitInput = () => {
 if(input.value) emit(`input`, (input.value));
+// console.log('smth')
+
 
 }
 const handleInput = (e: Event) => {
@@ -76,6 +78,7 @@ const handleInput = (e: Event) => {
         }
     }
 
+    // console.log(input.value)
     emitInput();
 }
 const CalcHeight = () => {
