@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { vMaska } from "maska/vue"
 import Background from '../HomePage/landingSection/Background.vue';
+import { watch } from 'vue';
 
 const props = defineProps({
     required: Boolean,
@@ -23,15 +24,18 @@ let input = ref(``);
 const emit = defineEmits([`input`]);
 
 const emitInput = () => {
-if(input.value) emit(`input`, (input.value));
-// console.log('smth')
-
+    // emit(`input`, (e.target as HTMLInputElement).value);
+    emit(`input`, (input.value));
 
 }
-const handleInput = (e: Event) => {
+
+watch(() => input.value, () => {
+    handleInput();
+})
+const handleInput = () => {
 
     if (props.date) {
-        let value = (e.target as HTMLInputElement).value;
+        let value = input.value;
         if (value.length === 2) {
             if (parseInt(value) > 12) {
                 input.value = '12-';
@@ -64,21 +68,23 @@ const handleInput = (e: Event) => {
     }
 
     if (props.lettersOnly) {
-        let value = (e.target as HTMLInputElement).value;
+        let value = input.value;
         let regex = /^[a-zA-Z\s]*$/;
         if (!regex.test(value)) {
             input.value = value.slice(0, -1);
+            return;
         }
     }
-    else if (props.numbersOnly) {
-        let value = (e.target as HTMLInputElement).value;
+    if (props.numbersOnly) {
+        let value = input.value;
         let regex = /^[0-9]*$/;
         if (!regex.test(value)) {
             input.value = value.slice(0, -1);
+            return;
+
         }
     }
 
-    // console.log(input.value)
     emitInput();
 }
 const CalcHeight = () => {
@@ -100,10 +106,12 @@ const CalcTop = () => {
     <div class="required" :dir="$dir()">
         <input :disabled="$props.disabled" class="input-field" v-if="!$props.height"
             :style="`width:100%; ${CalcHeight()};${($props.error) ? 'border-color:red' : ''};${props.background ? `background-color:${props.background}` : 'white'}`"
-            v-maska="mask" type="text" v-model="input" @input="handleInput($event)">
-        <textarea :disabled="$props.disabled" class="input-field" v-if="$props.height"
+            v-maska="mask" type="text" v-model="input" >
+        
+            <textarea :disabled="$props.disabled" class="input-field" v-if="$props.height"
             :style="`width:100%;resize:none; ${CalcHeight()};${($props.error) ? 'border-color:red' : ''}`" floatlabeltype
-            type="text" v-model="input" @input="handleInput($event)" />
+            type="text" v-model="input"  ></textarea>
+
         <label class="asterisk" v-if="!input"
             :style="`${CalcTop()};${$dir() === 'ltr' ? 'left:1.25rem' : 'right:1.25rem'};`">{{ $props.placeHolder }}<span
                 :style="props.required ? `color:red` : `color:transparent`">
