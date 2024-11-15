@@ -34,10 +34,11 @@ const showDropDown = () => {
     filteredList.value = props.list;
     show.value = true;
 }
-const emit = defineEmits([`input`]);
+const emit = defineEmits([`input`,'update:modelValue']);
 
 const changeInput = (insurance: string) => {
     input.value = insurance;
+    emit(`update:modelValue`, input.value);
     emit(`input`, input.value);
     show.value = false;
 

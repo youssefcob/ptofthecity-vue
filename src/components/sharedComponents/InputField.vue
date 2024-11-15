@@ -21,10 +21,11 @@ const props = defineProps({
     background: String
 });
 let input = ref(``);
-const emit = defineEmits([`input`]);
+const emit = defineEmits([`input`, 'update:modelValue']);
 
 const emitInput = () => {
     // emit(`input`, (e.target as HTMLInputElement).value);
+    emit(`update:modelValue`, (input.value));
     emit(`input`, (input.value));
 
 }
