@@ -30,13 +30,10 @@ const debounce = (fn: Function, ms = 300) => {
 };
 
 const convertZipToPosition = async (zip_code: string) => {
-    console.log(zip_code)
     let res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${zip_code}&key=${google_api_key}`)
 
     return (res.data.results[0].geometry.location);
 }
-
-
 
 
 const filterbyZip = async ($event: string) => {
@@ -77,7 +74,7 @@ const debouncedZipToPosition = debounce(async (zip_code: string) => await filter
 
 
 
-const filterClinicsByBorough = (borough: string = props.location || 'All Clinics') => {
+const filterClinicsByBorough = (borough: string) => {
     if (borough == 'All Clinics') {
         filteredClinicPositions.value = clinicPositions.value;
     } else if (borough) {
@@ -86,10 +83,18 @@ const filterClinicsByBorough = (borough: string = props.location || 'All Clinics
     }
 }
 
+const borough = ref(props.location || 'All Clinics')
+const zip_code = ref('')
+const filterClinics = () => {
+    console.log(borough.value)
+    filterClinicsByBorough(borough.value)
+    debouncedZipToPosition(zip_code.value)
+}
+
 
 onMounted(async () => {
     await getClinics();
-    filterClinicsByBorough()
+    filterClinicsByBorough(borough.value)
 })
 
 </script>
@@ -103,9 +108,9 @@ onMounted(async () => {
             <div class="input-wrapper">
                 <div class="input-fields">
                     <DropDownInputField :background="'#C7E3E8'" :placeHolder="'Borough'"
-                        :list="['All Clinics', ...clinicNames]" @input="filterClinicsByBorough($event)"
+                        :list="['All Clinics', ...clinicNames]" @input="filterClinics()" v-model="borough"
                         :default="props.location || 'All Clinics'" />
-                    <InputField :background="'#C7E3E8'" :placeHolder="'Zip Code'" @input="debouncedZipToPosition($event)"
+                    <InputField :background="'#C7E3E8'" :placeHolder="'Zip Code'" @input="filterClinics()" v-model="zip_code"
                         numbersOnly />
                 </div>
                 <h2 class="desktop">Results</h2>
