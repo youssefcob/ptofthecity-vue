@@ -14,7 +14,7 @@ const props = defineProps({
 onMounted(async () => {
     await getServices();
     await getClinics();
-    
+
 })
 
 </script>
@@ -45,7 +45,7 @@ onMounted(async () => {
                 </router-link>
             </div>
         </li>
-       
+
 
 
         <li>
@@ -81,7 +81,7 @@ onMounted(async () => {
         <li>
             <RouterLink class="list-item" active-class="navbar-link" to="/booking">
                 <!-- {{ $translate('contactUs') }} -->
-                  Book Now
+                Book Now
             </RouterLink>
         </li>
 
@@ -93,9 +93,9 @@ onMounted(async () => {
 ul {
     list-style-type: none;
     display: flex;
-    gap: 0.2rem;
+    gap: clamp(0px, 0.5vw, 1rem);
     align-items: center;
-    padding: 0.6rem 1.5rem;
+    padding: 0.4rem 1.5rem;
 
     border-radius: $border-radius;
     height: 100%;
@@ -171,8 +171,16 @@ ul {
         }
     }
 
+    li {
+        margin-left: 0;
+        height: 100%;
+
+    }
+
     .list-item {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 0.3125rem 0.4125rem;
         height: 100%;
         position: relative;

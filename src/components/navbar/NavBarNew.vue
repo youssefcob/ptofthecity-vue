@@ -93,6 +93,7 @@ watch(y, (newValue) => {
 
 
 
+    
     .logo {
         align-self: center;
     }
