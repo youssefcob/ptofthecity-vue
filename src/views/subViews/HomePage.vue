@@ -32,6 +32,10 @@ onMounted(() => {
         <section class="landing-page-container">
             <LandingPageNew />
         </section>
+        <section class="blogSection" id="Blog">
+            <BlogSection />
+        </section>
+
         <!-- <section class="landing-page-container">
             <LandingPage />
         </section> -->
@@ -59,9 +63,7 @@ onMounted(() => {
             <OurStaffPage />
         </section>
 
-        <section class="blogSection" id="Blog">
-            <BlogSection />
-        </section>
+    
 
         <section class="careersSection" id="Careers">
             <CareersPage />

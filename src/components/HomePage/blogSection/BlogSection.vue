@@ -41,12 +41,15 @@ const updateInfo = (id: string, show: boolean) => {
     <!-- <h1 :style="`position:absolute`" v-if="show">neck</h1> -->
 
     <div class="blog-container">
-    <h1 class="mobile">Where is your pain</h1>
+        <h1 class="mobile">Where is your pain</h1>
 
         <div class="info-wrapper">
             <Instructions v-if="!show" />
             <BodyPartInfo :data="infoValue" v-if="show" />
-            <router-link to="/blog" class="btn responsive">Our Blog</router-link>
+            <div class="btn-wrapper">
+                <router-link to="/blog" class="btn responsive">Our Blog</router-link>
+                <router-link to="/booking" class="btn responsive transparent">Book Now</router-link>
+            </div>
 
         </div>
 
@@ -57,14 +60,16 @@ const updateInfo = (id: string, show: boolean) => {
 </template>
 
 <style scoped lang="scss">
-.mobile{
-    display:none;
+.mobile {
+    display: none;
+
     @media screen and (max-width: 700px) {
-        display:block;
-        
-        
+        display: block;
+
+
     }
 }
+
 .blog-container {
     @include pagePadding;
 
@@ -78,13 +83,21 @@ const updateInfo = (id: string, show: boolean) => {
         justify-content: center;
 
         @media screen and (max-width: 768px) {
-            display:block;
+            display: block;
         }
 
+        .btn-wrapper{
+            width:100%;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap:1rem;
+        }
         .btn {
             width: 50%;
-            margin-top: 2rem;
+            // margin-top: 2rem;
             align-self: flex-start;
+
         }
     }
 
