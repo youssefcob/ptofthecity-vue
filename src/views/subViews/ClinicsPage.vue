@@ -49,6 +49,15 @@ const filterbyZip = async ($event: string) => {
     console.log(filteredClinicPositions.value)
 }
 
+const filterbyNearest = (cords:{lat:number,lng:number}) => {
+    const radius = 10;
+    filteredClinicPositions.value = filteredClinicPositions.value.filter(location => {
+        const distance = calculateDistance(cords.lat, cords.lng, Number(location.lat), Number(location.long));
+        console.log(distance)
+        return distance <= radius;
+    });
+}
+
 
 
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -77,6 +86,17 @@ const debouncedZipToPosition = debounce(async (zip_code: string) => await filter
 const filterClinicsByBorough = (borough: string) => {
     if (borough == 'All Clinics') {
         filteredClinicPositions.value = clinicPositions.value;
+    } else if (borough == 'Nearest') {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let cords = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+        };
+            filterbyNearest(cords);
+        });
+    }
+   
     } else if (borough) {
         filteredClinicPositions.value = clinics[borough as keyof typeof clinics]
 
@@ -110,8 +130,8 @@ onMounted(async () => {
                     <DropDownInputField :background="'#C7E3E8'" :placeHolder="'Borough'"
                         :list="['All Clinics', ...clinicNames]" @input="filterClinics()" v-model="borough"
                         :default="props.location || 'All Clinics'" />
-                    <InputField :background="'#C7E3E8'" :placeHolder="'Zip Code'" @input="filterClinics()" v-model="zip_code"
-                        numbersOnly />
+                    <InputField :background="'#C7E3E8'" :placeHolder="'Zip Code'" @input="filterClinics()"
+                        v-model="zip_code" numbersOnly />
                 </div>
                 <h2 class="desktop">Results</h2>
 

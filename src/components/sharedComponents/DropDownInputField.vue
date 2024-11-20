@@ -34,6 +34,8 @@ const showDropDown = () => {
     filteredList.value = props.list;
     show.value = true;
 }
+
+
 const emit = defineEmits([`input`,'update:modelValue']);
 
 const changeInput = (insurance: string) => {
@@ -86,10 +88,10 @@ onUnmounted(() => {
 
 <template>
 
-    <div :class="`drpdown-btn ${id}`" @click="showDropDown">
+    <div :class="`drpdown-btn ${id}`" @click="showDropDown" >
 
         <div class="required">
-            <input :dir="$dir()" :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()"
+            <input :dir="$dir()" :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()" @focus="showDropDown" 
                 v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''};${background? `background-color:${background}`:'white'}`" type="text">
 
 

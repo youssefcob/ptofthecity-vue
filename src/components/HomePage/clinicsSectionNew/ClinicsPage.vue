@@ -21,7 +21,7 @@ onMounted(async () => {
 </script>
 
 <template>
-        <h1 class="responsive">Our {{ getClinicsCount() }} Clinics</h1>
+    <h1 class="responsive">Our {{ getClinicsCount() }} Clinics</h1>
 
     <div class="clinics-container">
 
@@ -49,7 +49,12 @@ onMounted(async () => {
                     <router-link :to="`/clinics`">
                         <div class="btn responsive">See all clinics</div>
                     </router-link>
-                    <div class="btn responsive transparent">find your nearest location</div>
+
+                    <router-link :to="`/clinics/Nearest`">
+                        <div class="btn responsive transparent">find your nearest
+                            location
+                        </div>
+                    </router-link>
 
                 </div>
             </div>
@@ -124,7 +129,7 @@ onMounted(async () => {
         margin-top: 1rem;
         align-self: first baseline;
 
-        >.btn.transparent {
+        .btn.transparent {
             background: rgba(42, 192, 212, 0.20);
             color: white;
 
@@ -147,8 +152,8 @@ onMounted(async () => {
                 width: 100%;
                 @include pagePadding;
 
-                h1{
-                    display:none;
+                h1 {
+                    display: none;
                 }
 
                 @media screen and (max-width: 990px) {
@@ -178,15 +183,15 @@ onMounted(async () => {
     }
 }
 
-h1.responsive{
-    display:none;
+h1.responsive {
+    display: none;
+
     @media screen and (max-width: 990px) {
-        display:block;
-        color:$navy;
+        display: block;
+        color: $navy;
         @include pagePadding;
-        margin-bottom:2rem;
-        
+        margin-bottom: 2rem;
+
     }
 }
-
 </style>

@@ -3,6 +3,7 @@ import NavLogoInverted from './NavLogoInverted.vue';
 
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { Ref } from 'vue';
+import Mobile from '../NavbarComps/Mobile.vue';
 
 
 const show: Ref<boolean> = ref(false);
@@ -37,32 +38,14 @@ onUnmounted(() => {
     <div class="lang-container">
         <NavLogoInverted class="logo"/>
 
-        <!-- <div class="language">
-            <div class="language-dropdown-responsive">
-                <div class="language-btn" @click="show = !show">
-                    <span>
-                    {{ lang }}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 12 7" fill="none">
-                        <path d="M1 1L6 6L11 1" stroke="black" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </span>
-
-                </div>
-                <div class="language-list-responsive" v-if="show">
-                    <div class="language-item" @click="changeLang('EN')">EN</div>
-                    <div class="language-item" @click="changeLang('AR')">AR</div>
-                    <div class="language-item" @click="changeLang('ES')">ES</div>
-                </div>
-            </div>
-        </div> -->
+        <Mobile inverted/>
 
     </div>
 </template>
 
 <style scoped lang="scss">
 .lang-container {
-    padding:3rem 0 3rem 0 ; 
+    padding:3rem 2.5rem 3rem 2.5rem ; 
     width: 100%;
     display: flex;
     align-items: center;
@@ -73,7 +56,7 @@ onUnmounted(() => {
     border-radius: 1.5rem;
 
     >.logo{
-    margin-left:2.5rem;
+    // margin-left:2.5rem;
 
     }
     >.language {
