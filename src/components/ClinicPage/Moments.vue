@@ -21,12 +21,8 @@ const props = defineProps({
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s;
-    &:hover{
-        transform: scale(1.05);
-    }
+    // border-radius: 1rem;
+    // margin-bottom: 1rem;
+
 }
 </style>

@@ -406,6 +406,8 @@ a {
 
 .moments{
     @include pagePadding;
+    // border-radius: 1rem;
+    // overflow: hidden;
 
     .moment_carousel{
         height:40rem;
