@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, type Ref } from 'vue';
 
 const props = defineProps({
     images: {
-        type: Array as () => string[],
+        type: Array as () => {path:string}[],
         default: () => [
             '/images/careers.png',
             '/images/contactUs.jpg',
@@ -38,7 +38,7 @@ onUnmounted(() => {
 
 <template>
     <div class="image-container">
-        <div class="background-image" :style="{ backgroundImage: `url(${props.images[currentIndex]})` }">
+        <div class="background-image" :style="{ backgroundImage: `url(${props.images[currentIndex].path})` }">
             <div class="desc">
                 <slot></slot>
             </div>

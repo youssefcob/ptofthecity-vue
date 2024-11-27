@@ -5,51 +5,12 @@ import { onMounted, reactive, ref, type Ref } from 'vue';
 import BackGroundImage from '../landingSection/BackGroundImage.vue';
 import Fade from './Animations/Fade.vue';
 import Description from './Description/Description.vue';
+import {campaign, getCampaigns} from '@/state/LandingPage';
 
 
 
 const carousel: Ref<typeof Carousel | null> = ref(null);
 
-// onMounted(async () => {
-//     // await getCarousel();
-//     setInterval(initiateScroll, 1000);
-// })
-// let bas
-const campaign = reactive([
-    {
-        images: [
-            '/images/careers.png',
-            '/images/contactUs.jpg',
-            '/images/eligibilityFormImage.jpg',
-        ],
-        title: 'PTOf the City',
-        slogans: [ 'not description', 'smth', 'slogan'],
-        animation: {
-            background: 'fade',
-            description: 'transitioningSlogans',
-            interval: 2000
-        },
-        button: 'service/1',
-        buttonText: 'button',
-    },
-    {
-        images: [
-            '/images/eligibilityFormImage.jpg',
-            '/images/careers.png',
-            '/images/contactUs.jpg',
-        ],
-        title: 'PTOf the City',
-        slogans: ['description', 'not description', 'smth', 'slogan'],
-        animation: {
-            background: 'fade',
-            description: 'transitioningSlogans',
-            interval: 2000
-        },
-        buttonLink: 'service/2',
-        buttonText: 'button 2',
-
-    }
-])
 
 const initiateScroll = () => {
 
@@ -57,8 +18,9 @@ const initiateScroll = () => {
 }
 
 onMounted(async () => {
-    // await getCarousel();
+    await getCampaigns();
     setInterval(initiateScroll, 10000);
+
 })
 
 
@@ -70,10 +32,10 @@ onMounted(async () => {
     <div class="container">
         <Carousel NoIndicator NoButtons ref="carousel" class="carousel">
             <div v-for="(item, index) in campaign" class="carousel-item" :key="index">
-                <Fade :interval="item.animation.interval" :images="item.images" >
+                <Fade :interval="Number(item.animation_interval)" :images="item.images" >
 
                     <Description class="description" :title="item.title" :description="item.slogans"
-                        :animation="item.animation.description" :interval="item.animation.interval"
+                        :animation="item.slogans_animation" :interval="item.animation_interval"
                         :buttonLink="item.buttonLink" :buttonText="item.buttonText" />
                 </Fade>
             </div>
