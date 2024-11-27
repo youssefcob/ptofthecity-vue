@@ -40,7 +40,7 @@ type Campaign = {
         path: string
     }[],
     slogans_animation: string,
-    animation_interval: string,
+    animation_interval: number,
     buttonLink: string,
     buttonText: string,
     animation: string
