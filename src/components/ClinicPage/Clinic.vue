@@ -91,7 +91,7 @@ const renderClinic = async () => {
     await getClinicReviews();
 }
 
-const momentsCarousel : Ref<InstanceType<typeof Moments> | null> = ref(null);
+const momentsCarousel : Ref<InstanceType<typeof Carousel> | null> = ref(null);
 
 const setMomentsInterval = () => {
     if (momentsCarousel.value) {
