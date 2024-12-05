@@ -11,27 +11,14 @@
     rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <title>PT Of The City</title> -->
-  <script type="module" crossorigin src="/assets/index-C3mppw-m.js"></script>
+  <script type="module" crossorigin src="/assets/index-BIkachNM.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-DYiJIt7F.css">
 </head>
 
 <body>
   <div id="app"></div>
   <script src="https://unpkg.com/vue3-google-map"></script>
-  <script>
-    const getMeta = async () => {
-      const response = await fetch('https://ptofthecity-26da1857a791.herokuapp.com/api/head');
-      const datas = await response.json();
-      // debugger;
-      const head = document.querySelector('head > title');
-      head.textContent = JSON.stringify(datas);
-      
-      console.log(datas);
-      // return data;
-    }
-
-    getMeta();
-  </script>
+   
 </body>
 
 </html>
