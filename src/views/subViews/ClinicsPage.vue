@@ -40,17 +40,23 @@ const filterbyZip = async ($event: string) => {
     if ($event.length < 5) return;
     let { lat, lng } = await convertZipToPosition($event);
 
-    const radius = 10;
-    filteredClinicPositions.value = filteredClinicPositions.value.filter(location => {
-        const distance = calculateDistance(lat, lng, Number(location.lat), Number(location.long));
-        console.log(distance)
-        return distance <= radius;
-    });
+    const radius = 8;
+    filteredClinicPositions.value = filteredClinicPositions.value
+        .filter(location => {
+            const distance = calculateDistance(lat, lng, Number(location.lat), Number(location.long));
+            console.log(distance);
+            return distance <= radius;
+        })
+        .sort((a, b) => {
+            const distanceA = calculateDistance(lat, lng, Number(a.lat), Number(a.long));
+            const distanceB = calculateDistance(lat, lng, Number(b.lat), Number(b.long));
+            return distanceA - distanceB;
+        });
     console.log(filteredClinicPositions.value)
 }
 
 const filterbyNearest = (cords:{lat:number,lng:number}) => {
-    const radius = 10;
+    const radius = 1.6;
     filteredClinicPositions.value = filteredClinicPositions.value.filter(location => {
         const distance = calculateDistance(cords.lat, cords.lng, Number(location.lat), Number(location.long));
         console.log(distance)
@@ -138,7 +144,7 @@ onMounted(async () => {
 
             </div>
             <div class="map-wrapper">
-                <ClinicsMap :positions="filteredClinicPositions" />
+                <ClinicsMap :zoom="9.8" :positions="filteredClinicPositions" />
             </div>
 
             <h2 class="mobile">Results</h2>
