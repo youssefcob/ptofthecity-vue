@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { Vue3Snackbar } from "vue3-snackbar";
 import { useHead } from "@vueuse/head";
+import { onMounted, ref } from "vue";
+import Http from "./mixins/Http";
+
+import data from "../public/data.json";
+
+const jsonData = ref(data);
+
+
 
 useHead({
-    title: "Pt Of The City",
+    title: jsonData.value.title,
     meta: [
         {
             name: "description",
@@ -18,6 +26,7 @@ const checkMobile = () => {
     }
     return onMobile;
 }
+
 </script>
 
 <template>

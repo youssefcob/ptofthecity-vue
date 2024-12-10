@@ -4,6 +4,8 @@ import BodyPartMobile from '@/components/BlogPage/BodyPartMobile.vue';
 import { blogInfo } from '@/state/blogSection';
 import { ref } from 'vue';
 const parts = Object.keys(blogInfo);
+
+
 </script>
 
 <template>

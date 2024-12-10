@@ -78,6 +78,7 @@ const updateLocation = (e: string) => {
     console.log(servicesList.value);
 
 }
+
 const sortLocations = (data: any) => {
     if (!cords.value.lat || !cords.value.long) return data;
     data.forEach((location: { name: string, lat: string, long: string, distance?: number }) => {
@@ -109,7 +110,7 @@ const getInsurances = async () => {
 }
 
 const getLocationFromProp = () => {
-    if(props.clinicName){
+    if (props.clinicName) {
         console.log(props.clinicName);
         console.log(servicesList.value)
         updateLocation(props.clinicName);
@@ -124,9 +125,9 @@ onMounted(async () => {
             cords.value.long = position.coords.longitude
         })
     }
-   await  getLocations()
-   await  getInsurances()
-     getLocationFromProp()
+    await getLocations()
+    await getInsurances()
+    getLocationFromProp()
 
 })
 
@@ -395,20 +396,23 @@ const isSelfPay = () => {
             <div class="left">
                 <div>
 
-                    <DropDownInputField id="location" :list="locations" :default="props.clinicName? props.clinicName:'' " placeHolder="Find Your nearest clinic"
-                        @input="updateLocation($event)" required :error="formErrors.location" />
-                    <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
+                    <DropDownInputField id="service" :list="servicesList" placeHolder="Service"
+                        @input="form.service = $event" required :error="formErrors.service" />
+                    <div class="ps" style="visibility: hidden;">Make sure to allow location access, Clinics are listed
+                        in order of proximity.</div>
 
 
                 </div>
                 <div>
 
-                    <DropDownInputField id="service" :list="servicesList" placeHolder="Service"
-                        @input="form.service = $event" required :error="formErrors.service" />
-                    <div class="ps" style="visibility: hidden;">Make sure to allow location access, Clinics are listed in order of proximity.</div>
+                    <DropDownInputField id="location" :list="locations"
+                        :default="props.clinicName ? props.clinicName : ''" placeHolder="Find Your nearest clinic"
+                        @input="updateLocation($event)" required :error="formErrors.location" />
+                    <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
 
 
                 </div>
+
                 <div>
                     <div class="split name">
                         <InputField required class="field" placeHolder="First Name" id="firstName"
