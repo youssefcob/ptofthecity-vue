@@ -58,7 +58,7 @@ const trans = (languagesObject: any) => {
             <div class="info-image">
                 <div class="info">
                     <p class="text-s" v-html="formatText(service?.description)"></p>
-                    <ServiceClinics :clinics="service?.clinics" />
+                    <ServiceClinics :clinics="service?.clinics" :serviceName="service?.title" />
                     <router-link to="/booking" class="btn responsive main">Book Now</router-link>
                 </div>
 

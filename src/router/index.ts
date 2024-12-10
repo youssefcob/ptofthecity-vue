@@ -50,7 +50,7 @@ const router = createRouter({
           component: () => import('@/components/FAQsPage/FAQsPage.vue')
         },
         {
-          path: 'booking/:clinicName?',
+          path: 'booking/:clinicName?/:serviceName?',
           name: 'booking',
           component: () => import('@/components/BookingPage/Booking.vue'),
           props: true

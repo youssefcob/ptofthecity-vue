@@ -4,13 +4,14 @@ import type { Clinic } from '@/interfaces/content';
 
 const props = defineProps({
     clinics: Object as () => Clinic[],
+    serviceName: String,
 });
 
 </script>
 
 <template>
     <div class="results-wrapper">
-        <router-link :to="`/clinic/${clinic.id.toString()}`" class="single-result"
+        <router-link :to="`/booking/${clinic?.name}/${props.serviceName}`" class="single-result"
             v-for="(clinic, index) in props.clinics">
             <span class="name"> {{ clinic.name }} </span>
             <br>
@@ -34,7 +35,6 @@ const props = defineProps({
         flex-grow: 1;
         padding: 0.5rem 1rem;
         border-radius: 1rem;
-        max-width: 25rem;
         cursor: pointer;
 
         &:hover {
@@ -50,6 +50,11 @@ const props = defineProps({
             font-weight: 500;
             color: $black;
 
+        }
+
+        @media screen and (min-width: 768px) {
+            max-width: 25rem;
+            
         }
     }
 }
