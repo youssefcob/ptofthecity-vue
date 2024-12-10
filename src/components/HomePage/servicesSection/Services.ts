@@ -29,7 +29,6 @@ const getServices = async () => {
     if (services.value.length > 0) return;
     let data = await Http.get('services');
     services.value = data;
-    console.log(data);
 }
 
 export { services, getServices };
