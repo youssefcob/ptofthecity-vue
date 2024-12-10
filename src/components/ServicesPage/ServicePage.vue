@@ -4,6 +4,7 @@ import { type Service, services, getServices } from '@/components/HomePage/servi
 import Carousel from '../sharedComponents/Carousel.vue';
 import SingleService from './SingleService.vue';
 import { lang } from '@/mixins/Translate';
+import ServiceClinics from './ServiceClinics.vue';
 
 const props = defineProps({
     id: String,
@@ -57,7 +58,7 @@ const trans = (languagesObject: any) => {
             <div class="info-image">
                 <div class="info">
                     <p class="text-s" v-html="formatText(service?.description)"></p>
-
+                    <ServiceClinics :clinics="service?.clinics" />
                     <router-link to="/booking" class="btn responsive main">Book Now</router-link>
                 </div>
 
@@ -106,6 +107,7 @@ const trans = (languagesObject: any) => {
         }
         .info-image{
             display:flex;
+            gap:3rem;
             @media screen and (max-width: 800px) {
                 flex-direction: column-reverse;
 
