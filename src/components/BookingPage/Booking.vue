@@ -12,12 +12,21 @@ import { recaptcha } from '@/components/Recaptcha';
 import Loading from '../sharedComponents/Loading.vue';
 import type { Service } from '../HomePage/servicesSection/Services';
 import moment from 'moment-timezone';
+import { getServices, services } from '../HomePage/servicesSection/Services';
+import { getClinics,clinics } from '../HomePage/clinicsSection/Clinics';
+import { insurances, getInsurances, insurancesArr } from '../HomePage/insuranceSection/Insurances';
 
 const isLoading: Ref<boolean> = ref(false);
 
 const props = defineProps({
-    clinicName: String
+    clinicName: String,
+    serviceName: String
 })
+
+const schedule: Ref<Schedule | undefined> = ref(undefined);
+// const services: Ref<Service[]> = ref([]);
+const servicesList: Ref<string[]> = ref([]);
+const insurancesList: Ref<string[]> = ref([]);
 
 
 
@@ -41,43 +50,81 @@ const form = reactive({
 
 })
 let Httplocations: { name: string, id: number, schedule: Schedule, services: Service[] }[] = [];
-const locations = ref([]);
+const locations: Ref<string[]> = ref([]);
 const location = '';
 let cords = ref({
     lat: 0,
     long: 0
 })
-const getLocations = async () => {
-    let data = await Http.get('clinic/names');
-    console.log(data);
-    data = sortLocations(data)
-    Httplocations = data;
-    services.value = data.services;
-    locations.value = data.map((location: { name: string }) => location.name);
-    formValidation.location.rules[1] = { dropdown: locations.value };
+
+const locationComp: Ref<InstanceType<typeof DropDownInputField> | null> = ref(null);
+const serviceComp: Ref<InstanceType<typeof DropDownInputField> | null> = ref(null);
+
+const getServicesNames = () => {
+    let s = services.value.map((service) => service.title);
+    servicesList.value = s;
+    formValidation.service.rules[1] = { dropdown: s };
+}
+
+const getclinicNames = () => {
+    let reducedClinics = [];
+    for (const key in clinics) {
+        if (clinics.hasOwnProperty(key)) {
+            const value = clinics[key];
+            reducedClinics.push(...value);
+        }
+    }
+    Httplocations = reducedClinics;
+    // let s = Httplocations.map((clinic) => clinic.name);
+    // locations.value = s;
+    // formValidation.location.rules[1] = { dropdown: s };
+}
+
+const getInsurancesNames = () => {
+    let s = insurances.value.map((insurance) => insurance.title);
+    insurancesList.value = s;
+    formValidation.insurance.rules[1] = { dropdown: insurancesList.value };
+}
+
+const updateService = (e: string) => {
+    form.service = e;
+    locationComp.value?.clear();
+
+    let c = services.value.find((service) => service.title === e)?.clinics;
+    if (c) {
+        locations.value = c.map((clinic) => clinic.name);
+        formValidation.location.rules[1] = { dropdown: locations.value };
+    }
+}
+
+
+const updateLocation = (e: string) => {
+    form.location = e;
+    schedule.value = getSchedule();
 
 }
+
+// const getLocations = async () => {
+//     let data = await Http.get('clinic/names');
+//     console.log(data);
+//     data = sortLocations(data)
+//     Httplocations = data;
+//     services.value = data.services;
+//     locations.value = data.map((location: { name: string }) => location.name);
+//     formValidation.location.rules[1] = { dropdown: locations.value };
+
+// }
 const getSchedule = () => {
+    
     let clinic = Httplocations.find((location) => location.name === form.location);
     if (!clinic) return;
     return clinic.schedule;
 }
-const schedule: Ref<Schedule | undefined> = ref(undefined);
-const services: Ref<Service[]> = ref([]);
-const servicesList: Ref<string[]> = ref([]);
-const updateLocation = (e: string) => {
-    form.location = e;
-    schedule.value = getSchedule();
-    let s = Httplocations.find((location) => location.name === e)?.services;
 
-    if (s) {
-        services.value = s;
-        servicesList.value = s.map((service) => service.title);
-        formValidation.service.rules[1] = { dropdown: servicesList.value };
-    }
-    console.log(servicesList.value);
 
-}
+
+
+
 
 const sortLocations = (data: any) => {
     if (!cords.value.lat || !cords.value.long) return data;
@@ -100,22 +147,17 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
     return R * c; // Distance in km
 }
 
-let HttpInsurances = [];
-const insurances = ref([]);
-const getInsurances = async () => {
-    let data = await Http.get('images/insurance/names');
-    HttpInsurances = data;
-    insurances.value = data.map((insurance: { title: string }) => insurance.title);
-    formValidation.insurance.rules[1] = { dropdown: insurances.value };
-}
 
-const getLocationFromProp = () => {
-    if (props.clinicName) {
-        console.log(props.clinicName);
-        console.log(servicesList.value)
-        updateLocation(props.clinicName);
-        console.log(form)
+
+const getLocationAndServiceFromProp = () => {
+
+    if (props.serviceName) {
+        serviceComp.value?.defaultValue(props.serviceName);
+        if (props.clinicName) {
+            locationComp.value?.defaultValue(props.clinicName);
+        }
     }
+ 
 }
 
 onMounted(async () => {
@@ -125,9 +167,13 @@ onMounted(async () => {
             cords.value.long = position.coords.longitude
         })
     }
-    await getLocations()
+    await getServices()
+    getServicesNames()
+    await getClinics()
+    getclinicNames()
     await getInsurances()
-    getLocationFromProp()
+    getInsurancesNames()
+    getLocationAndServiceFromProp()
 
 })
 
@@ -192,7 +238,7 @@ const formValidation = {
 
     },
     insurance: {
-        rules: ['required:if:payment:Insurance', { dropdown: insurances.value }],
+        rules: ['required:if:payment:Insurance', { dropdown: insurancesList.value }],
 
     },
     memberId: {
@@ -355,8 +401,10 @@ const convertTotimeStamp = (date: string, time: string) => {
 
 }
 
+const hoursComp: Ref<InstanceType<typeof DropDownInputField> | null> = ref(null);
 
 const updateHours = (date: { start: string, end: string }) => {
+    hoursComp.value?.clear();
     const getHours = (time: string) => {
         const [hours, minutes, seconds] = time.split(':');
         return parseInt(hours);
@@ -369,7 +417,7 @@ const updateHours = (date: { start: string, end: string }) => {
     Availablehours.value = hours
     formValidation.time.rules[1] = { dropdown: Availablehours.value }
 
-    console.log(date);
+    // console.log(date);
 }
 const updateDate = (date: { day: number, month: number, year: number }) => {
     form.date = `${date.month}-${date.day}-${date.year}`;
@@ -396,8 +444,9 @@ const isSelfPay = () => {
             <div class="left">
                 <div>
 
-                    <DropDownInputField id="service" :list="servicesList" placeHolder="Service"
-                        @input="form.service = $event" required :error="formErrors.service" />
+                    <DropDownInputField id="service" ref="serviceComp" :list="servicesList"
+                     placeHolder="Service"
+                        @input="updateService($event)" required :error="formErrors.service" />
                     <div class="ps" style="visibility: hidden;">Make sure to allow location access, Clinics are listed
                         in order of proximity.</div>
 
@@ -405,8 +454,8 @@ const isSelfPay = () => {
                 </div>
                 <div>
 
-                    <DropDownInputField id="location" :list="locations"
-                        :default="props.clinicName ? props.clinicName : ''" placeHolder="Find Your nearest clinic"
+                    <DropDownInputField id="location" ref="locationComp" :list="locations"
+                        placeHolder="Find Your nearest clinic"
                         @input="updateLocation($event)" required :error="formErrors.location" />
                     <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
 
@@ -447,7 +496,7 @@ const isSelfPay = () => {
                         :options="['Insurance', 'Self Pay']" :checked="'Insurance'" id="payment"
                         :error="formErrors.payment" />
                 </div>
-                <DropDownInputField id="insurance" :list="insurances" placeHolder="Insurance company name"
+                <DropDownInputField id="insurance" :list="insurancesList" placeHolder="Insurance company name"
                     @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
                 <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
                     :disabled="isSelfPay()" :error="formErrors.memberId" />
@@ -456,7 +505,7 @@ const isSelfPay = () => {
             </div>
             <div class="right">
                 <Calender @input="updateDate($event)" @hours="updateHours($event)" :schedule="schedule" />
-                <DropDownInputField @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
+                <DropDownInputField ref="hoursComp" @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
                     :error="formErrors.time" />
                 <div @click="submit()" class="btn responsive">Book Appointment</div>
             </div>
