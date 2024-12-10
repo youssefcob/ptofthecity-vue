@@ -1,5 +1,6 @@
 import Http from "@/mixins/Http";
 import { ref, type Ref } from "vue";
+import type { Clinic } from "@/interfaces/content";
 
 interface Lang {
     en: string;
@@ -18,6 +19,7 @@ export interface Service {
     description: Lang;
     listHeader: Lang;
     list: ListLang;
+    clinics: Clinic[];
     
 }
 
@@ -27,6 +29,7 @@ const getServices = async () => {
     if (services.value.length > 0) return;
     let data = await Http.get('services');
     services.value = data;
+    console.log(data);
 }
 
 export { services, getServices };
