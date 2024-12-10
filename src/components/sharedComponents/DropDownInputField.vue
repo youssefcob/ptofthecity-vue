@@ -30,9 +30,27 @@ let id = makeid(5);
 const input: Ref<string> = ref('');
 const show: Ref<boolean> = ref(false);
 
+const clear = () => {
+    input.value = '';
+    emit(`update:modelValue`, input.value);
+    emit(`input`, input.value);
+}
+
+const defaultValue = (value : string) => {
+    input.value = value;
+    emit(`update:modelValue`, input.value);
+    emit(`input`, input.value);
+}
+
 const showDropDown = () => {
     filteredList.value = props.list;
     show.value = true;
+}
+
+const hideDropDown = () => {
+    setTimeout(() => {
+        show.value = false;
+    }, 200);
 }
 
 
@@ -84,6 +102,11 @@ onMounted(() => {
 onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside);
 });
+
+defineExpose({
+    clear,
+    defaultValue
+});
 </script>
 
 <template>
@@ -91,7 +114,7 @@ onUnmounted(() => {
     <div :class="`drpdown-btn ${id}`" @click="showDropDown" >
 
         <div class="required">
-            <input :dir="$dir()" :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()" @focus="showDropDown" 
+            <input :dir="$dir()" :disabled="props.disabled" ref="inputField" class="input-field " @input="filterList()" @focus="showDropDown"  @focusout="hideDropDown"
                 v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''};${background? `background-color:${background}`:'white'}`" type="text">
 
 
