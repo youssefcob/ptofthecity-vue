@@ -10,6 +10,8 @@ const props = defineProps({
 </script>
 
 <template>
+    <h3>Book Now At Your Nearest Clinic.</h3>
+
     <div class="results-wrapper">
         <router-link :to="`/booking/${clinic?.name}/${props.serviceName}`" class="single-result"
             v-for="(clinic, index) in props.clinics">
@@ -21,6 +23,13 @@ const props = defineProps({
 </template>
 
 <style lang="scss" scoped>
+h3 {
+    font-size:2.2rem;
+    font-weight: 600;
+    color: $navy;
+}
+
+
 .results-wrapper {
     margin-top: 0.5rem;
     display: grid;
@@ -29,6 +38,7 @@ const props = defineProps({
     gap: 0.5rem;
 
     width: 100%;
+
 
     .single-result {
         background-color: $light-green;
@@ -54,7 +64,7 @@ const props = defineProps({
 
         @media screen and (min-width: 768px) {
             max-width: 25rem;
-            
+
         }
     }
 }

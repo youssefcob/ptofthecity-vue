@@ -129,7 +129,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                     </div>
                 </div>
                 <div class="btns-wrapper">
-                    <router-link :to="`/booking/${clinic?.name}`" class="btn responsive">
+                    <router-link :to="`/booking/${clinic?.name}/${'Initial Checkup'}`" class="btn responsive">
                         {{ $translate('book_now') }}
                     </router-link>
                 </div>

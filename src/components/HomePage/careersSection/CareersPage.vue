@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { images } from "@/state/Images"
+import { computed } from "vue";
+
+
+const careerImage = computed(() => {
+    const image = images.value.find(image => image.title === 'career');
+    return image ? image.path : "images/careers.png";
+});
 
 </script>
 
@@ -7,7 +15,7 @@
     <div class="careers-container">
         <h1 class="sectionHeader">{{$translate('careers')}}</h1>
         <div class="careers-wrapper">
-            <div class="careers-background">
+            <div class="careers-background" :style="`background-image: url(${careerImage})`">
                 <div class="careers-content">
                     <div class="text">
                         <h2>{{ $translate('join_us') }} <span>{{$translate('now')}}</span></h2>
@@ -46,7 +54,6 @@
             // position: relative;
             width: 100%;
             height: 100%;
-            background-image: url('/images/careers.png');
             @include image;
             overflow: hidden;
             @include flex(inherit,flex-end);

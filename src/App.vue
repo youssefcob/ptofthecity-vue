@@ -6,6 +6,8 @@ import Http from "./mixins/Http";
 
 import data from "../public/data.json";
 
+import {getImages} from '@/state/Images'
+
 const jsonData = ref(data);
 
 
@@ -26,6 +28,12 @@ const checkMobile = () => {
     }
     return onMobile;
 }
+
+
+
+onMounted(()=>{
+getImages()
+})
 
 </script>
 

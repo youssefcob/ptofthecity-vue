@@ -12,7 +12,7 @@ import { recaptcha } from '@/components/Recaptcha';
 import Loading from '../sharedComponents/Loading.vue';
 import type { Service } from '../HomePage/servicesSection/Services';
 import moment from 'moment-timezone';
-import { getServices, services } from '../HomePage/servicesSection/Services';
+import { getServices, servicesInitial as services } from '../HomePage/servicesSection/Services';
 import { getClinics,clinics } from '../HomePage/clinicsSection/Clinics';
 import { insurances, getInsurances, insurancesArr } from '../HomePage/insuranceSection/Insurances';
 
@@ -89,6 +89,7 @@ const getInsurancesNames = () => {
 const updateService = (e: string) => {
     form.service = e;
     locationComp.value?.clear();
+    
 
     let c = services.value.find((service) => service.title === e)?.clinics;
     if (c) {
@@ -447,8 +448,7 @@ const isSelfPay = () => {
                     <DropDownInputField id="service" ref="serviceComp" :list="servicesList"
                      placeHolder="Service"
                         @input="updateService($event)" required :error="formErrors.service" />
-                    <div class="ps" style="visibility: hidden;">Make sure to allow location access, Clinics are listed
-                        in order of proximity.</div>
+                    <div class="ps" >What would you like to do at PT of of The City?</div>
 
 
                 </div>
