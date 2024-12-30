@@ -66,10 +66,22 @@ onUnmounted(() => {
         top: 0;
         left: 0;
         transition: background-image 0.25s ease-in-out;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(44, 50, 51, 0.20) 0%, rgba(44, 50, 51, 0.80) 100%);
+            z-index: 1;
+        }
         .desc{
             position: relative;
             height:100%;
             width:100%;
+            z-index:1;
           
         }
 
