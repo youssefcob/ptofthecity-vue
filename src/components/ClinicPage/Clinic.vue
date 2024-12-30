@@ -65,7 +65,8 @@ const getWorkingHours = () => {
         const [hours, minutes] = time.split(':');
         const ampm = parseInt(hours) >= 12 ? 'PM' : 'AM';
         const hours12 = parseInt(hours) % 12 || 12;
-        return `${hours12}:${minutes} ${ampm}`;
+        const minutesStr = minutes ? `:${minutes}` : '';
+        return `${hours12}${minutesStr} ${ampm}`;
     };
     let schedule = clinic.value?.schedule;
     // console.log(schedule);
