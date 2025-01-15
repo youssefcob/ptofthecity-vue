@@ -11,10 +11,7 @@
     "type-check": "vue-tsc --build --force",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "predeploy-prod": "npm run build",
-
-    "deploy-prod": "prod -d dist "
-
+    "deploy-prod": "git checkout prod && git merge gh-pages && git subtree push --prefix dist origin prod"
     
   },
   "dependencies": {
