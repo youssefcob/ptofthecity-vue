@@ -144,7 +144,7 @@ const isNotWeekend = (day: number) => {
     let date = new Date(year.value, month.value, day);
     let dayName = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     // console.log(date);
-    if (props.schedule && props.schedule[dayName as keyof typeof props.schedule].off == true) return false
+    if (props.schedule && props.schedule[dayName as keyof typeof props.schedule].isOff == true) return false
     // if(props.schedule) console.log(dayName, props.schedule[dayName as keyof typeof props.schedule])
     return true
 }

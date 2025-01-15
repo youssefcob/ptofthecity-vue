@@ -68,12 +68,7 @@ const toggleDropDown = () => {
           {{ $translate('faqs') }}
         </RouterLink>
       </li>
-      <li>
-        <RouterLink class="list-item" active-class="navbar-link" @click="toggleDropDown" to="/booking">
-          <!-- {{ $translate('contactUs') }} -->
-          Book Now
-        </RouterLink>
-      </li>
+
     </ul>
   </div>
 </template>

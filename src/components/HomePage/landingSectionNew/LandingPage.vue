@@ -49,7 +49,7 @@ onMounted(async () => {
 <style scoped lang='scss'>
 .carousel-item {
     @include carouselItem2(1);
-    height:100vh;
+    height:$landinPageHeight;
 
 }
 

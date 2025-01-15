@@ -28,7 +28,7 @@ let services: Ref<Service[]> = ref([]);
 let servicesInitial: Ref<Service[]> = ref([]);
 
 const unshift = (data: Service[]) => {
-    const initialCheckupIndex = data.findIndex(service => service.title === 'Initial Checkup');
+    const initialCheckupIndex = data.findIndex(service => service.title === 'Initial Check-up');
     if (initialCheckupIndex !== -1) {
         const [initialCheckupService] = data.splice(initialCheckupIndex, 1);
         data.unshift(initialCheckupService);
@@ -40,7 +40,7 @@ const getServices = async () => {
     if (services.value.length > 0) return;
     let data = await Http.get('services');
     servicesInitial.value = unshift(data);
-    data = data.filter((service: Service) => service.title !== 'Initial Checkup');
+    data = data.filter((service: Service) => service.title !== 'Initial Check-up');
     services.value = data;
 }
 

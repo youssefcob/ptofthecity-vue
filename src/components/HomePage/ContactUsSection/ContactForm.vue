@@ -201,7 +201,7 @@ defineExpose({
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: $formGap;
 
 }
 

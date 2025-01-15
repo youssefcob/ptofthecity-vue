@@ -9,6 +9,7 @@ import SearchBarNew from './NavbarComps/SearchBarNew.vue';
 import Mobile from './NavbarComps/Mobile.vue';
 
 import { useWindowScroll } from '@vueuse/core';
+import BookNow from './NavbarComps/BookNow.vue';
 
 let menuState = ref(false); 
 const handleDropdownUpdate = () => {
@@ -60,8 +61,9 @@ watch(y, (newValue) => {
 
         <div class="util-wrapper">
             <!-- smth -->
-            <SearchBarNew :navOnLanding="navOnLanding" />
-            <Mobile />
+            <!-- <SearchBarNew :navOnLanding="navOnLanding" /> -->
+            <BookNow :navOnLanding="navOnLanding" />
+            <Mobile :navOnLanding="navOnLanding" />
             <!-- <Lang /> -->
         </div>
     </nav>

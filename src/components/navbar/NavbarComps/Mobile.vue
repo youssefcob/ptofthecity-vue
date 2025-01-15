@@ -1,13 +1,18 @@
 <script setup lang="ts">
 const props = defineProps({
-    inverted:Boolean
+    inverted:{
+        type: Boolean
+    },
+    navOnLanding: {
+        type: Boolean,
+    }
 })
 
 </script>
 
 <template>
     <a href="tel:+201019223311">
-        <div :class="`icon-wrapper ${props.inverted? 'inverted':''}`">
+        <div :class="`icon-wrapper ${props.inverted? 'inverted':''} ${props.navOnLanding ? 'main' : 'secondary'}`">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                 <g clip-path="url(#clip0_813_892)">
                     <path
@@ -37,6 +42,11 @@ a{
 
     &.inverted{
         background:white;
+
+    }
+    &.secondary:not(.inverted) {
+        opacity:0.8;
     }
 }
+
 </style>

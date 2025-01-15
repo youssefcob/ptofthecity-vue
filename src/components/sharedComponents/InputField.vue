@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue';
 import { vMaska } from "maska/vue"
 import Background from '../HomePage/landingSection/Background.vue';
 import { watch } from 'vue';
@@ -18,9 +18,14 @@ const props = defineProps({
     maxYear: String,
     lettersOnly: Boolean,
     numbersOnly: Boolean,
+    value: String,
     background: String
 });
-let input = ref(``);
+
+const clear = () => {
+    input.value = '';
+}
+let input = ref(props.value || '');
 const emit = defineEmits([`input`, 'update:modelValue']);
 
 const emitInput = () => {
@@ -33,6 +38,9 @@ const emitInput = () => {
 watch(() => input.value, () => {
     handleInput();
 })
+
+const asterisk: Ref<HTMLElement | null> = ref(null);
+
 const handleInput = () => {
 
     if (props.date) {
@@ -86,6 +94,12 @@ const handleInput = () => {
         }
     }
 
+    if (input.value.length > 0) {
+        asterisk.value?.classList.add('active');
+    } else {
+        asterisk.value?.classList.remove('active');
+    }
+
     emitInput();
 }
 const CalcHeight = () => {
@@ -101,6 +115,15 @@ const CalcTop = () => {
     }
     return '';
 }
+
+onMounted(() => {
+
+if (input.value.length > 0) {
+    asterisk.value?.classList.add('active');
+} else {
+    asterisk.value?.classList.remove('active');
+}
+})
 </script>
 
 <template>
@@ -110,13 +133,17 @@ const CalcTop = () => {
             v-maska="mask" type="text" v-model="input" >
         
             <textarea :disabled="$props.disabled" class="input-field" v-if="$props.height"
-            :style="`width:100%;resize:none; ${CalcHeight()};${($props.error) ? 'border-color:red' : ''}`" floatlabeltype
+            :style="`width:100%;resize:none; ${CalcHeight()};${($props.error) ? 'border-color:red' : ''}`"
             type="text" v-model="input"  ></textarea>
 
-        <label class="asterisk" v-if="!input"
+            <label class="asterisk" ref="asterisk" :style="`${CalcTop()};`">{{ $props.placeHolder }}<span style="color:red"
+                v-if="props.required">
+                &nbsp;*</span> <span class='ps' v-if="$props.optional">(Optional)</span></label>
+                
+        <!-- <label class="asterisk" ref="asterisk" 
             :style="`${CalcTop()};${$dir() === 'ltr' ? 'left:1.25rem' : 'right:1.25rem'};`">{{ $props.placeHolder }}<span
                 :style="props.required ? `color:red` : `color:transparent`">
-                *</span> <span class='ps' v-if="$props.optional">(Optional)</span></label>
+                *</span> <span class='ps' v-if="$props.optional">(Optional)</span></label> -->
     </div>
 </template>
 <style scoped lang="scss">
@@ -138,29 +165,43 @@ const CalcTop = () => {
 
     }
 
-    .arrowdown,
     .asterisk {
         position: absolute;
     }
 
     .asterisk {
         left: 1.25rem;
-
-        top: 21%;
+        top: 35%;
         color: rgba(0, 0, 0, 0.793);
         font-family: $montserrat;
         font-size: 1.125rem;
         pointer-events: none;
+        transition: all 0.3s ease-in-out;
 
-        @media screen and (max-width: 800px) {
-            left: 18px;
-            top: 34%;
-
+        span{
+            position: absolute;
+            top: -40%;
+            // right:-1rem;
+            &.ps{
+                // right:-7rem;
+            }
         }
 
 
+        &.active {
+            top: -1.5rem !important;
+            left:.7rem;
+            // background-color: white;
+            transition: all 0.3s ease-in-out;
+            font-size: 0.9rem;
+        }
+
         @media screen and (max-width: 800px) {
-            // font-size: 13px;
+            left: 18px;
+        }
+
+        @media screen and (max-width: 800px) {
+            font-size: 13px;
         }
     }
 

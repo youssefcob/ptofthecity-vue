@@ -310,7 +310,7 @@ const base = ref(import.meta.env.VITE_BASE_URL as string);
     display: none;
 }
 
-$formGap: 1.2rem;
+// $formGap: 1.7rem;
 
 .eligibility-container {
     margin-top: $section-margin;

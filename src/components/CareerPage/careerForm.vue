@@ -290,8 +290,9 @@ const modifyForm = () => {
 <template>
     <div class="form-wrapper">
         <Loading v-if="isLoading" />
+        <div class="ps">Fields marked with an <span style="color:red">*</span> are required</div>
+
         <div>
-            <div class="ps">Fields marked with an <span style="color:red">*</span> are required</div>
             <DropDownInputField placeHolder="Job you're applying for" required :list="jobs" @input="form.job = $event"
                 id="jobs" />
         </div>
@@ -318,7 +319,7 @@ const modifyForm = () => {
 </template>
 
 <style scoped lang="scss">
-$formgap: 1.25rem;
+// $formGap: 1.25rem;
 
 .form-wrapper {
     width: 60%;
@@ -330,12 +331,12 @@ $formgap: 1.25rem;
 
     display: flex;
     flex-direction: column;
-    gap: $formgap;
+    gap: $formGap;
 
     .name-wrapper {
         width: 100%;
         display: flex;
-        gap: $formgap;
+        gap: $formGap;
 
         @media screen and (max-width: 500px) {
             flex-direction: column;
@@ -355,7 +356,7 @@ $formgap: 1.25rem;
     .location-wrapper {
         width: 100%;
         display: flex;
-        gap: $formgap;
+        gap: $formGap;
 
         @media screen and (max-width: 501px) {
             flex-direction: column;
@@ -368,19 +369,7 @@ $formgap: 1.25rem;
         }
     }
 
-    .recaptcha {
-        @media screen and (max-width: 501px) {
-            width: 100%;
-            height: 6rem;
-
-        }
-
-        width: 14rem;
-        height: 4rem;
-        background-color: $darkgrey;
-        border-radius: $border-radius;
-
-    }
+  
 
     .btn {
         @media screen and (min-width: 501px) {

@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router';
 
 import { services, getServices } from '@/components/HomePage/servicesSection/Services';
 import { clinics, getClinics, clinicNames } from '@/components/HomePage/clinicsSection/Clinics';
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref, type Ref } from 'vue';
 
 const props = defineProps({
     navOnLanding: {
@@ -11,31 +11,39 @@ const props = defineProps({
         required: true
     }
 })
+let rearrangedClinicsNames:Ref<string[]> = ref([]);
 onMounted(async () => {
     await getServices();
     await getClinics();
+    rearrangeClinics();
 
 })
+
+const rearrangeClinics = () => {
+    rearrangedClinicsNames.value = clinicNames.value;
+    rearrangedClinicsNames.value = rearrangedClinicsNames.value.filter(clinic => clinic !== 'Brooklyn');
+    rearrangedClinicsNames.value.push('Brooklyn');
+}
 
 </script>
 
 <template>
     <ul :class="props.navOnLanding ? 'main' : 'secondary'">
-       
+
         <li class="dropdown">
             <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Clinics">
                 {{ $translate('Clinics') }}
             </RouterLink>
             <div class="dropdown-content clinics">
-                <div class="clinic" v-for="(clinic, index) in clinicNames" :key="clinic">
+                <template class="clinic" v-for="(clinic, index) in rearrangedClinicsNames" :key="clinic">
                     <strong>{{ clinic }}</strong>
 
                     <router-link class="dropdown-item" v-for=" title in clinics[clinic as keyof typeof clinics]"
                         :to="`/clinic/${title.id.toString()}`">{{ title.name }}</router-link>
-                </div>
+                </template>
             </div>
         </li>
-        
+
         <li class="dropdown">
             <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Services">
                 {{ $translate('services') }}
@@ -47,9 +55,9 @@ onMounted(async () => {
                 </router-link>
             </div>
         </li>
-       
-      
-    
+
+
+
 
 
 
@@ -83,12 +91,11 @@ onMounted(async () => {
                 {{ $translate('faqs') }}
             </RouterLink>
         </li>
-        <li>
+        <!-- <li>
             <RouterLink class="list-item" active-class="navbar-link" to="/booking">
-                <!-- {{ $translate('contactUs') }} -->
                 Book Now
             </RouterLink>
-        </li>
+        </li> -->
 
 
     </ul>
@@ -160,9 +167,17 @@ ul {
             }
 
             &.clinics {
+                display: none;
+                flex-direction: column;
+                flex-wrap: wrap;
+                width: 40vw;
+                height: 58vh;
+
                 .clinic {
                     display: flex;
                     flex-direction: column;
+                    flex-wrap: wrap;
+                    max-height: fit-content;
                 }
 
                 strong {
@@ -173,6 +188,10 @@ ul {
 
         &:hover .dropdown-content {
             display: grid;
+
+            &.clinics {
+                display: flex;
+            }
         }
     }
 

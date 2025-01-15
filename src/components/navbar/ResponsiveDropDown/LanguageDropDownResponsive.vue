@@ -38,7 +38,7 @@ onUnmounted(() => {
     <div class="lang-container">
         <NavLogoInverted class="logo"/>
 
-        <Mobile inverted/>
+        <Mobile :inverted="true" />
 
     </div>
 </template>

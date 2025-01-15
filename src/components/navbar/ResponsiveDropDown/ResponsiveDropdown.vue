@@ -4,6 +4,7 @@ import SearchBar from '../NavbarComps/SearchBar.vue';
 import NavListVertical from '../NavbarComps/NavListVertical.vue';
 import LanguageDropDown from './LanguageDropDownResponsive.vue';
 import SearchBarNew from '../NavbarComps/SearchBarNew.vue';
+import BookNow from '../NavbarComps/BookNow.vue';
 
 const emit = defineEmits(['dropdown']);
 
@@ -26,7 +27,8 @@ const toggleDropDown = () => {
 
             <div class="list-search-container">
                 <div class="search-bar">
-                    <SearchBarNew :navOnLanding="false" />
+                    <!-- <SearchBarNew :navOnLanding="false" /> -->
+                     <BookNow :navOnLanding="true" />
                 </div>
                 <div class="navList">
                     <NavListVertical @dropdown="toggleDropDown" />
@@ -72,7 +74,8 @@ const toggleDropDown = () => {
             gap: 2rem;
 
             .search-bar{
-                height:5rem;
+                height:6rem;
+                margin-top: 1rem;
             }
 
         }

@@ -78,7 +78,7 @@ const getWorkingHours = () => {
         days.forEach((day: any) => {
             let hours = schedule[day as keyof typeof schedule];
             let dayAcr = capitalizeFirstLetter(day.slice(0, 3));
-            if (hours.off) {
+            if (hours.isOff) {
                 workingHours += `<span ><strong>${dayAcr}</strong>: Off </span>`;
             } else {
                 workingHours += `<span ><strong>${dayAcr}</strong>: ${convertToAmPm(hours.start)} - ${convertToAmPm(hours.end)} </span>`;
@@ -120,7 +120,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
         <div class="clinic-container">
             <div class="desc-wrapper">
                 <h1 class="desktop">{{ clinic?.name }}</h1>
-                <p>{{ clinic?.summary }}
+                <p v-html="clinic?.summary">
 
                 </p>
                 <div class="schedule">
@@ -130,7 +130,7 @@ const markerOptions = { position: center, label: 'L', title: 'LADY LIBERTY' }
                     </div>
                 </div>
                 <div class="btns-wrapper">
-                    <router-link :to="`/booking/${clinic?.name}/${'Initial Checkup'}`" class="btn responsive">
+                    <router-link :to="`/booking/${clinic?.name}/${'Initial Check-up'}`" class="btn responsive">
                         {{ $translate('book_now') }}
                     </router-link>
                 </div>

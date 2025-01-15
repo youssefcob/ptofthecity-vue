@@ -38,6 +38,11 @@ const clear = () => {
 
 const defaultValue = (value : string) => {
     input.value = value;
+    if (input.value.length > 0) {
+    asterisk.value?.classList.add('active');
+} else {
+    asterisk.value?.classList.remove('active');
+}
     emit(`update:modelValue`, input.value);
     emit(`input`, input.value);
 }
@@ -64,8 +69,15 @@ const changeInput = (insurance: string) => {
 
 }
 
+const asterisk: Ref<HTMLElement | null> = ref(null);
 
 const filterList = () => {
+    
+    if (input.value.length > 0) {
+        asterisk.value?.classList.add('active');
+    } else {
+        asterisk.value?.classList.remove('active');
+    }
     if (props.list) {
         filteredList.value = props.list.filter(listItem => listItem.toLowerCase().startsWith(input.value.toLowerCase()));
     }
@@ -98,6 +110,14 @@ onMounted(() => {
 
 
 });
+onMounted(() => {
+
+if (input.value.length > 0) {
+    asterisk.value?.classList.add('active');
+} else {
+    asterisk.value?.classList.remove('active');
+}
+})
 
 onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside);
@@ -118,7 +138,7 @@ defineExpose({
                 v-model="input" :style="`width:100%;$;${($props.error) ? 'border-color:red' : ''};${background? `background-color:${background}`:'white'}`" type="text">
 
 
-            <label :class="`asterisk ${$dir()}`" v-show="!input">{{ $props.placeHolder }}<span v-if="props.required">&nbsp;*</span></label>
+            <label ref="asterisk" :class="`asterisk ${$dir()}`" >{{ $props.placeHolder }}<span v-if="props.required" style="color:red">&nbsp;*</span></label>
             <label :class="`arrowdown ${$dir()}`" ref="arrowdown">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 7" fill="none">
                     <path d="M1 1L6 6L11 1" stroke="black" stroke-width="0.5" stroke-linecap="round"
@@ -259,41 +279,73 @@ defineExpose({
      
     }
 
-    .asterisk {
-        left: 1.25rem;
+    // .asterisk {
+    //     left: 1.25rem;
      
 
-        top: 30%;
+    //     top: 30%;
+    //     color: rgba(0, 0, 0, 0.793);
+    //     font-family: $montserrat;
+    //     pointer-events: none;
+    //     font-size:1.125rem;
+
+
+    //     @media screen and (max-width: 800px) {
+    //         font-size: 13px;
+    //     }
+
+    //     >span {
+    //         color: red;
+    //     }
+
+    //     &.rtl {
+    //         flex-direction: row-reverse;
+    //         right:1.25rem;
+
+    //     }
+
+    //     @media screen and (max-width: 800px) {
+    //         left: 18px;
+    //         &.rtl {
+    //         flex-direction: row-reverse;
+    //         right:18px;
+
+    //     }
+    //     }
+    // }
+
+    .asterisk {
+        left: 1.25rem;
+        top: 35%;
         color: rgba(0, 0, 0, 0.793);
         font-family: $montserrat;
+        font-size: 1.125rem;
         pointer-events: none;
-        font-size:1.125rem;
+        transition: all 0.3s ease-in-out;
 
-
-        @media screen and (max-width: 800px) {
-            font-size: 13px;
+        span{
+            position: absolute;
+            top: -40%;
+            right:-1rem;
         }
 
-        >span {
-            color: red;
-        }
 
-        &.rtl {
-            flex-direction: row-reverse;
-            right:1.25rem;
-
+        &.active {
+            top: -35%;
+            left:.7rem;
+            // background-color: white;
+            transition: all 0.3s ease-in-out;
+            font-size: 0.9rem;
         }
 
         @media screen and (max-width: 800px) {
             left: 18px;
-            &.rtl {
-            flex-direction: row-reverse;
-            right:18px;
-
         }
+
+        @media screen and (max-width: 800px) {
+            font-size: 13px;
         }
     }
-
     .arrowdown {
         right: 3%;
         top: 34%;

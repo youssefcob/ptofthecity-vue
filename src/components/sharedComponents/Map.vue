@@ -16,7 +16,7 @@ const props = defineProps({
     },
     zoom:{
         type:Number,
-        default:9
+        default:9.5
     }
 })
 

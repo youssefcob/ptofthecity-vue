@@ -74,7 +74,9 @@ const router = createRouter({
 
 
   ],
-  scrollBehavior(to, from, savedPosition) {
+  async scrollBehavior(to, from, savedPosition) {
+    const delay = (t: number) => new Promise((r) => setTimeout(r, t))
+
     if (to.hash) {
       return {
         el: to.hash,
@@ -84,8 +86,11 @@ const router = createRouter({
     };
     if (savedPosition) {
       return savedPosition;
-    }
+    } else {
+      await delay(0)
     return { top: 0, behavior: 'smooth' };
+
+    }
   }
 })
 

@@ -47,7 +47,7 @@ onMounted(() => {
             <ClinicsPageNew />
         </section>
         <section class="servicesSection" id="Services">
-                <ServicesPage />
+            <ServicesPage />
         </section>
         <section class="insuranceSection" id="Insurance">
             <InsurancePage />
@@ -63,7 +63,7 @@ onMounted(() => {
             <OurStaffPage />
         </section>
 
-    
+
 
         <section class="careersSection" id="Careers">
             <CareersPage />
@@ -73,7 +73,7 @@ onMounted(() => {
         <section class="TrustedBySection" id="TrustedBy">
             <TrustedByPage />
         </section>
-<!-- 
+        <!-- 
         <section class="TestimonialsSection" id="Testimonials">
             <TestimonialsPage />
         </section> -->
@@ -94,20 +94,27 @@ onMounted(() => {
 
     >section {
         &:first-child {
-            margin-top: 0;
+            margin: 0;
         }
+
         &:last-child {
             margin-bottom: 0;
         }
 
-        @include sectionMargin;
+        margin: 12.5rem 0;
+        &.blogSection{
+           margin:$firstSectionGap 0;
+        }
+        // @include sectionMargin;
+
     }
 
 }
 
 .landing-page-container {
     width: 100%;
-    height: 100vh;
+    // height: 100vh;
+    margin-bottom: 0;
 
 }
 
@@ -117,11 +124,13 @@ onMounted(() => {
     // min-height:160vh;
 }
 
-// .whoWeAreSection{
-//     width:100%;
-//     // height:92vh;
+.blogSection {
+    margin-top: 0;
+    // width:100%;
+    // height:92vh;
 
-// }
+}
+
 .ourStaffSection {
     width: 100%;
     margin-top: 12.5rem;
