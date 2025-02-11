@@ -12,7 +12,7 @@ import { onMounted, ref } from 'vue';
 //     // console.log(services);
 // }
 onMounted(() => {
-    getServices();
+    // getServices();
 })
 
 const props = defineProps({

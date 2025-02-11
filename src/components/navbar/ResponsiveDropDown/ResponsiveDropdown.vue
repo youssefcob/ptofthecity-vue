@@ -28,7 +28,7 @@ const toggleDropDown = () => {
             <div class="list-search-container">
                 <div class="search-bar">
                     <!-- <SearchBarNew :navOnLanding="false" /> -->
-                     <BookNow :navOnLanding="true" />
+                     <BookNow :navOnLanding="true"  @click="toggleDropDown"/>
                 </div>
                 <div class="navList">
                     <NavListVertical @dropdown="toggleDropDown" />

@@ -65,6 +65,9 @@ const changeInput = (insurance: string) => {
     input.value = insurance;
     emit(`update:modelValue`, input.value);
     emit(`input`, input.value);
+    if (input.value.length > 0) {
+    asterisk.value?.classList.add('active');
+}
     show.value = false;
 
 }
@@ -239,16 +242,21 @@ defineExpose({
             border: 1px solid $blue;
             width: 100%;
             height: fit-content;
-            max-height: 100px;
+            max-height: 150px;
             overflow-y: scroll;
             background-color: $white;
             z-index: 1;
             @include flex();
             justify-content: flex-start;
+            align-items: flex-start;
 
+ 
             .dropdown-list {
                 height: 95%;
                 width: 98%;
+                
+
+
 
                 .dropdown-item {
                     padding: 10px;
@@ -259,6 +267,7 @@ defineExpose({
                     &:hover {
                         background-color: $blue;
                     }
+                    
                 }
             }
         }
@@ -279,41 +288,7 @@ defineExpose({
      
     }
 
-    // .asterisk {
-    //     left: 1.25rem;
-     
-
-    //     top: 30%;
-    //     color: rgba(0, 0, 0, 0.793);
-    //     font-family: $montserrat;
-    //     pointer-events: none;
-    //     font-size:1.125rem;
-
-
-    //     @media screen and (max-width: 800px) {
-    //         font-size: 13px;
-    //     }
-
-    //     >span {
-    //         color: red;
-    //     }
-
-    //     &.rtl {
-    //         flex-direction: row-reverse;
-    //         right:1.25rem;
-
-    //     }
-
-    //     @media screen and (max-width: 800px) {
-    //         left: 18px;
-    //         &.rtl {
-    //         flex-direction: row-reverse;
-    //         right:18px;
-
-    //     }
-    //     }
-    // }
-
+ 
     .asterisk {
         left: 1.25rem;
         top: 35%;
@@ -331,7 +306,7 @@ defineExpose({
 
 
         &.active {
-            top: -35%;
+            top: -1.5rem;
             left:.7rem;
             // background-color: white;
             transition: all 0.3s ease-in-out;

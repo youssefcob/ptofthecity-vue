@@ -15,7 +15,7 @@ const getClinicsCount = () => {
 }
 
 onMounted(async () => {
-    await getClinics();
+    // await getClinics();
 
 })
 </script>

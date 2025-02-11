@@ -14,8 +14,11 @@ const getClinics = async () => {
     if(clinicNames.value.length > 0) return;
     let data = await Http.get('clinic/groupByLocation');
     clinics = data;
+    console.log(data)
     // console.log(clinics);
     clinicNames.value =  Object.keys(clinics);
+    console.log(clinicNames.value);
+    
 
 }
 

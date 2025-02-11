@@ -69,7 +69,23 @@ const getWorkingHours = () => {
         return `${hours12}${minutesStr} ${ampm}`;
     };
     let schedule = clinic.value?.schedule;
-    // console.log(schedule);
+    const daysOfWeek = [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+    ];
+    const orderedSchedule: typeof schedule = daysOfWeek.reduce((acc, day) => {
+        if (schedule && acc) {
+            acc[day as keyof typeof schedule] = schedule[day as keyof typeof schedule];
+            return acc;
+        }
+    }, {} as typeof schedule);
+
+    schedule = orderedSchedule;
     let days;
     let workingHours: string = '';
 
@@ -92,7 +108,7 @@ const renderClinic = async () => {
     await getClinicReviews();
 }
 
-const momentsCarousel : Ref<InstanceType<typeof Carousel> | null> = ref(null);
+const momentsCarousel: Ref<InstanceType<typeof Carousel> | null> = ref(null);
 
 const setMomentsInterval = () => {
     if (momentsCarousel.value) {
@@ -405,18 +421,19 @@ a {
     }
 }
 
-.moments{
+.moments {
     @include pagePadding;
     // border-radius: 1rem;
     // overflow: hidden;
 
-    .moment_carousel{
-        height:40rem;
+    .moment_carousel {
+        height: 40rem;
     }
+
     .singleMoment {
         @include carouselItem2(1);
 
- 
+
 
     }
 }

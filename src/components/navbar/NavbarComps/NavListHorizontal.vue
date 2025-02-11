@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 
-import { services, getServices } from '@/components/HomePage/servicesSection/Services';
-import { clinics, getClinics, clinicNames } from '@/components/HomePage/clinicsSection/Clinics';
-import { onMounted, reactive, ref, type Ref } from 'vue';
+import { services } from '@/components/HomePage/servicesSection/Services';
+import { clinics, clinicNames } from '@/components/HomePage/clinicsSectionNew/Clinics';
+import { computed, onMounted } from 'vue';
 
 const props = defineProps({
     navOnLanding: {
@@ -11,19 +11,16 @@ const props = defineProps({
         required: true
     }
 })
-let rearrangedClinicsNames:Ref<string[]> = ref([]);
+// let rearrangedClinicsNames:Ref<string[]> = ref([]);
 onMounted(async () => {
-    await getServices();
-    await getClinics();
-    rearrangeClinics();
-
+    // await getClinics();
 })
 
-const rearrangeClinics = () => {
-    rearrangedClinicsNames.value = clinicNames.value;
-    rearrangedClinicsNames.value = rearrangedClinicsNames.value.filter(clinic => clinic !== 'Brooklyn');
-    rearrangedClinicsNames.value.push('Brooklyn');
-}
+let rearrangedClinicsNames = computed(() => {
+    return clinicNames.value.filter((clinic) => clinic !== 'Brooklyn').concat('Brooklyn');
+})
+
+
 
 </script>
 
@@ -34,7 +31,7 @@ const rearrangeClinics = () => {
             <RouterLink class="list-item dropbtn" active-class="navbar-link" to="/#Clinics">
                 {{ $translate('Clinics') }}
             </RouterLink>
-            <div class="dropdown-content clinics">
+            <div v-if="clinicNames.length > 0" class="dropdown-content clinics">
                 <template class="clinic" v-for="(clinic, index) in rearrangedClinicsNames" :key="clinic">
                     <strong>{{ clinic }}</strong>
 

@@ -21,6 +21,7 @@ const content = ref({
 
 const getWhoWeAre = async () => {
     content.value = await getContent("Who We Are");
+    console.log(content.value);
 }
 onMounted(() => {
     getWhoWeAre();  

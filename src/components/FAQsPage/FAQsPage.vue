@@ -12,6 +12,7 @@ const faqs = ref([]);
 const faqsHeaders: Ref<string[]> = ref([]);
 const getFaqs = async () => {
     let data = await Http.get('content/faqs');
+    console.log(data);
     faqs.value = data;
     faqsHeaders.value = (Object.keys(data));
 }

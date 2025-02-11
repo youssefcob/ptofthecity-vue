@@ -93,6 +93,8 @@ onMounted(() => {
     height: fit-content;
 
     >section {
+        margin: 12.5rem 0;
+
         &:first-child {
             margin: 0;
         }
@@ -101,11 +103,16 @@ onMounted(() => {
             margin-bottom: 0;
         }
 
-        margin: 12.5rem 0;
-        &.blogSection{
-           margin:$firstSectionGap 0;
+        &.TrustedBySection {
+            margin: 0 0 !important;
         }
+
+        &.blogSection {
+            margin: $firstSectionGap 0;
+        }
+
         // @include sectionMargin;
+
 
     }
 
@@ -117,6 +124,7 @@ onMounted(() => {
     margin-bottom: 0;
 
 }
+
 
 
 .insuranceSection {
@@ -145,7 +153,7 @@ onMounted(() => {
 }
 
 .FAQsSection {
-    margin-top: 12.5rem;
+    // margin-top: 12.5rem;
     height: fit-content;
 }
 

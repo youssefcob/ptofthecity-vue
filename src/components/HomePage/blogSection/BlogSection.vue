@@ -47,8 +47,8 @@ const updateInfo = (id: string, show: boolean) => {
             <Instructions v-if="!show" />
             <BodyPartInfo :data="infoValue" v-if="show" />
             <div class="btn-wrapper">
-                <router-link to="/blog" class="btn responsive">Our Blog</router-link>
-                <router-link to="/booking" class="btn responsive transparent">Book Now</router-link>
+                <router-link to="/blog" class="btn responsive transparent">Learn More</router-link>
+                <router-link to="/booking" class="btn responsive ">Book Now</router-link>
             </div>
 
         </div>

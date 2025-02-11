@@ -49,7 +49,7 @@ watch(y, (newValue) => {
 
 
 <template>
-    <nav :class="`navbar horizontal ${navOnLanding ? 'main' : 'secondary'}`">
+    <nav :class="`navbar horizontal secondary`">
         <div class="logo">
             <router-link to="/">
                 <NavLogo />

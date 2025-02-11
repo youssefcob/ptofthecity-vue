@@ -2,6 +2,9 @@
 import Contact from './Contact.vue';
 import Logo from './logo.vue';
 import Socials from './Socials.vue';
+function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
 </script>
 <template>
     <div class="container">
@@ -14,7 +17,9 @@ import Socials from './Socials.vue';
         </div>
         <div class="mid">
             <span class="text underline">Notice Of Privacy Practices</span>
-            <span class="text">Back to top</span>
+            <span class="text click" @click="scrollToTop">Back to top</span>
+
+       
 
         </div>
         <div class="bot">
@@ -60,6 +65,9 @@ import Socials from './Socials.vue';
         >.text {
             color: white;
 
+            &.click {
+                cursor: pointer;
+            }
             &.underline {
                 text-decoration-line: underline;
             }

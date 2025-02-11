@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import Http from '@/mixins/Http';
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { getContent } from '@/mixins/Content';
 
 const formatText = (text: string | undefined): string => {
@@ -10,58 +9,106 @@ const formatText = (text: string | undefined): string => {
 
 const content = ref({
     clinics: 25,
-    successful_cases: 6660,
-    employees: 68,
-    our_story:'Our story of success started with Dr. Mahmoud`s simple dream of being the best physical therapy clinic in town. It grew over the years into a dream that came true with the establishment of the PT of the city in 2020. We reached 14 locations in a few years, all over New York, with the dedication of our partners and team and the trust of our patients. And to more success, we go.',
-    our_technique:'We offer you a treatment plan specialized for each case to achieve the most effective results. You will be given detailed information about the nature of the case and injury, the treatment plan, tools, and devices you will use, as well as the expected outcome from the treatment. Our main concern is your comfort and wellness. You will be treated with the most recent evidence guidelines and the most advanced tools, techniques, and devices that will help you reach the treatment goal in the most convenient way and in the shortest duration of time.'
+    successful_cases: 6666,
+    employees: 67,
+    our_story: 'Our story of success started with Dr. Mahmoud`s simple dream of being the best physical therapy clinic in town. It grew over the years into a dream that came true with the establishment of the PT of the city in 2020. We reached 14 locations in a few years, all over New York, with the dedication of our partners and team and the trust of our patients. And to more success, we go.',
+    our_technique: 'We offer you a treatment plan specialized for each case to achieve the most effective results. You will be given detailed information about the nature of the case and injury, the treatment plan, tools, and devices you will use, as well as the expected outcome from the treatment. Our main concern is your comfort and wellness. You will be treated with the most recent evidence guidelines and the most advanced tools, techniques, and devices that will help you reach the treatment goal in the most convenient way and in the shortest duration of time.'
 
 });
 
+// console.log('smth');
+
 const getWhoWeAre = async () => {
     content.value = await getContent("Who We Are");
+    console.log('smth');
 }
-onMounted(() => {
-    getWhoWeAre();  
+onMounted(async () => {
+    await getWhoWeAre();
 })
+
+const statsCounter = reactive({
+    clinics: 0,
+    successful_cases: 0,
+    employees: 0,
+})
+
+const stats = ref<HTMLElement | null>(null);
+
+const startCounting = () => {
+
+    const count = (target: number, property: string) => {
+        let currentCount = 0;
+        const increment = target / 70; // Adjust the increment for smoother animation
+        const interval = setInterval(() => {
+            currentCount += increment;
+            if (currentCount >= target) {
+                currentCount = target;
+                clearInterval(interval);
+            }
+            statsCounter[property as keyof typeof statsCounter] = Math.ceil(currentCount);
+        }, 20);
+    }
+
+    count(content.value.clinics, 'clinics');
+    count(content.value.successful_cases, 'successful_cases');
+    count(content.value.employees, 'employees');
+};
+
+
+onMounted(() => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                console.log('intersecting');
+                startCounting();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    if (stats.value) {
+        observer.observe(stats.value);
+    }
+});
 </script>
 
 <template>
     <div class="container">
 
-        <h1 class="sectionHeader">{{$translate('whoWeAre')}}</h1>
+        <h1 class="sectionHeader">{{ $translate('whoWeAre') }}</h1>
 
 
         <div class="whoWeAreContainer">
-            <div class="stats">
+            <div class="stats" ref="stats">
 
                 <div class="box">
                     <div>
-                        <h1>{{content.clinics}}</h1>
+                        <h1>{{ statsCounter.clinics }}</h1>
                     </div>
                     <div>
-                        <h3 class="header-q">{{$translate('clinics')}}</h3>
-                    </div>
-                </div>
-                <div class="box">
-                    <div>
-                        <h1>{{content.successful_cases}}</h1>
-                    </div>
-                    <div>
-                        <h3 class="header-q">{{$translate('successful_cases')}}</h3>
+                        <h3 class="header-q">{{ $translate('clinics') }}</h3>
                     </div>
                 </div>
                 <div class="box">
                     <div>
-                        <h1>{{content.employees}}</h1>
+                        <h1>{{ statsCounter.successful_cases }}</h1>
                     </div>
                     <div>
-                        <h3 class="header-q">{{$translate('employees')}}</h3>
+                        <h3 class="header-q">{{ $translate('successful_cases') }}</h3>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>
+                        <h1>{{ statsCounter.employees }}</h1>
+                    </div>
+                    <div>
+                        <h3 class="header-q">{{ $translate('employees') }}</h3>
                     </div>
                 </div>
             </div>
 
             <div class="infocontainer">
-                <h3 class="header-t">{{$translate('our_story')}}</h3>
+                <h3 class="header-t">{{ $translate('our_story') }}</h3>
                 <div class="wrapper">
                     <div class="info">
                         <div class="infowrapper">
@@ -71,7 +118,7 @@ onMounted(() => {
                             </p>
                         </div>
                         <div>
-                            <h3 class="header-t" >{{$translate('our_technique')}}</h3>
+                            <h3 class="header-t">{{ $translate('our_technique') }}</h3>
                             <div class="infowrapper">
                                 <p class="text-s">
                                     <!-- {{ $translate('our_technique_text') }} -->
@@ -84,7 +131,8 @@ onMounted(() => {
 
                     </div>
                 </div>
-                <router-link to="/WhoWeAre" class="btn transparent responsive main">{{$translate('learn_more')}}</router-link>
+                <router-link to="/WhoWeAre" class="btn transparent responsive main">{{ $translate('learn_more')
+                    }}</router-link>
             </div>
         </div>
     </div>
@@ -95,8 +143,7 @@ onMounted(() => {
 .container {
     @include pagePadding();
 
-    .text-s{
-    }
+    .text-s {}
 
     .stats {
         display: grid;
@@ -105,7 +152,8 @@ onMounted(() => {
         gap: 3rem;
         // padding: 3rem 0;
         padding-bottom: 3rem;
-        .header-q{
+
+        .header-q {
             font-weight: bold;
         }
 
@@ -159,12 +207,13 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         width: 100%;
-        .header-t{
-            margin-bottom:1.25rem;
+
+        .header-t {
+            margin-bottom: 1.25rem;
         }
 
 
-      
+
 
 
 

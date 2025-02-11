@@ -35,7 +35,7 @@ onMounted(async () => {
                 <Fade :interval="Number(item.animation_interval)" :images="item.images" >
 
                     <Description class="description" :title="item.title" :description="item.slogans"
-                        :animation="item.slogans_animation" :interval="item.animation_interval"
+                        :animation="item.slogans_animation" :interval="Number(item.animation_interval)"
                         :buttonLink="item.buttonLink" :buttonText="item.buttonText" />
                 </Fade>
             </div>

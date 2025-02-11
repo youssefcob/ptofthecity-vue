@@ -103,7 +103,7 @@ let showMore = () => {
     }
 
     .show-more {
-        max-height: 100rem;
+        max-height: 160rem;
         transition: all 0.5s ease-in-out;
 
 

@@ -75,9 +75,6 @@ const getclinicNames = () => {
         }
     }
     Httplocations = reducedClinics;
-    // let s = Httplocations.map((clinic) => clinic.name);
-    // locations.value = s;
-    // formValidation.location.rules[1] = { dropdown: s };
 }
 
 const getInsurancesNames = () => {
@@ -514,6 +511,8 @@ const isSelfPay = () => {
 </template>
 
 <style scoped lang="scss">
+$gap: 2rem;
+
 .booking-container {
     @include pagePadding;
     padding-top: calc(8vh + 7.5vh) !important;
@@ -523,6 +522,7 @@ const isSelfPay = () => {
     .form-container {
         display: flex;
         gap: 5rem;
+        margin-top:3rem;
 
         @media screen and (max-width: 870px) {
             flex-direction: column;
@@ -535,11 +535,11 @@ const isSelfPay = () => {
 
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: $gap;
 
             .split {
                 display: flex;
-                gap: 1.25rem;
+                gap: $gap;
 
                 >.field {
                     width: 50%;
@@ -568,7 +568,7 @@ const isSelfPay = () => {
         .right {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: $gap;
 
             .btn {
                 margin-top: auto;
