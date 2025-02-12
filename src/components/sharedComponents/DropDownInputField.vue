@@ -168,6 +168,7 @@ defineExpose({
     >.required {
         >.input-field {
             transition: all 0.3s ease-in-out;
+            height:5rem;
 
             @media screen and (max-width: 800px) {
                 height: 6rem;
@@ -294,7 +295,7 @@ defineExpose({
         top: 35%;
         color: rgba(0, 0, 0, 0.793);
         font-family: $montserrat;
-        font-size: 1.125rem;
+        font-size: 1.3rem;
         pointer-events: none;
         transition: all 0.3s ease-in-out;
 

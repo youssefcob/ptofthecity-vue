@@ -151,7 +151,7 @@ if (input.value.length > 0) {
     position: relative;
 
     >.input-field {
-        height: 3.75rem;
+        height: 5rem;
         transition: all 0.3s ease-in-out;
 
         &[disabled] {
@@ -174,7 +174,7 @@ if (input.value.length > 0) {
         top: 35%;
         color: rgba(0, 0, 0, 0.793);
         font-family: $montserrat;
-        font-size: 1.125rem;
+        font-size: 1.3rem;
         pointer-events: none;
         transition: all 0.3s ease-in-out;
 
