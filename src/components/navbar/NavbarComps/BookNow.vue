@@ -11,7 +11,7 @@ const props = defineProps({
 <template>
 
     <RouterLink :class="`BookNow ${props.navOnLanding ? 'main' : 'secondary'}`" to="/booking">
-        <span class="btnfont">Book Now</span>
+        <span class="btnfont">Request Appointment</span>
     </RouterLink>
 
 </template>

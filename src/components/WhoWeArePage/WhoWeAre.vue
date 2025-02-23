@@ -26,7 +26,7 @@ onMounted(() => {
         </Carousel>
         <div class="btns-container">
             <router-link active-class="navbar-link" class="btn btnfont" to="/booking" >
-                Book Now
+                {{ $translate('book_now') }}
             </router-link>
             <router-link active-class="navbar-link" class="btn transparent btnfont" to="/">
                 Back to Home Page

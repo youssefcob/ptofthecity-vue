@@ -92,7 +92,7 @@ const HandleFileUpload = (e: Event) => {
         @media screen and (max-width: 800px) {
             display: none;
         }
-        height: 3.75rem;
+        height: 5rem;
 
         border: 1px solid $blue;
         border-radius: $border-radius;

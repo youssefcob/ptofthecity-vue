@@ -272,7 +272,7 @@ const phrase: PhraseDictionary = {
   },
 
   book_now: {
-    EN: 'Book Now',
+    EN: 'Request Appointment',
     ES: 'Reserva Ahora',
     AR: 'احجز الآن'
   },
