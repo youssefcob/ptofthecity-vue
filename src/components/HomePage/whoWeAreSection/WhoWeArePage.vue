@@ -59,7 +59,6 @@ onMounted(() => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                console.log('intersecting');
                 startCounting();
                 observer.unobserve(entry.target);
             }
@@ -79,7 +78,7 @@ onMounted(() => {
 
 
         <div class="whoWeAreContainer">
-            <div class="stats" ref="stats">
+             <div class="stats" ref="stats">
 
                 <div class="box">
                     <div>
@@ -94,7 +93,7 @@ onMounted(() => {
                         <h1>{{ statsCounter.successful_cases }}</h1>
                     </div>
                     <div>
-                        <h3 class="header-q">{{ $translate('successful_cases') }}</h3>
+                        <h3 class="header-q">{{ $translate('satisfied_patients') }}</h3>
                     </div>
                 </div>
                 <div class="box">
@@ -105,7 +104,7 @@ onMounted(() => {
                         <h3 class="header-q">{{ $translate('employees') }}</h3>
                     </div>
                 </div>
-            </div>
+            </div> 
 
             <div class="infocontainer">
                 <h3 class="header-t">{{ $translate('our_story') }}</h3>

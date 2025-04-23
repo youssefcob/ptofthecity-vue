@@ -2,7 +2,7 @@
 import InputField from '../sharedComponents/InputField.vue';
 import DropDownInputField from '../sharedComponents/DropDownInputField.vue';
 import FileInputField2 from '../sharedComponents/FileInputField2.vue';
-import { onMounted, reactive, ref, type Ref } from 'vue';
+import { onMounted, reactive, ref, watch, type Ref } from 'vue';
 import validation from '@/mixins/Validation';
 import { useSnackbar } from "vue3-snackbar";
 import Http from '@/mixins/Http';
@@ -20,28 +20,33 @@ const btnClicked = () => {
 
 }
 
+const selectCareer = (career: string) =>{
+    jobRef.value?.defaultValue(career);
+}
+defineExpose({
+    selectCareer
+})
 
-
-
+const jobRef = ref<InstanceType<typeof DropDownInputField> | null>(null);
 
 const isLoading: Ref<boolean> = ref(false);
 
 const snackbar = useSnackbar();
-let httpJobs: Ref<Job[]> = ref([]);
-let jobs: Ref<string[]> = ref([]);
-// let jobsList: any[] = [];
-const getJobs = async () => {
-    let data = await Http.get('career/jobs');
-    // jobsList = data;
-    httpJobs.value = data;
-    jobs.value = data.filter((job: any) => job.isAvailable === 1).map((job: any) => job.title);
-    formValidation.job.rules[1] = { dropdown: jobs.value };
-
-    // console.log(data);
-}
-onMounted(() => {
-    getJobs();
+const props = defineProps({
+    httpJobs: {
+        type: Array,
+        default: () => ([] as Job[]),
+    },
+    jobs: {
+        type: Array as () => string[],
+        default: () => ([]),
+    },
 })
+
+watch(() => props.jobs, (newJobs) => {
+    formValidation.job.rules[1] = { dropdown: props.jobs };
+
+});
 const states = [
     "Alabama",
     "Alaska",
@@ -111,7 +116,7 @@ const form = reactive({
 
 const formValidation = {
     job: {
-        rules: ['required', { dropdown: jobs.value }],
+        rules: ['required', { dropdown: props.jobs as string[] }],
         message: {
             required: 'Please Select A Job',
             dropdown: 'Please Select A Valid Job'
@@ -293,7 +298,7 @@ const modifyForm = () => {
         <div class="ps">Fields marked with an <span style="color:red">*</span> are required</div>
 
         <div>
-            <DropDownInputField placeHolder="Job you're applying for" required :list="jobs" @input="form.job = $event"
+            <DropDownInputField ref="jobRef" placeHolder="Job you're applying for" required :list="jobs" @input="form.job = $event"
                 id="jobs" />
         </div>
         <div class="name-wrapper">
@@ -369,7 +374,7 @@ const modifyForm = () => {
         }
     }
 
-  
+
 
     .btn {
         @media screen and (min-width: 501px) {

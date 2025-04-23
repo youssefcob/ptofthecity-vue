@@ -53,15 +53,16 @@ defineExpose({
 dialog {
 
     background-color: rgba(44, 50, 51, 0.40);
-    position: fixed;
+    // position: fixed;
     border: none;
-    top: 10%;
-    left: 15%;
+    // top: 10%;
+    // left: 15%;
     user-select: none;
+    margin:auto;
 
     @media screen and (max-width: 800px) {
-        top: 5%;
-        left: 5%;
+        // top: 5%;
+        // left: 5%;
 
     }
 

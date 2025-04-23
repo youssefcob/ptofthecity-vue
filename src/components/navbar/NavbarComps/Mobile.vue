@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <a href="tel:+201019223311">
+    <a href="tel:+17186480888">
         <div :class="`icon-wrapper ${props.inverted? 'inverted':''} ${props.navOnLanding ? 'main' : 'secondary'}`">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                 <g clip-path="url(#clip0_813_892)">

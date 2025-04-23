@@ -15,12 +15,12 @@ const jsonData = ref(data);
 
 useHead({
     title: jsonData.value.title,
-    meta: [
-        {
-            name: "description",
-            content: "Vue3 Snackbar"
-        }
-    ]
+    // meta: [
+    //     {
+    //         name: "description",
+    //         content: "Vue3 Snackbar"
+    //     }
+    // ]
 });
 const checkMobile = () => {
     let onMobile = false;

@@ -1,10 +1,9 @@
 // import Career from "./Career.vue"
 
 const careers = {
-    pt:{
-    title:`Physical Therapy`,
-    description:`Identify and meet patients’ goals and needs. Offer cost-effective treatments that help improve clients’ motion and mobility. Reduce the need for medications and provide alternatives to surgery. Develop care plans using a variety of treatment techniques. Create fitness- and wellness-oriented programs tailored to patients’ specific needs. Provide quality, personalized, and evidence-based care and proven interventions. Motivate patients during treatment to help them function optimally. Promote clients’ healthy lifestyles by improving strength, flexibility, balance, and coordination. Consult and practice with other health professionals. Evaluate effects, track progress, and communicate results. Document patient care services.
-`
+    EP:{
+    title:`Exercise Physiologist`,
+    description:`We are seeking a qualified and motivated Exercise Physiologist with a strong foundation in physiology and a passion for patient-centered care. In this role, you'll work closely with individuals managing various health conditions—designing personalized exercise programs, promoting recovery, and enhancing overall wellness. Key Responsibilities: • Conduct detailed fitness and health assessments • Develop customized exercise prescriptions • Monitor patient progress and ensure program effectiveness • Collaborate with multidisciplinary teams for integrated care • Educate and motivate patients to adopt long-term health habits Ideal Candidate Profile: • Proficient in exercise science and patient assessment • Strong understanding of cardiology and body mechanics • Skilled in health coaching and behavior change strategies • Committed to delivering high-quality, compassionate care`
     },
     ptAide:{
         title:`Physical Therapy Aide`,

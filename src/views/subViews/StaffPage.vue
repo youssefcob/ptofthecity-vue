@@ -52,13 +52,13 @@ const navigateTo = (id: string) => {
             <div class="info">
                 <h1>{{ staffMember?.title }} {{ staffMember?.first_name }} {{ staffMember?.last_name }}</h1>
                 <p class="text-s" v-html="formatText(staffMember?.bio)"></p>
-                <div class="btn responsive main">{{ $translate('book_now') }}</div>
+                <router-link  to="/booking" class="btn responsive main">{{ $translate('book_now') }}</router-link>
             </div>
             <!-- <div class="image" ></div> -->
 
 
         </div>
-        <router-link to="/" class="btn transparent responsive main back">Back To Homepage</router-link>
+        <router-link to="/booking" class="btn transparent responsive main back">Back To Homepage</router-link>
     </div>
     <h1 class="carousel-header">Our Staff</h1>
     <Carousel class="carousel">

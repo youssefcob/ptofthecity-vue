@@ -93,10 +93,10 @@ const phrase: PhraseDictionary = {
 
 
   // who we are
-  successful_cases: {
-    EN: 'Successful Cases',
-    ES: 'Casos Exitosos',
-    AR: 'حالة ناجحة'
+  satisfied_patients: {
+    EN: 'Satisfied Patients',
+    ES: 'Pacientes Satisfechos',
+    AR: 'مرضى راضون'
   },
   employees: {
     EN: 'Employees',

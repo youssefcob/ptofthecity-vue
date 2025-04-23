@@ -5,8 +5,9 @@ const props = defineProps<{
     career: Career;
 }>();
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close','apply']);
 const close = () => {
+    emit('apply',props.career.title);
     emit('close');
 }
 </script>

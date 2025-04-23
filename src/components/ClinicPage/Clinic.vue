@@ -94,7 +94,7 @@ const getWorkingHours = () => {
         days.forEach((day: any) => {
             let hours = schedule[day as keyof typeof schedule];
             let dayAcr = capitalizeFirstLetter(day.slice(0, 3));
-            if (hours.isOff) {
+            if (hours.off) {
                 workingHours += `<span ><strong>${dayAcr}</strong>: Off </span>`;
             } else {
                 workingHours += `<span ><strong>${dayAcr}</strong>: ${convertToAmPm(hours.start)} - ${convertToAmPm(hours.end)} </span>`;
@@ -106,6 +106,7 @@ const getWorkingHours = () => {
 const renderClinic = async () => {
     await getClinicFromState();
     await getClinicReviews();
+    console.log(clinic.value);
 }
 
 const momentsCarousel: Ref<InstanceType<typeof Carousel> | null> = ref(null);
@@ -328,9 +329,7 @@ a {
                 }
 
 
-                .schedule {
-                    .hours {}
-                }
+               
             }
         }
     }

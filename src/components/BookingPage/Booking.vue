@@ -13,8 +13,9 @@ import Loading from '../sharedComponents/Loading.vue';
 import type { Service } from '../HomePage/servicesSection/Services';
 import moment from 'moment-timezone';
 import { getServices, servicesInitial as services } from '../HomePage/servicesSection/Services';
-import { getClinics,clinics } from '../HomePage/clinicsSection/Clinics';
+import { getClinics, clinics } from '../HomePage/clinicsSection/Clinics';
 import { insurances, getInsurances, insurancesArr } from '../HomePage/insuranceSection/Insurances';
+import Modal from '../sharedComponents/modal.vue';
 
 const isLoading: Ref<boolean> = ref(false);
 
@@ -86,7 +87,7 @@ const getInsurancesNames = () => {
 const updateService = (e: string) => {
     form.service = e;
     locationComp.value?.clear();
-    
+
 
     let c = services.value.find((service) => service.title === e)?.clinics;
     if (c) {
@@ -113,7 +114,7 @@ const updateLocation = (e: string) => {
 
 // }
 const getSchedule = () => {
-    
+
     let clinic = Httplocations.find((location) => location.name === form.location);
     if (!clinic) return;
     return clinic.schedule;
@@ -154,11 +155,16 @@ const getLocationAndServiceFromProp = () => {
         if (props.clinicName) {
             locationComp.value?.defaultValue(props.clinicName);
         }
+    } else {
+        serviceComp.value?.defaultValue('Initial Check-up');
     }
- 
+
 }
 
 onMounted(async () => {
+    if (!props.serviceName) {
+        serviceComp.value?.defaultValue('Initial Check-up');
+    }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             cords.value.lat = position.coords.latitude
@@ -304,6 +310,18 @@ const validate = () => {
 
 }
 
+const successModal: Ref<InstanceType<typeof Modal> | null> = ref(null);
+
+const confirmSuccess = () => {
+    successModal.value?.openModal();
+
+    setTimeout(() => {
+        successModal.value?.closeModal();
+        window.location.href = '/';
+
+    }, 3000)
+
+}
 
 
 const submit = async () => {
@@ -332,10 +350,11 @@ const submit = async () => {
             console.log(response);
             snackbar.add({
                 background: '#8EF5E8',
-                text: 'Form Submitted Successfully',
+                text: 'Form Submitted Successfully, We will contact you',
 
             })
             isLoading.value = false;
+            confirmSuccess();
         } catch (e) {
             console.error(e);
             snackbar.add({
@@ -379,6 +398,7 @@ const modifyForm = () => {
         payment: formPayment(),
         service_id: serviceId(),
         date: date_in_unix,
+        pain: form.pain,
 
     });
     // console.log(date_in_unix);
@@ -436,24 +456,29 @@ const isSelfPay = () => {
     <div class="booking-container">
         <!-- <div @click="recaptcha('smth')" class="btn responsive">Book Appointment</div> -->
         <Loading v-if="isLoading" />
+        <Modal ref="successModal">
+            <div class="success">
+                <p>We recieved your reservation, check your email for confirmation</p>
+                <p>Thank you for trusting Pt Of The City</p>
+            </div>
+        </Modal>
         <h1 class="sectionHeader">Booking</h1>
 
         <div class="form-container">
             <div class="left">
                 <div>
 
-                    <DropDownInputField id="service" ref="serviceComp" :list="servicesList"
-                     placeHolder="Service"
+                    <DropDownInputField id="service" ref="serviceComp" :list="servicesList" placeHolder="Service"
                         @input="updateService($event)" required :error="formErrors.service" />
-                    <div class="ps" >What would you like to do at PT of of The City?</div>
+                    <div class="ps">What would you like to do at PT of of The City?</div>
 
 
                 </div>
                 <div>
 
                     <DropDownInputField id="location" ref="locationComp" :list="locations"
-                        placeHolder="Find Your nearest clinic"
-                        @input="updateLocation($event)" required :error="formErrors.location" />
+                        placeHolder="Find Your nearest clinic" @input="updateLocation($event)" required
+                        :error="formErrors.location" />
                     <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
 
 
@@ -502,8 +527,8 @@ const isSelfPay = () => {
             </div>
             <div class="right">
                 <Calender @input="updateDate($event)" @hours="updateHours($event)" :schedule="schedule" />
-                <DropDownInputField ref="hoursComp" @input="form.time = $event" id="time" :list="Availablehours" placeHolder="When"
-                    :error="formErrors.time" />
+                <DropDownInputField ref="hoursComp" @input="form.time = $event" id="time" :list="Availablehours"
+                    placeHolder="When" :error="formErrors.time" />
                 <div @click="submit()" class="btn responsive">Book Appointment</div>
             </div>
         </div>
@@ -512,6 +537,34 @@ const isSelfPay = () => {
 
 <style scoped lang="scss">
 $gap: 2rem;
+
+.success {
+    background-color: rgba(45, 139, 156, 0.4);
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    border: 1px solid white;
+
+    p {
+        color: white;
+        line-height: 150%;
+    }
+
+    :nth-child(1) {
+        color: white;
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    :nth-child(2) {
+        // color: red;
+        font-size: 2rem;
+    }
+}
 
 .booking-container {
     @include pagePadding;
@@ -522,7 +575,7 @@ $gap: 2rem;
     .form-container {
         display: flex;
         gap: 5rem;
-        margin-top:3rem;
+        margin-top: 3rem;
 
         @media screen and (max-width: 870px) {
             flex-direction: column;

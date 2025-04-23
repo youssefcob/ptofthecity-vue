@@ -63,11 +63,11 @@ let rearrangedClinicsNames = computed(() => {
                 Insurance choices
             </RouterLink>
         </li>
-        <li>
+        <!-- <li>
             <RouterLink class="list-item" active-class="navbar-link" to="/#WhoWeAre">
                 {{ $translate('whoWeAre') }}
             </RouterLink>
-        </li>
+        </li> -->
         <li>
             <RouterLink class="list-item" active-class="navbar-link" to="/#Blog">
                 {{ $translate('Conditions') }}
@@ -147,6 +147,7 @@ ul {
             padding: 1rem;
             border-radius: $border-radius;
             border-top-left-radius: 0;
+            text-align: left;
 
             .dropdown-item {
                 white-space: nowrap;
@@ -195,6 +196,7 @@ ul {
     li {
         margin-left: 0;
         height: 100%;
+        text-align: center;
 
     }
 
