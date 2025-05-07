@@ -428,9 +428,15 @@ const updateHours = (date: { start: string, end: string }) => {
         return parseInt(hours);
     }
     let hours = [];
+    const startHour = getHours(date.start);
+    const endHour = getHours(date.end);
 
-    for (let i = getHours(date.start); i < getHours(date.end); i++) {
+    for (let i = startHour; i < endHour; i++) {
         hours.push(`${i}:00`)
+        if (i < endHour - 1) {
+            hours.push(`${i}:30`);
+        }
+
     }
     Availablehours.value = hours
     formValidation.time.rules[1] = { dropdown: Availablehours.value }
