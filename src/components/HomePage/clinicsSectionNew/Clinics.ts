@@ -23,7 +23,6 @@ let clinicNames: Ref<string[]> = ref([]);
 // let clinicPositions: Ref<Clinic[]> = ref([]);
 const getClinics = async () => {
     let data = await Http.get('clinic/groupByLocation');
-    console.log(data);
     clinics = data;
     // console.log(clinics);
     clinicNames.value =  Object.keys(clinics);
