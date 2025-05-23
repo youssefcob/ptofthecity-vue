@@ -24,7 +24,7 @@ interface date {
 }
 
 interface Form {
-    [key: string]: string | string[] | FormData |null;
+    [key: string]: string | string[] | FormData | null | boolean;
 
 }
 
@@ -49,16 +49,41 @@ class validation {
                     }
                 }
 
+                const parseConditionString = (conditionString: string) => {
+                    // Split by OR operator |
+                    const orConditions = conditionString.split('|');
+                    console.log(orConditions);
+
+                    // For each OR condition, check if any evaluates to true
+                    return orConditions.some(orCondition => {
+                        // Split by & to get AND conditions
+                        const andConditions = orCondition.trim().split('&');
+                        console.log(andConditions);
+
+                        // All AND conditions must be true
+                        return andConditions.every(andCondition => {
+                            const [key, value] = andCondition.trim().split('==');
+                            console.log(key, value);
+
+                            // Check if the object's property matches the condition value
+                            console.log(this.form[key as keyof typeof this.form], value);
+                            console.log(this.form[key as keyof typeof this.form] === value);
+                            return this.form[key] === value;
+                        });
+                    });
+                }
+
 
                 if (arr && arr.length > 0) {
                     const firstElement = arr[0];
                     if (firstElement === 'if') {
-                        let data = this.form[arr[1] as keyof typeof this.form];
-                        if (data && data === arr[2]) {
-                            if (!this.data) {
-                                pushError();
-                            }
+                        // console.log(parseConditionString(arr[1]));
+                        // let data = this.form[arr[1] as keyof typeof this.form];
+                        // if (data && data === arr[2]) {
+                        if ( parseConditionString(arr[1]) && !this.data) {
+                            pushError();
                         }
+                        // }
                     }
                 } else {
                     if (!this.data) {
@@ -180,10 +205,10 @@ class validation {
                     }
                 }
                 if (arr && arr.length > 0) {
-                // console.log(arr)
+                    // console.log(arr)
 
                     const file = this.data as FormData;
-                    if(!file) return;
+                    if (!file) return;
                     for (let [key, value] of file.entries()) {
                         if (value instanceof File) {
                             console.log(value);
@@ -219,7 +244,7 @@ class validation {
         }
     }
 
-    
+
     protected validator: any;
 
 

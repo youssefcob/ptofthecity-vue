@@ -52,7 +52,7 @@ const navigateTo = (id: string) => {
             <div class="info">
                 <h1>{{ staffMember?.title }} {{ staffMember?.first_name }} {{ staffMember?.last_name }}</h1>
                 <p class="text-s" v-html="formatText(staffMember?.bio)"></p>
-                <router-link  to="/booking" class="btn responsive main">{{ $translate('book_now') }}</router-link>
+                <!-- <router-link  to="/booking" class="btn responsive main">{{ $translate('book_now') }}</router-link> -->
             </div>
             <!-- <div class="image" ></div> -->
 

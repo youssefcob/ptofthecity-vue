@@ -37,17 +37,22 @@ const form = reactive({
     location: '',
     firstName: '',
     lastName: '',
+    returning: 'No',
     dob: '',
     gender: '',
     phone: '',
     email: '',
-    payment: '',
+    payment: 'Insurance',
     insurance: '',
     memberId: '',
     service: '',
     pain: '',
     date: '',
-    time: ''
+    time: '',
+    date_of_accident: '',
+    case_number: '',
+    lawyer_name: '',
+    lawyer_phone_number: '',
 
 })
 let Httplocations: { name: string, id: number, schedule: Schedule, services: Service[] }[] = [];
@@ -196,6 +201,12 @@ const formValidation = {
             dropdown: 'Please select a valid location'
         }
     },
+    returning: {
+        rules: [],
+        message: {
+            required: 'Please select if you are a returning patient'
+        }
+    },
     firstName: {
         rules: ['required', 'letters:only'],
         message: {
@@ -238,15 +249,15 @@ const formValidation = {
         rules: ['required', 'email']
     },
     payment: {
-        rules: ['required', { dropdown: ['Insurance', 'Self Pay'] }],
+        rules: ['required', { dropdown: ['Insurance', 'Self Pay', 'Workers Compensation'] }],
 
     },
     insurance: {
-        rules: ['required:if:payment:Insurance', { dropdown: insurancesList.value }],
+        rules: ['required:if:payment==Insurance&returning==No', { dropdown: insurancesList.value }],
 
     },
     memberId: {
-        rules: ['required:if:payment:Insurance'],
+        rules: ['required:if:payment==Insurance&returning==No'],
     },
     pain: {
     },
@@ -256,7 +267,36 @@ const formValidation = {
     },
     time: {
         rules: ['required', { dropdown: Availablehours.value }],
-    }
+    },
+
+    date_of_accident: {
+        rules: ['required:if:payment==Workers Compensation'],
+        message: {
+            required: 'Date of accident is required',
+        }
+
+    },
+    case_number: {
+        rules: ['required:if:payment==Workers Compensation'],
+        message: {
+            required: 'Case number is required',
+        }
+
+    },
+    lawyer_name: {
+        rules: ['required:if:payment==Workers Compensation'],
+        message: {
+            required: 'Lawyer name is required',
+        }
+
+    },
+    lawyer_phone_number: {
+        rules: ['required:if:payment==Workers Compensation'],
+        message: {
+            required: 'Lawyer phone number is required',
+        }
+
+    },
 
 }
 
@@ -274,7 +314,12 @@ const formErrors = reactive({
     memberId: false,
     pain: false,
     date: false,
-    time: false
+    time: false,
+    returning: false,
+    date_of_accident: false,
+    case_number: false,
+    lawyer_name: false,
+    lawyer_phone_number: false,
 });
 
 const validate = () => {
@@ -313,21 +358,24 @@ const validate = () => {
 const successModal: Ref<InstanceType<typeof Modal> | null> = ref(null);
 
 const confirmSuccess = () => {
-    successModal.value?.openModal();
+    // successModal.value?.openModal();
 
-    setTimeout(() => {
-        successModal.value?.closeModal();
-        window.location.href = '/';
+    // setTimeout(() => {
+    //     successModal.value?.closeModal();
+    //     window.location.href = '/';
 
-    }, 3000)
+    // }, 3000)
 
 }
 
 
 const submit = async () => {
+    // console.log(form);
     let isValid = validate();
     if (isValid) {
         let moddedForm = modifyForm();
+        // console.log(moddedForm);
+        // return;
         let recaptchaToken = await recaptcha('reservation');
         if (recaptchaToken) {
             Object.assign(moddedForm, {
@@ -345,7 +393,7 @@ const submit = async () => {
         try {
             isLoading.value = true;
 
-            console.log(moddedForm);
+            // console.log(moddedForm);
             let response = await Http.post('reservation', moddedForm);
             console.log(response);
             snackbar.add({
@@ -377,8 +425,16 @@ const modifyForm = () => {
         return clinic.id;
     }
     let formPayment = () => {
-        if (form.payment === 'Insurance') return 'insurance';
-        return 'self_pay';
+        switch (form.payment) {
+            case 'Insurance':
+                return 'insurance';
+            case 'Self Pay':
+                return 'self_pay';
+            case 'Workers Compensation':
+                return 'workers_compensation';
+            default:
+                return 'self_pay';
+        }
     }
 
     let serviceId = () => {
@@ -399,6 +455,7 @@ const modifyForm = () => {
         service_id: serviceId(),
         date: date_in_unix,
         pain: form.pain,
+        returning: form.returning
 
     });
     // console.log(date_in_unix);
@@ -406,6 +463,15 @@ const modifyForm = () => {
         Object.assign(moddedform, {
             insurance_company: form.insurance,
             member_id: form.memberId
+        });
+    }
+
+    if (form.payment === 'Workers Compensation') {
+        Object.assign(moddedform, {
+            date_of_accident: form.date_of_accident,
+            case_number: form.case_number,
+            lawyer_name: form.lawyer_name,
+            lawyer_phone_number: form.lawyer_phone_number,
         });
     }
     return moddedform;
@@ -449,197 +515,344 @@ const updateDate = (date: { day: number, month: number, year: number }) => {
 }
 
 const assignPayment = (e: string) => {
-    form.payment = e
+    form.payment = e;
+
+}
+
+const assignReturning = (e: string) => {
+    form.returning = e;
+    // form.returning = isReturning;
 }
 const isSelfPay = () => {
     return form.payment !== 'Insurance'
 
 }
-
-
 </script>
 <template>
-    <div class="booking-container">
-        <!-- <div @click="recaptcha('smth')" class="btn responsive">Book Appointment</div> -->
-        <Loading v-if="isLoading" />
-        <Modal ref="successModal">
-            <div class="success">
-                <p>We recieved your reservation, check your email for confirmation</p>
-                <p>Thank you for trusting Pt Of The City</p>
-            </div>
-        </Modal>
-        <h1 class="sectionHeader">Booking</h1>
+  <div class="booking-container">
+    <!-- <div @click="recaptcha('smth')" class="btn responsive">Book Appointment</div> -->
+    <Loading v-if="isLoading" />
+    <Modal ref="successModal">
+      <div class="success">
+        <p>We recieved your reservation, check your email for confirmation</p>
+        <p>Thank you for trusting Pt Of The City</p>
+      </div>
+    </Modal>
+    <h1 class="sectionHeader">Booking</h1>
 
-        <div class="form-container">
-            <div class="left">
-                <div>
-
-                    <DropDownInputField id="service" ref="serviceComp" :list="servicesList" placeHolder="Service"
-                        @input="updateService($event)" required :error="formErrors.service" />
-                    <div class="ps">What would you like to do at PT of of The City?</div>
-
-
-                </div>
-                <div>
-
-                    <DropDownInputField id="location" ref="locationComp" :list="locations"
-                        placeHolder="Find Your nearest clinic" @input="updateLocation($event)" required
-                        :error="formErrors.location" />
-                    <div class="ps">Make sure to allow location access, Clinics are listed in order of proximity.</div>
-
-
-                </div>
-
-                <div>
-                    <div class="split name">
-                        <InputField required class="field" placeHolder="First Name" id="firstName"
-                            @input="form.firstName = $event" :error="formErrors.firstName" lettersOnly />
-                        <InputField required class="field" placeHolder="Last Name" id="lastName"
-                            @input="form.lastName = $event" :error="formErrors.lastName" lettersOnly />
-                    </div>
-                    <div class="ps">Your legal name as shown in the photo ID</div>
-
-                </div>
-                <div class="split">
-                    <div class="field">
-                        <InputField placeHolder="Date of Birth" mask="##-##-####" id="dob" required
-                            @input="form.dob = $event" :error="formErrors.dob" date minYear="-100" maxYear="+10" />
-                        <div class="ps">MM-DD-YYYY</div>
-                    </div>
-                    <DropDownInputField class='field' :list="['Male', 'Female', 'Other', 'Prefer not to say']" required
-                        id="gender" placeHolder="Gender" @input="form.gender = $event" :error="formErrors.gender" />
-                </div>
-                <div class="split reverse">
-                    <div class="field">
-                        <InputField placeHolder="Phone Number" mask="(###) ###-####" id="phone" required
-                            @input="form.phone = $event" :error="formErrors.phone" />
-                    </div>
-                    <div class="field">
-                        <InputField placeHolder="Email" id="email" required @input="form.email = $event"
-                            :error="formErrors.email" />
-                    </div>
-                </div>
-                <div class="field coverage">
-                    <RadioInputField @change="assignPayment($event)" style="width:100%;" title="Coverage"
-                        :options="['Insurance', 'Self Pay']" :checked="'Insurance'" id="payment"
-                        :error="formErrors.payment" />
-                </div>
-                <DropDownInputField id="insurance" :list="insurancesList" placeHolder="Insurance company name"
-                    @input="form.insurance = $event" :disabled="isSelfPay()" :error="formErrors.insurance" />
-                <InputField @input="form.memberId = $event" placeHolder="Member ID" id="MemberId"
-                    :disabled="isSelfPay()" :error="formErrors.memberId" />
-                <InputField @input="form.pain = $event" height="15rem" placeHolder="Tell us more about your pain"
-                    id="pain" optional :error="formErrors.pain" />
-            </div>
-            <div class="right">
-                <Calender @input="updateDate($event)" @hours="updateHours($event)" :schedule="schedule" />
-                <DropDownInputField ref="hoursComp" @input="form.time = $event" id="time" :list="Availablehours"
-                    placeHolder="When" :error="formErrors.time" />
-                <div @click="submit()" class="btn responsive">Book Appointment</div>
-            </div>
+    <div class="form-container">
+      <div class="left">
+        <div>
+          <DropDownInputField
+            id="service"
+            ref="serviceComp"
+            :list="servicesList"
+            placeHolder="Service"
+            @input="updateService($event)"
+            required
+            :error="formErrors.service"
+          />
+          <div class="ps">What would you like to do at PT of of The City?</div>
         </div>
+        <div>
+          <DropDownInputField
+            id="location"
+            ref="locationComp"
+            :list="locations"
+            placeHolder="Find Your nearest clinic"
+            @input="updateLocation($event)"
+            required
+            :error="formErrors.location"
+          />
+          <div class="ps">
+            Make sure to allow location access, Clinics are listed in order of proximity.
+          </div>
+        </div>
+
+        <div class="field coverage">
+          <RadioInputField
+            @change="assignReturning($event)"
+            style="width: 100%"
+            title="Returning Patient"
+            :options="['Yes', 'No']"
+            :checked="'No'"
+            id="returning"
+            :error="formErrors.returning"
+          />
+        </div>
+
+        <div>
+          <div class="split name">
+            <InputField
+              required
+              class="field"
+              placeHolder="First Name"
+              id="firstName"
+              @input="form.firstName = $event"
+              :error="formErrors.firstName"
+              lettersOnly
+            />
+            <InputField
+              required
+              class="field"
+              placeHolder="Last Name"
+              id="lastName"
+              @input="form.lastName = $event"
+              :error="formErrors.lastName"
+              lettersOnly
+            />
+          </div>
+          <div class="ps">Your legal name as shown in the photo ID</div>
+        </div>
+        <div class="split">
+          <div class="field">
+            <InputField
+              placeHolder="Date of Birth"
+              mask="##-##-####"
+              id="dob"
+              required
+              @input="form.dob = $event"
+              :error="formErrors.dob"
+              date
+              minYear="-100"
+              maxYear="+10"
+            />
+            <div class="ps">MM-DD-YYYY</div>
+          </div>
+          <DropDownInputField
+            class="field"
+            :list="['Male', 'Female', 'Other', 'Prefer not to say']"
+            required
+            id="gender"
+            placeHolder="Gender"
+            @input="form.gender = $event"
+            :error="formErrors.gender"
+          />
+        </div>
+        <div class="split reverse">
+          <div class="field">
+            <InputField
+              placeHolder="Phone Number"
+              mask="(###) ###-####"
+              id="phone"
+              required
+              @input="form.phone = $event"
+              :error="formErrors.phone"
+            />
+          </div>
+          <div class="field">
+            <InputField
+              placeHolder="Email"
+              id="email"
+              required
+              @input="form.email = $event"
+              :error="formErrors.email"
+            />
+          </div>
+        </div>
+        <div class="field coverage">
+          <RadioInputField
+            @change="assignPayment($event)"
+            style="width: 100%"
+            title="Coverage"
+            :options="['Insurance', 'Self Pay', 'Workers Compensation']"
+            :checked="'Insurance'"
+            id="payment"
+            :error="formErrors.payment"
+          />
+        </div>
+        <DropDownInputField
+          v-if="!(form.returning == 'Yes' || form.payment == 'Workers Compensation')"
+          id="insurance"
+          :list="insurancesList"
+          placeHolder="Insurance company name"
+          @input="form.insurance = $event"
+          :disabled="isSelfPay()"
+          :error="formErrors.insurance"
+        />
+        <InputField
+          v-if="!(form.returning == 'Yes' || form.payment == 'Workers Compensation')"
+          @input="form.memberId = $event"
+          placeHolder="Member ID"
+          id="MemberId"
+          :disabled="isSelfPay()"
+          :error="formErrors.memberId"
+        />
+
+        <!-- WorkersCompensation -->
+        <div class="split">
+          <div class="field">
+            <InputField
+              v-if="form.payment === 'Workers Compensation'"
+              @input="form.date_of_accident = $event"
+              placeHolder="Date of Accident"
+              mask="##-##-####"
+              id="date_of_accident"
+              :error="formErrors.date_of_accident"
+              date
+              required
+              min-year="-50"
+              max-year="+0"
+            />
+          </div>
+          <div class="field">
+            <InputField
+              v-if="form.payment === 'Workers Compensation'"
+              @input="form.case_number = $event"
+              placeHolder="Case Number"
+              id="case_number"
+              :error="formErrors.case_number"
+              required
+            />
+          </div>
+        </div>
+        <div class="split">
+          <div class="field">
+            <InputField
+              v-if="form.payment === 'Workers Compensation'"
+              @input="form.lawyer_name = $event"
+              placeHolder="Lawyer Name"
+              id="lawyer_name"
+              :error="formErrors.lawyer_name"
+              letterOnly
+              required
+            />
+          </div>
+          <div class="field">
+            <InputField
+              v-if="form.payment === 'Workers Compensation'"
+              @input="form.lawyer_phone_number = $event"
+              placeHolder="Lawyer Phone Number"
+              id="lawyer_phone_number"
+              :error="formErrors.lawyer_phone_number"
+              mask="(###) ###-####"
+              required
+            />
+          </div>
+        </div>
+
+        <InputField
+          @input="form.pain = $event"
+          height="15rem"
+          placeHolder="Tell us more about your pain"
+          id="pain"
+          optional
+          :error="formErrors.pain"
+        />
+      </div>
+      <div class="right">
+        <Calender
+          @input="updateDate($event)"
+          @hours="updateHours($event)"
+          :schedule="schedule"
+        />
+        <DropDownInputField
+          ref="hoursComp"
+          @input="form.time = $event"
+          id="time"
+          :list="Availablehours"
+          placeHolder="When"
+          :error="formErrors.time"
+        />
+        <div @click="submit()" class="btn responsive">Book Appointment</div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
 $gap: 2rem;
 
 .success {
-    background-color: rgba(45, 139, 156, 0.4);
-    height: 80vh;
-    width: 80vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5rem;
-    border: 1px solid white;
+  background-color: rgba(45, 139, 156, 0.4);
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  border: 1px solid white;
 
-    p {
-        color: white;
-        line-height: 150%;
-    }
+  p {
+    color: white;
+    line-height: 150%;
+  }
 
-    :nth-child(1) {
-        color: white;
-        font-size: 3rem;
-        text-align: center;
-    }
+  :nth-child(1) {
+    color: white;
+    font-size: 3rem;
+    text-align: center;
+  }
 
-    :nth-child(2) {
-        // color: red;
-        font-size: 2rem;
-    }
+  :nth-child(2) {
+    // color: red;
+    font-size: 2rem;
+  }
 }
 
 .booking-container {
-    @include pagePadding;
-    padding-top: calc(8vh + 7.5vh) !important;
+  @include pagePadding;
+  padding-top: calc(8vh + 7.5vh) !important;
 
+  .form-container {
+    display: flex;
+    gap: 5rem;
+    margin-top: 3rem;
 
-
-    .form-container {
-        display: flex;
-        gap: 5rem;
-        margin-top: 3rem;
-
-        @media screen and (max-width: 870px) {
-            flex-direction: column;
-            gap: 2.5rem;
-
-        }
-
-        .left {
-            width: 100%;
-
-            display: flex;
-            flex-direction: column;
-            gap: $gap;
-
-            .split {
-                display: flex;
-                gap: $gap;
-
-                >.field {
-                    width: 50%;
-
-                }
-
-                >.coverage {
-                    display: flex;
-                    align-items: center;
-                }
-
-                @media screen and (max-width: 800px) {
-                    flex-direction: column;
-
-                    >.field {
-                        width: 100%;
-                    }
-
-                    &.reverse {
-                        flex-direction: column-reverse;
-                    }
-                }
-            }
-        }
-
-        .right {
-            display: flex;
-            flex-direction: column;
-            gap: $gap;
-
-            .btn {
-                margin-top: auto;
-
-                @media screen and (max-width: 800px) {
-                    padding: 2.5rem 0rem;
-                    font-size: 1.5rem;
-                }
-            }
-        }
+    @media screen and (max-width: 870px) {
+      flex-direction: column;
+      gap: 2.5rem;
     }
 
+    .left {
+      width: 100%;
 
+      display: flex;
+      flex-direction: column;
+      gap: $gap;
+
+      .split {
+        display: flex;
+        gap: $gap;
+
+        .field {
+          width: 50%;
+        }
+
+        > .coverage {
+          display: flex;
+          align-items: center;
+        }
+
+        @media screen and (max-width: 800px) {
+          flex-direction: column;
+
+          > .field {
+            width: 100%;
+          }
+
+          &.reverse {
+            flex-direction: column-reverse;
+          }
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: $gap;
+
+      .btn {
+        margin-top: auto;
+
+        @media screen and (max-width: 800px) {
+          padding: 2.5rem 0rem;
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
 }
 </style>

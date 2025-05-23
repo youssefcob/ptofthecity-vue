@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue';
 import { vMaska } from "maska/vue"
-import Background from '../HomePage/landingSection/Background.vue';
 import { watch } from 'vue';
 
 const props = defineProps({
@@ -19,7 +18,8 @@ const props = defineProps({
     lettersOnly: Boolean,
     numbersOnly: Boolean,
     value: String,
-    background: String
+    background: String,
+    default: String,
 });
 
 const clear = () => {
@@ -123,6 +123,14 @@ if (input.value.length > 0) {
 } else {
     asterisk.value?.classList.remove('active');
 }
+    if (props.default) {
+        input.value = props.default;
+        emitInput();
+    }
+    if (props.value) {
+        input.value = props.value;
+        emitInput();
+    }
 })
 </script>
 

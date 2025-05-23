@@ -23,6 +23,11 @@ const getWhoWeAre = async () => {
     content.value = await getContent("Who We Are");
     console.log(content.value);
 }
+
+const formatText = (text: string | undefined): string => {
+    if (!text) return '';
+    return text.replace(/\n/g, '<br>');
+}
 onMounted(() => {
     getWhoWeAre();  
 })
@@ -36,7 +41,7 @@ onMounted(() => {
                 <div class="">
                     <h3 class="header-t">Our story</h3>
                     <div class="infowrapper">
-                        <p class="text-s">{{content.our_story}}
+                            <p class="text-s" v-html="formatText(content.our_story)">
                         </p>
                     </div>
                 </div>
