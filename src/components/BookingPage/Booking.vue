@@ -358,13 +358,13 @@ const validate = () => {
 const successModal: Ref<InstanceType<typeof Modal> | null> = ref(null);
 
 const confirmSuccess = () => {
-    // successModal.value?.openModal();
+    successModal.value?.openModal();
 
-    // setTimeout(() => {
-    //     successModal.value?.closeModal();
-    //     window.location.href = '/';
+    setTimeout(() => {
+        successModal.value?.closeModal();
+        window.location.href = '/';
 
-    // }, 3000)
+    }, 3000)
 
 }
 
